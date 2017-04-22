@@ -1,5 +1,6 @@
 #pragma once
-
+#pragma warning(disable : 4996)			//TO DO: check error message on windows platform
+										// error is connected with std::localtime function
 #include <chrono>
 #include <string>
 
