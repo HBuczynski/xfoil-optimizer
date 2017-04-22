@@ -27,3 +27,11 @@
 *.exe
 *.out
 *.app
+
+#visual studio project files
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.dblite
+build/*
+.vs/*

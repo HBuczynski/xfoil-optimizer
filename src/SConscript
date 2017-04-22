@@ -1,0 +1,8 @@
+#!python
+Import('env')
+env.dProgram(target='X-foilOptimizer',
+             source = '''
+               main.cpp
+             ''',
+             CPPPATH = Split('#gui #optimizer #tests #utility #xfoil')
+             )
