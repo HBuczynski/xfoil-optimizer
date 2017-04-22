@@ -119,7 +119,7 @@ if env['CC'] == 'cl':
             # /MD(msvcrtd) /MTd(libcmtd) and /MDd(msvcrtd)
             # So if you want to debug with the freever, the only option is
             # the single-threaded lib, /MLd
-            vclibs['Debug']='/MLd'
+            vclibs['Debug']='/MTd'
             vclibs['Release']='/MT'
 
     # MSVC SETUP
@@ -136,7 +136,7 @@ if env['CC'] == 'cl':
         # env.Clean('.', '${TARGET}.pdb')
         # Need to clean .pdbs somehow! The above line doesn't work!
     else:
-        env.Append(CCFLAGS=Split('/Og /Ot /Ob1 /Op /G6'))
+        env.Append(CCFLAGS=Split('/Ot /Ob1 /O2 '))
 
     env.Append(CCFLAGS=Split('/EHsc /J /W3 /Gd'))
     env.Append(CPPDEFINES=Split('WIN32 _WINDOWS'))
