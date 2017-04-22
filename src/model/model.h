@@ -8,10 +8,11 @@ class Model
 public:
 	Model();
 	~Model();
-	
-	void initializeLogger();
-	void initializeConfigurationReader();
 
 	void setProfileData(AviationProfileParameters data);
 	void updateChart(std::vector<double> dataX, std::vector<double> dataY);
+
+private:
+	void initializeLogger();
+	void initializeConfigurationReader();
 };
