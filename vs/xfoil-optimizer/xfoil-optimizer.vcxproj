@@ -63,7 +63,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <NMakeBuildCommandLine>scons -C ..\.. debug=1</NMakeBuildCommandLine>
-    <NMakeOutput>..\..\build\Debug\src\X-foilOptimizer.exe</NMakeOutput>
+    <NMakeOutput>..\..\build\Debug\src\X-foilOptimizer_dbg.exe</NMakeOutput>
     <NMakeCleanCommandLine>scons -C ..\.. -c</NMakeCleanCommandLine>
     <NMakeReBuildCommandLine>scons -C ..\a.. -c &amp;&amp; scons -C ..\.. debug=1</NMakeReBuildCommandLine>
     <NMakePreprocessorDefinitions>WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
@@ -80,6 +80,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
