@@ -1,4 +1,5 @@
 #!python
+import os
 Import('env')
 env.dProgram(target='X-foilOptimizer',
              source = '''
