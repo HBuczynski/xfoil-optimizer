@@ -1,13 +1,17 @@
 #pragma once
 
-#include<profile_parameters.h>
-#include<gui_objects.h>
-#include<model.h>
+#include <QObject>
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+
+#include "src/model/profile_parameters.h"
+#include "src/gui/gui_objects.h"
+#include "src/model/model.h"
 
 class View
 {
 public:
-	View(Model *model);
+    View();
 	~View();
 
 	AviationProfileParameters getInitialProfileParameters();
@@ -16,6 +20,8 @@ public:
 private:
 	void initializeGuiObjects();
 	void destroyGuiObjects();
+
+    QQmlApplicationEngine engine;
 
 	Model *model_;
 	GuiObjects guiObjects_;

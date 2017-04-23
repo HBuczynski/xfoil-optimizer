@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>InitialParameters.qml</file>
+        <file>TargetValues.qml</file>
+        <file>FitnessParameters.qml</file>
+    </qresource>
+</RCC>
