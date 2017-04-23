@@ -136,9 +136,10 @@ if env['CC'] == 'cl':
         # env.Clean('.', '${TARGET}.pdb')
         # Need to clean .pdbs somehow! The above line doesn't work!
     else:
-        env.Append(CCFLAGS=Split('/Ot /Ob1 /O2 '))
+        env.Append(CCFLAGS=Split('/Ot /Ob1 /O2'))
 
     env.Append(CCFLAGS=Split('/EHsc /J /W3 /Gd'))
+    env.Append(LINKFLAGS=['/MACHINE:X64'])
     env.Append(CPPDEFINES=Split('WIN32 _WINDOWS'))
 
 #-------------- gcc-like (default) ---------
