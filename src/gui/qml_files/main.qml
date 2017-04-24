@@ -23,12 +23,21 @@ ApplicationWindow {
 
         InitialParameters{
             id: baseParametersBox
+            anchors.right: parent.right
+            anchors.rightMargin: 386
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 19
             anchors.leftMargin: 33
             anchors.topMargin: 7
         }
 
         TargetValues {
             id: targetParametersBox
+            anchors.left: parent.left
+            anchors.leftMargin: 397
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 19
+            anchors.rightMargin: 19
         }
     }
 
