@@ -33,3 +33,21 @@ HEADERS += \
     src/utility/time_manager.h \
     src/utility/utility.h \
     src/xfoil/simulation.h
+
+QMAKE_CXXFLAGS_RELEASE -= -O
+QMAKE_CXXFLAGS_RELEASE -= -O1
+QMAKE_CXXFLAGS_RELEASE -= -O2
+
+win64 { # For Windows
+  QMAKE_CXXFLAGS += -openmp
+  QMAKE_CXXFLAGS += -arch:AVX
+  QMAKE_CXXFLAGS += -D "_CRT_SECURE_NO_WARNINGS"
+  QMAKE_CXXFLAGS_RELEASE *= -O2
+}
+
+linux { # For Linux
+  QMAKE_CXXFLAGS += -fopenmp
+  QMAKE_LFLAGS += -fopenmp
+  QMAKE_CXXFLAGS += -mavx
+  QMAKE_CXXFLAGS_RELEASE *= -O3
+}

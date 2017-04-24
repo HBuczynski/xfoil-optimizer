@@ -33,13 +33,13 @@ ApplicationWindow {
     }
 
     Frame {
-        id: buttondFrame
+        id: buttonFrame
         x: 32
         width: 145
         height: 178
         anchors.top: parent.top
         anchors.topMargin: 18
-        anchors.right: frame1.left
+        anchors.right: parametersFrame.left
         anchors.rightMargin: 159
 
         Button {

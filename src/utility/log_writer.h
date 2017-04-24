@@ -10,7 +10,7 @@ class LogWriter
 public:
     ~LogWriter();
 	
-	static LogWriter& LogWriter::getInstance();
+    static LogWriter& getInstance();
 
 	bool initialize(std::string directoryName);
     void destroy();
