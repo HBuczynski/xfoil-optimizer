@@ -1,14 +1,14 @@
 TEMPLATE = app
-
+INCLUDEPATH += src
 QT += qml quick
 CONFIG += c++11
-
 SOURCES += \
     src/gui/view.cpp \
     src/model/model.cpp \
     src/utility/log_writer.cpp \
     src/utility/time_manager.cpp \
-    src/main.cpp
+    src/main.cpp \
+    src/tests/optimizer_tests.cpp
 
 RESOURCES += src/gui/qml_files/qml.qrc \
     src/gui/qml_files/qml.qrc
@@ -32,7 +32,10 @@ HEADERS += \
     src/utility/log_writer.h \
     src/utility/time_manager.h \
     src/utility/utility.h \
-    src/xfoil/simulation.h
+    src/xfoil/simulation.h \
+    src/optimizer/airfoil_optimizer.h \
+    src/optimizer/geometry.h \
+    src/tests/optimizer_tests.h
 
 QMAKE_CXXFLAGS_RELEASE -= -O
 QMAKE_CXXFLAGS_RELEASE -= -O1
