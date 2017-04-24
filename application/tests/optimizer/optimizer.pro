@@ -28,3 +28,5 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += tst_optimizertest.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
+
+INCLUDEPATH += ../../src
