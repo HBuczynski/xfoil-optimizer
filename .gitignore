@@ -35,3 +35,4 @@
 *.dblite
 build/*
 .vs/*
+*.pro.user
