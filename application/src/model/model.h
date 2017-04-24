@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "src/model/profile_parameters.h"
+#include "model/profile_parameters.h"
 
 class Model
 {

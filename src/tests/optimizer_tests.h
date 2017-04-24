@@ -1,4 +1,0 @@
-#ifndef OPTIMIZER_TESTS_H
-#define OPTIMIZER_TESTS_H
-
-#endif // OPTIMIZER_TESTS_H
