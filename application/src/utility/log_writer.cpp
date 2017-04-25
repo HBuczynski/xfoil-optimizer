@@ -99,7 +99,7 @@ void LogWriter::addInformationMessage(const char *message)
 
 void addErrorMessage(const std::string &message)
 {
-	addErrorMessage(message.c_str());
+    LogWriter::getInstance().addErrorMessage(message.c_str());
 }
 
 void LogWriter::addErrorMessage(const char *message)

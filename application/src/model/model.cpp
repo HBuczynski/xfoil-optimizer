@@ -1,4 +1,4 @@
-#include "src/model/model.h"
+#include "model/model.h"
 
 Model::Model()
 {

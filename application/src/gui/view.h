@@ -4,9 +4,9 @@
 #include <QQmlApplicationEngine>
 #include <QQmlComponent>
 
-#include "src/model/profile_parameters.h"
-#include "src/gui/gui_objects.h"
-#include "src/model/model.h"
+#include "model/profile_parameters.h"
+#include "gui/gui_objects.h"
+#include "model/model.h"
 
 class View : public QObject
 {

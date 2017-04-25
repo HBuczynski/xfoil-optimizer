@@ -33,6 +33,9 @@
 #*.vcxproj
 #*.vcxproj.filters
 *.dblite
-build/*
+application/build/*
 .vs/*
 *.pro.user
+*.user
+Makefile
+*.qmake.stash
