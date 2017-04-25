@@ -34,7 +34,9 @@ HEADERS += \
     src/utility/utility.h \
     src/xfoil/simulation.h \
     src/optimizer/airfoil_optimizer.h \
-    src/optimizer/geometry.h
+    src/optimizer/geometry.h \
+    src/utility/config.h \
+    src/xfoil/simulation_results.h
 
 QMAKE_CXXFLAGS_RELEASE -= -O
 QMAKE_CXXFLAGS_RELEASE -= -O1

@@ -1,6 +1,10 @@
 #pragma once
 #include "optimizer/geometry.h"
 
+//!  Interface class for various optimizers
+/*!
+  Provides an interface for model to control and display results of the optimization
+*/
 class AirfoilOptimizer
 {
 public:

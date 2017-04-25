@@ -4,14 +4,36 @@
 #include "optimizer/airfoil_optimizer.h"
 #include "optimizer/genetic_datatypes.h"
 #include "xfoil/simulation.h"
+#include "optimizer/geometry.h"
 
 
 
+//!  Class implementing genetic algorithm for optimization
+/*!
+  A more elaborate class description. [TODO]
+*/
 
 class GeneticOptimizer : public AirfoilOptimizer
 {
 
 public:
+    enum GAState;
+    GeneticOptimizer():
+        state_(NotInitialized)
+    {
+
+    }
+
+    void Initialize()
+    {
+
+    }
+
+    GAState GetState() const
+    {
+        return state_;
+    }
+
     enum GAState
     {
         NotInitialized,
@@ -21,12 +43,35 @@ public:
         OptimizationCompleteFinalGeneration
     };
 
-private:
-    class Genome
+    virtual void AddBaseGeometry(Geometry &geom)
     {
 
+    }
+
+    virtual void OptimizeStep()
+    {
+
+    }
+
+    virtual Geometry const GetTopGeometry(int place)
+    {
+        //TODO//
+        return baseGeometry_;
+    }
+
+    virtual double const GetProgress()
+    {
+        return 0.0;
+    }
+
+private:
+
+    class Genome
+    {
+    private:
+        Geometry currentGeom_;
     };
-    class GenomeScrambler //This might need retinking - maybe move to genome as it is genome specific...
+    class GenomeScrambler //This might need rethinking - maybe move to genome as it is genome specific...
     {
     public:
         virtual void Mutate(Genome &genome) = 0;
@@ -35,7 +80,7 @@ private:
     class DudScrambler: public GenomeScrambler
     {
     public:
-        virtual void Mutate(Genome const &genome) override
+        virtual void Mutate(Genome &genome) override
         {
 
         }
@@ -44,4 +89,14 @@ private:
             return Genome();
        }
     };
+
+    class FitnessCalculator
+    {
+
+    };
+    //Members//
+    GAState state_;
+    Geometry baseGeometry_;
+    std::vector<Genome> population_;
+    std::vector<Genome> elites_;
 };
