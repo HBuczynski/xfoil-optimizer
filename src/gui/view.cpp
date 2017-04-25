@@ -7,17 +7,15 @@ View::View(Model *model): model_(model),
                           componentMainWindow_(new QQmlComponent(&engine_,QUrl(QStringLiteral("qrc:/main.qml"))))
 {
     initializeGuiObjects();
-
     initializeModelViewConnection();
 }
 
 View::~View()
 {
     destroyGuiObjects();
-    delete componentMainWindow_;
 }
 
-const AviationProfileParameters View::getInitialProfileParameters()
+const AviationProfileParameters& View::getInitialProfileParameters()
 {
     return profileParameters_;
 }
@@ -32,13 +30,7 @@ void View::initializeGuiObjects()
     initializeBaseParametersLabels();
     initializeFitnessParametersLabels();
     initializeTargetValuesFields();
-
-    //initialize charts frame
-    guiObjects_.baseChartFrame.name = "baseChartFrame";
-    guiObjects_.baseChartFrame.object = guiObjects_.mainWindow->findChild<QObject *>(guiObjects_.baseChartFrame.name.c_str());
-
-    guiObjects_.optimizeChartFrame.name = "optimizeChartFrame";
-    guiObjects_.optimizeChartFrame.object = guiObjects_.mainWindow->findChild<QObject *>(guiObjects_.optimizeChartFrame.name.c_str());
+    initializeBusyIndicator();
 }
 
 void View::initializeButtons()
@@ -74,6 +66,22 @@ void View::initializeFitnessParametersLabels()
 
 }
 
+void View::initializeChartsFrames()
+{
+    //initialize charts frame
+    guiObjects_.baseChartFrame.name = "baseChartFrame";
+    guiObjects_.baseChartFrame.object = guiObjects_.mainWindow->findChild<QObject *>(guiObjects_.baseChartFrame.name.c_str());
+
+    guiObjects_.optimizeChartFrame.name = "optimizeChartFrame";
+    guiObjects_.optimizeChartFrame.object = guiObjects_.mainWindow->findChild<QObject *>(guiObjects_.optimizeChartFrame.name.c_str());
+}
+
+void View::initializeBusyIndicator()
+{
+    guiObjects_.busyIndicator.name = "busyIndicator";
+    guiObjects_.busyIndicator.object = guiObjects_.mainWindow->findChild<QObject*>(guiObjects_.busyIndicator.name.c_str());
+}
+
 void View::initializeModelViewConnection()
 {
 
@@ -81,5 +89,5 @@ void View::initializeModelViewConnection()
 
 void View::destroyGuiObjects()
 {
-
+    delete componentMainWindow_;
 }

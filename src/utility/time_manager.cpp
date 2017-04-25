@@ -7,16 +7,19 @@
 using namespace std::chrono;
 
 time_point<high_resolution_clock> TimeManager::timeStart_ = high_resolution_clock::now();
+
 //String containing boot time for directories created on initialization
 const std::string TimeManager::bootTime_ = TimeManager::getStringDateTime();
 
 TimeManager::TimeManager()
 {
+
 }
 
 
 TimeManager::~TimeManager()
 {
+
 }
 
 int TimeManager::getTimeSinceStart()

@@ -2,6 +2,7 @@ import QtQuick 2.4
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.0
 
+
 ApplicationWindow {
     id: mainWindow
     width: 1024
@@ -12,6 +13,9 @@ ApplicationWindow {
     maximumWidth: 1024
     maximumHeight: 768
     visible: true
+
+    property color bright: "#85878A"
+    property color dark: "#47494A"
 
     Frame {
         id: parametersFrame
@@ -54,6 +58,7 @@ ApplicationWindow {
         anchors.right: parametersFrame.left
         anchors.rightMargin: 159
 
+
         Button {
             id: button1
             x: 47
@@ -66,6 +71,18 @@ ApplicationWindow {
             anchors.horizontalCenter: parent.horizontalCenter
             checkable: false
             checked: false
+
+            property color backgroundColor: hovered ?  mouseArea1.pressed ? bright: dark
+                                                    :  mouseArea1.pressed ? bright: "black"
+
+            signal buttonClick(string name)
+
+            MouseArea {
+             id:mouseArea1
+             anchors.fill: leftButton1
+             onClicked: leftButton1.buttonClick("button1")
+            }
+
         }
 
         Button {
@@ -91,10 +108,13 @@ ApplicationWindow {
 
     BusyIndicator {
         id: busyIndicator
+        objectName: "busyIndicator"
         x: 835
         y: 601
         width: 88
         height: 92
+
+        running: false
     }
 
     FitnessParameters {

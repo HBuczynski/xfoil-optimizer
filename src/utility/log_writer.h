@@ -27,7 +27,6 @@ public:
 private:
 	LogWriter();
 	LogWriter(const LogWriter&) = delete;
-	LogWriter& operator=(const LogWriter&) = delete;
 
 	static LogWriter *pInstance_;
 

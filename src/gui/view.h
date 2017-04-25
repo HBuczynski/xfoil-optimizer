@@ -16,7 +16,7 @@ public:
     explicit View(Model *model);
 	~View();
 
-    const AviationProfileParameters getInitialProfileParameters();
+    const AviationProfileParameters& getInitialProfileParameters();
     void drawChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
 	
 private:
@@ -25,6 +25,8 @@ private:
     void initializeBaseParametersLabels();
     void initializeTargetValuesFields();
     void initializeFitnessParametersLabels();
+    void initializeChartsFrames();
+    void initializeBusyIndicator();
 
     void initializeModelViewConnection();
 	void destroyGuiObjects();
