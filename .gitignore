@@ -37,3 +37,5 @@ application/build/*
 .vs/*
 *.pro.user
 *.user
+Makefile
+*.qmake.stash
