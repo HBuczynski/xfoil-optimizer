@@ -7,8 +7,8 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    Model model;
-    View lolo;
+    Model *model = new Model;
+    View *view = new View(model);
 
     return app.exec();
 }

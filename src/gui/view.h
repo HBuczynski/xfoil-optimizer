@@ -1,29 +1,38 @@
 #pragma once
 
-#include <QObject>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlComponent>
 
 #include "src/model/profile_parameters.h"
 #include "src/gui/gui_objects.h"
 #include "src/model/model.h"
 
-class View
+class View : public QObject
 {
+    Q_OBJECT
+
 public:
-    View();
+    explicit View(Model *model);
 	~View();
 
-	AviationProfileParameters getInitialProfileParameters();
-	void drawChart(std::vector<double> dataX, std::vector<double> dataY);
+    const AviationProfileParameters getInitialProfileParameters();
+    void drawChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
 	
 private:
 	void initializeGuiObjects();
+    void initializeButtons();
+    void initializeBaseParametersLabels();
+    void initializeTargetValuesFields();
+    void initializeFitnessParametersLabels();
+
+    void initializeModelViewConnection();
 	void destroyGuiObjects();
 
-    QQmlApplicationEngine engine;
+    QQmlApplicationEngine engine_;
+    QQmlComponent *componentMainWindow_;
 
-	Model *model_;
+    Model *model_;
 	GuiObjects guiObjects_;
 	AviationProfileParameters profileParameters_;
 };

@@ -8,7 +8,9 @@ SOURCES += \
     src/utility/log_writer.cpp \
     src/utility/time_manager.cpp \
     src/main.cpp \
-    src/tests/optimizer_tests.cpp
+    src/tests/optimizer_tests.cpp \
+    src/utility/configuration_reader.cpp \
+    src/utility/utility.cpp
 
 RESOURCES += src/gui/qml_files/qml.qrc \
     src/gui/qml_files/qml.qrc

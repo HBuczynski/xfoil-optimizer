@@ -15,6 +15,7 @@ ApplicationWindow {
 
     Frame {
         id: parametersFrame
+        objectName: "parametersFrame"
         x: 336
         y: 18
         width: 643
@@ -23,6 +24,7 @@ ApplicationWindow {
 
         InitialParameters{
             id: baseParametersBox
+            objectName: "baseParametersBox"
             anchors.right: parent.right
             anchors.rightMargin: 386
             anchors.bottom: parent.bottom
@@ -43,6 +45,7 @@ ApplicationWindow {
 
     Frame {
         id: buttonFrame
+        objectName: "buttonFrame"
         x: 32
         width: 145
         height: 178
