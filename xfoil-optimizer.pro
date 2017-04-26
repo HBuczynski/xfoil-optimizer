@@ -2,4 +2,4 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     application \
-    application/tests/optimizer
+    application/tests/optimizer_tests
