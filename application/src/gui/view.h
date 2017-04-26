@@ -17,10 +17,13 @@ public:
 	~View();
 
     const AviationProfileParameters& getInitialProfileParameters();
+
+public slots:
     void drawChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
 	
 private:
 	void initializeGuiObjects();
+    void initializeMainWindow();
     void initializeButtons();
     void initializeBaseParametersLabels();
     void initializeTargetValuesFields();

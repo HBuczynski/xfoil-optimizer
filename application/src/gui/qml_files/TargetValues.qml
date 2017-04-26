@@ -29,6 +29,7 @@ GroupBox {
 
     TextField {
         id: textField1
+        objectName: "targetTextField1"
         x: 94
         y: 33
         width: 86
@@ -66,6 +67,7 @@ GroupBox {
 
     TextField {
         id: textField2
+        objectName: "targetTextField2"
         x: 94
         y: 73
         width: 86
@@ -75,6 +77,7 @@ GroupBox {
 
     TextField {
         id: textField3
+        objectName: "targetTextField3"
         x: 94
         y: 117
         width: 86

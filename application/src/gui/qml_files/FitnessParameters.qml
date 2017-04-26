@@ -67,6 +67,7 @@ GroupBox {
 
         Text {
             id: text6
+            objectName: "fitnessText1"
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             anchors.fill: parent
@@ -84,6 +85,7 @@ GroupBox {
 
         Text {
             id: text5
+            objectName: "fitnessText2"
             x: 20
             y: 0
             height: 24
@@ -106,6 +108,7 @@ GroupBox {
 
         Text {
             id: text4
+            objectName: "fitnessText3"
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             anchors.fill: parent

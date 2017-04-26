@@ -14,12 +14,10 @@ Model::~Model()
 
 void Model::setProfileData(AviationProfileParameters &data)
 {
+    const std::vector<double> dataX;
+    const std::vector<double> dataY;
 
-}
-
-void Model::updateChart(std::vector<double> dataX, std::vector<double> dataY)
-{
-
+    updateChart(dataX, dataY);
 }
 
 void Model::initializeLogger()

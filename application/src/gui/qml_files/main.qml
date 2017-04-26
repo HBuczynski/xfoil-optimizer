@@ -39,6 +39,7 @@ ApplicationWindow {
 
         TargetValues {
             id: targetParametersBox
+            objectName: "targetParametersBox"
             anchors.left: parent.left
             anchors.leftMargin: 397
             anchors.bottom: parent.bottom
@@ -61,6 +62,7 @@ ApplicationWindow {
 
         Button {
             id: button1
+            objectName: "button1"
             x: 47
             width: 120
             height: 40
@@ -71,22 +73,11 @@ ApplicationWindow {
             anchors.horizontalCenter: parent.horizontalCenter
             checkable: false
             checked: false
-
-            property color backgroundColor: hovered ?  mouseArea1.pressed ? bright: dark
-                                                    :  mouseArea1.pressed ? bright: "black"
-
-            signal buttonClick(string name)
-
-            MouseArea {
-             id:mouseArea1
-             anchors.fill: leftButton1
-             onClicked: leftButton1.buttonClick("button1")
-            }
-
         }
 
         Button {
             id: button2
+            objectName: "button2"
             x: 0
             y: 55
             text: qsTr("Optimizer Settings")
@@ -95,6 +86,7 @@ ApplicationWindow {
 
         Button {
             id: button3
+            objectName: "button3"
             x: 0
             y: 108
             width: 120
@@ -119,6 +111,7 @@ ApplicationWindow {
 
     FitnessParameters {
         id: fitnessBox
+        objectName: "fitnessParameters"
         x: 779
         y: 277
         width: 200
@@ -127,6 +120,7 @@ ApplicationWindow {
 
     Frame {
         id: frameBaseChart
+        objectName: "frameBaseChart"
         x: 32
         y: 295
         width: 728
@@ -135,6 +129,7 @@ ApplicationWindow {
 
     Frame {
         id: frameOptimizeChart
+        objectName: "frameOptimizeChart"
         x: 32
         y: 539
         width: 728
