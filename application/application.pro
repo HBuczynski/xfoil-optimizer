@@ -8,7 +8,8 @@ SOURCES += \
     src/model/model.cpp \
     src/utility/log_writer.cpp \
     src/utility/time_manager.cpp \
-    src/main.cpp
+    src/main.cpp \
+    src/utility/utility.cpp
 
 RESOURCES += src/gui/qml_files/qml.qrc \
     src/gui/qml_files/qml.qrc
