@@ -20,6 +20,7 @@ public:
 
 public slots:
     void drawChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
+    void buttonsClicked(QString);
 	
 private:
 	void initializeGuiObjects();

@@ -48,54 +48,8 @@ ApplicationWindow {
         }
     }
 
-    Frame {
-        id: buttonFrame
-        objectName: "buttonFrame"
-        x: 32
-        width: 145
-        height: 178
-        anchors.top: parent.top
-        anchors.topMargin: 18
-        anchors.right: parametersFrame.left
-        anchors.rightMargin: 159
+    Buttons {
 
-
-        Button {
-            id: button1
-            objectName: "button1"
-            x: 47
-            width: 120
-            height: 40
-            text: qsTr("Load Profile")
-            anchors.top: parent.top
-            anchors.topMargin: 6
-            anchors.horizontalCenterOffset: 0
-            anchors.horizontalCenter: parent.horizontalCenter
-            checkable: false
-            checked: false
-        }
-
-        Button {
-            id: button2
-            objectName: "button2"
-            x: 0
-            y: 55
-            text: qsTr("Optimizer Settings")
-            anchors.verticalCenter: parent.verticalCenter
-        }
-
-        Button {
-            id: button3
-            objectName: "button3"
-            x: 0
-            y: 108
-            width: 120
-            height: 40
-            text: qsTr("Run")
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 6
-        }
     }
 
     BusyIndicator {

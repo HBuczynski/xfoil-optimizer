@@ -27,6 +27,12 @@ void View::drawChart(const std::vector<double> & dataX, const std::vector<double
 
 }
 
+void View::buttonsClicked(QString name)
+{
+    //only for test
+    qDebug() << name;
+}
+
 void View::initializeGuiObjects()
 {
     try
@@ -181,7 +187,12 @@ void View::initializeBusyIndicator()
 
 void View::initializeModelViewConnection()
 {
+    //connect model with view
     QObject::connect(model_, SIGNAL(updateChart(const std::vector<double> &,const std::vector<double> &)), this, SLOT(drawChart(const std::vector<double> &,const std::vector<double> &)));
+
+    //initialize connection with buttons
+    for(int i=0; i<guiObjects_.buttonsCount; ++i)
+        QObject::connect(guiObjects_.settingsButtons.at(i), SIGNAL(buttonClick(QString)), this,  SLOT(buttonsClicked(QString)));
 }
 
 void View::destroyGuiObjects()
