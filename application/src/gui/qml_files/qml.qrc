@@ -5,5 +5,7 @@
         <file>TargetValues.qml</file>
         <file>FitnessParameters.qml</file>
         <file>Buttons.qml</file>
+        <file>BasePlot.qml</file>
+        <file>OptimizedPlot.qml</file>
     </qresource>
 </RCC>

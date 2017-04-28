@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     Model *model = new Model;
     View *view = new View(model);

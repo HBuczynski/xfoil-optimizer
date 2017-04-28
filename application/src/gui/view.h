@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QGuiApplication>
+#include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlComponent>
 

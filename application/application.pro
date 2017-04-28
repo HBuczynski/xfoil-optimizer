@@ -1,7 +1,10 @@
 TEMPLATE = app
 
 INCLUDEPATH += src
-QT += qml quick
+QT += qml quick core gui
+QT += charts
+
+
 CONFIG += c++11
 SOURCES += \
     src/gui/view.cpp \

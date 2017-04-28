@@ -20,10 +20,14 @@ ApplicationWindow {
     Frame {
         id: parametersFrame
         objectName: "parametersFrame"
-        x: 336
-        y: 18
-        width: 643
-        height: 243
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 507
+        anchors.top: parent.top
+        anchors.topMargin: 18
+        anchors.right: parent.right
+        anchors.rightMargin: 45
+        anchors.left: parent.left
+        anchors.leftMargin: 336
         spacing: 3
 
         InitialParameters{
@@ -55,50 +59,32 @@ ApplicationWindow {
     BusyIndicator {
         id: busyIndicator
         objectName: "busyIndicator"
-        x: 835
-        y: 601
+        x: 855
+        y: 338
         width: 88
         height: 92
 
-        running: false
+        running: true
     }
 
     FitnessParameters {
         id: fitnessBox
         objectName: "fitnessParameters"
-        x: 779
-        y: 277
+        x: 799
+        y: 539
         width: 200
         height: 220
-    }
-
-    Frame {
-        id: frameBaseChart
-        objectName: "frameBaseChart"
-        x: 32
-        y: 295
-        width: 728
-        height: 202
-    }
-
-    Frame {
-        id: frameOptimizeChart
-        objectName: "frameOptimizeChart"
-        x: 32
-        y: 539
-        width: 728
-        height: 203
     }
 
     Label {
         id: label1
         text: qsTr("BASE PROFILE")
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 479
+        anchors.bottomMargin: 501
         anchors.left: parent.left
         anchors.leftMargin: 32
         anchors.top: parent.top
-        anchors.topMargin: 273
+        anchors.topMargin: 251
     }
 
     Label {
@@ -110,6 +96,34 @@ ApplicationWindow {
         anchors.bottomMargin: 235
         anchors.left: parent.left
         anchors.leftMargin: 32
+    }
+
+    Rectangle {
+        id: rectangle1
+        x: 32
+        y: 280
+        width: 728
+        height: 220
+        color: "#ffffff"
+        radius: 13
+        border.width: 4
+
+        BasePlot {
+
+        }
+    }
+
+    Rectangle {
+        id: rectangle2
+        x: 32
+        y: 539
+        width: 728
+        height: 220
+        color: "#ffffff"
+        radius: 13
+        border.width: 4
+        OptimizedPlot {
+        }
     }
 }
 
