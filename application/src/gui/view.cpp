@@ -14,7 +14,7 @@ View::View(Model *model): model_(model),
 
 View::~View()
 {
-    destroyGuiObjects();
+
 }
 
 const AviationProfileParameters& View::getInitialProfileParameters()
@@ -31,6 +31,11 @@ void View::buttonsClicked(QString name)
 {
     //only for test
     qDebug() << name;
+}
+
+void View::getFitnessParametersLabel(AviationProfileParameters data)
+{
+
 }
 
 void View::initializeGuiObjects()
@@ -189,13 +194,11 @@ void View::initializeModelViewConnection()
 {
     //connect model with view
     QObject::connect(model_, SIGNAL(updateChart(const std::vector<double> &,const std::vector<double> &)), this, SLOT(drawChart(const std::vector<double> &,const std::vector<double> &)));
+    QObject::connect(model_, SIGNAL(setFitnessParameters(AviationProfileParameters)), this, SLOT(getFitnessParametersLabel(AviationProfileParameters)));
+    QObject::connect(this, SIGNAL(setBaseProfileVlues(AviationProfileParameters)), model_, SLOT(getBaseProfileValues(AviationProfileParameters)));
+    QObject::connect(this, SIGNAL(setTargetProfileValues(AviationProfileParameters)), model_, SLOT(getTargetProfileValues(AviationProfileParameters)));
 
     //initialize connection with buttons
     for(int i=0; i<guiObjects_.buttonsCount; ++i)
         QObject::connect(guiObjects_.settingsButtons.at(i), SIGNAL(buttonClick(QString)), this,  SLOT(buttonsClicked(QString)));
-}
-
-void View::destroyGuiObjects()
-{
-    delete componentMainWindow_;
 }

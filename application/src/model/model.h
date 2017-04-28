@@ -6,9 +6,6 @@
 #include "utility/log_writer.h"
 #include "model/profile_parameters.h"
 
-//typedef const std::vector<double> std::vector<double> &;
-
-
 class Model : public QObject
 {
     Q_OBJECT
@@ -17,16 +14,19 @@ public:
 	Model();
 	~Model();
 
-    void setProfileData(AviationProfileParameters &data);
-
 signals:
     void updateChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
+    void setFitnessParameters(AviationProfileParameters data);
+
+public slots:
+    void getTargetProfileValues(AviationProfileParameters data);
+    void getBaseProfileValues(AviationProfileParameters data);
 
 private:
 	void initializeLogger();
-	void initializeConfigurationReader();
+    void initializeConfigurationReader();
 
     AviationProfileParameters baseProfileData_;
+    AviationProfileParameters targetProfileData_;
     LogWriter *logger_;
-
 };
