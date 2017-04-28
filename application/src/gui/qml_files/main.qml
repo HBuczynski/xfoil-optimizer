@@ -71,58 +71,79 @@ ApplicationWindow {
         id: fitnessBox
         objectName: "fitnessParameters"
         x: 799
-        y: 539
+        y: 519
         width: 200
         height: 220
     }
 
-    Label {
-        id: label1
-        text: qsTr("BASE PROFILE")
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 501
-        anchors.left: parent.left
-        anchors.leftMargin: 32
-        anchors.top: parent.top
-        anchors.topMargin: 251
-    }
-
-    Label {
-        id: label2
-        text: qsTr("OPTIMIZED PROFILE")
-        anchors.top: parent.top
-        anchors.topMargin: 517
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 235
-        anchors.left: parent.left
-        anchors.leftMargin: 32
-    }
-
     Rectangle {
-        id: rectangle1
-        x: 32
-        y: 280
-        width: 728
-        height: 220
-        color: "#ffffff"
+        id: frameBaseChart
+        objectName: "frameBaseChart"
+        color: "#CED1D2"
         radius: 13
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 275
+        anchors.top: parent.top
+        anchors.topMargin: 280
+        anchors.right: parent.right
+        anchors.rightMargin: 264
+        anchors.left: parent.left
+        anchors.leftMargin: 32
         border.width: 4
 
         BasePlot {
 
         }
+
+        Label {
+            id: label1
+            text: qsTr("BASE PROFILE")
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 186
+            anchors.right: parent.right
+            anchors.rightMargin: 589
+            anchors.left: parent.left
+            anchors.leftMargin: 15
+            anchors.top: parent.top
+            anchors.topMargin: 13
+            font.pointSize: 10
+            font.bold: true
+        }
     }
 
     Rectangle {
-        id: rectangle2
-        x: 32
-        y: 539
-        width: 728
-        height: 220
-        color: "#ffffff"
+        id: frameOptimizeChart
+        objectName: "frameOptimizeChart"
+        color: "#CED1D2"
         radius: 13
+        anchors.top: parent.top
+        anchors.topMargin: 517
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 29
+        anchors.right: parent.right
+        anchors.rightMargin: 264
+        anchors.left: parent.left
+        anchors.leftMargin: 32
         border.width: 4
+
         OptimizedPlot {
+
+        }
+
+        Label {
+            id: label2
+            text: qsTr("OPTIMIZED PROFILE")
+            anchors.right: parent.right
+            anchors.rightMargin: 534
+            anchors.left: parent.left
+            anchors.leftMargin: 16
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 186
+            font.bold: true
+            font.pointSize: 10
+            anchors.top: parent.top
+            anchors.topMargin: 13
+
         }
     }
 }

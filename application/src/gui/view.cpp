@@ -52,7 +52,7 @@ void View::initializeGuiObjects()
     }
     catch(const ExceptionHandler &ex)
     {
-        //TO DO: save information and end program to logger
+        //TO DO: save information to logger and end program
         qDebug() << ex.e.c_str();   //only for tests
     }
 }
@@ -173,6 +173,7 @@ void View::initializeChartsFrames()
     //initialize charts frame
     guiObjects_.baseChartFrame.name = "frameBaseChart";
     guiObjects_.baseChartFrame.object = guiObjects_.mainWindow->findChild<QObject *>(guiObjects_.baseChartFrame.name.c_str());
+
     if(!guiObjects_.baseChartFrame.object)
         throw ExceptionHandler("Gui object - " + guiObjects_.baseChartFrame.name + " didn't initialize.");
 
