@@ -35,7 +35,7 @@
 *.dblite
 application/build/*
 .vs/*
-*.pro.user
+*.pro.user*
 *.user
 Makefile
 *.qmake.stash
