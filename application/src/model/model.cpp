@@ -1,10 +1,13 @@
 #include "model/model.h"
 
+#include <QDebug>
+
 Model::Model()
 {
     initializeLogger();
 
     initializeConfigurationReader();
+
 }
 
 Model::~Model()
@@ -12,14 +15,14 @@ Model::~Model()
 
 }
 
-void Model::setProfileData(AviationProfileParameters &data)
+void Model::getTargetProfileValues(AviationProfileParameters data)
 {
-
+    targetProfileData_  = data;
 }
 
-void Model::updateChart(std::vector<double> dataX, std::vector<double> dataY)
+void Model::getBaseProfileValues(AviationProfileParameters data)
 {
-
+    baseProfileData_ = data;
 }
 
 void Model::initializeLogger()

@@ -4,5 +4,6 @@
         <file>InitialParameters.qml</file>
         <file>TargetValues.qml</file>
         <file>FitnessParameters.qml</file>
+        <file>Buttons.qml</file>
     </qresource>
 </RCC>

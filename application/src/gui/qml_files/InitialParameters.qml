@@ -72,6 +72,7 @@ GroupBox {
 
         Text {
             id: text6
+            objectName: "baseParamText1"
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             anchors.fill: parent
@@ -91,6 +92,7 @@ GroupBox {
 
         Text {
             id: text4
+            objectName: "baseParamText2"
             anchors.rightMargin: 0
             anchors.bottomMargin: 0
             anchors.leftMargin: 0
@@ -111,6 +113,7 @@ GroupBox {
         color: "#e8e9ee"
         Text {
             id: text5
+            objectName: "baseParamText3"
             anchors.fill: parent
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
@@ -121,6 +124,4 @@ GroupBox {
             anchors.bottomMargin: 2
         }
     }
-
-
 }
