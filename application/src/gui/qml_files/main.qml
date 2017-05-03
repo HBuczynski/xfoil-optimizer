@@ -63,7 +63,6 @@ ApplicationWindow {
         y: 338
         width: 88
         height: 92
-
         running: true
     }
 
@@ -143,7 +142,6 @@ ApplicationWindow {
             font.pointSize: 10
             anchors.top: parent.top
             anchors.topMargin: 13
-
         }
     }
 }

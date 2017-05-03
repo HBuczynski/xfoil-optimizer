@@ -21,6 +21,9 @@ struct GuiObjects
     Component optimizeChartFrame;
     Component busyIndicator;
 
+    QObject* basePlot;
+    QObject* optimizedPlot;
+
     std::vector<QObject*> settingsButtons;
     std::vector<QObject*> baseParameters;
     std::vector<QObject*> targetValues;

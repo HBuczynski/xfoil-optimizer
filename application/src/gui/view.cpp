@@ -10,6 +10,7 @@ View::View(Model *model): model_(model),
 {
     initializeGuiObjects();
     initializeModelViewConnection();
+
 }
 
 View::~View()
@@ -173,14 +174,25 @@ void View::initializeChartsFrames()
     //initialize charts frame
     guiObjects_.baseChartFrame.name = "frameBaseChart";
     guiObjects_.baseChartFrame.object = guiObjects_.mainWindow->findChild<QObject *>(guiObjects_.baseChartFrame.name.c_str());
-
     if(!guiObjects_.baseChartFrame.object)
         throw ExceptionHandler("Gui object - " + guiObjects_.baseChartFrame.name + " didn't initialize.");
+
+    guiObjects_.basePlot = guiObjects_.baseChartFrame.object->findChild<QObject *>("basePlot");
+    if(!guiObjects_.basePlot)
+        throw ExceptionHandler("Gui object - basePlot didn't initialize.");
+
 
     guiObjects_.optimizeChartFrame.name = "frameOptimizeChart";
     guiObjects_.optimizeChartFrame.object = guiObjects_.mainWindow->findChild<QObject *>(guiObjects_.optimizeChartFrame.name.c_str());
     if(!guiObjects_.baseChartFrame.object)
         throw ExceptionHandler("Gui object - " + guiObjects_.baseChartFrame.name + " didn't initialize.");
+
+    guiObjects_.optimizedPlot = guiObjects_.optimizeChartFrame.object->findChild<QObject *>("optimizedPlot");
+    if(!guiObjects_.optimizedPlot)
+        throw ExceptionHandler("Gui object - optimizedPlot didn't initialize.");
+
+
+//    guiObjects_.optimizedPlot-
 }
 
 void View::initializeBusyIndicator()
