@@ -11,6 +11,17 @@ View::View(Model *model): model_(model),
     initializeGuiObjects();
     initializeModelViewConnection();
 
+    //only for tests
+    std::vector<double> dataX;
+    dataX.push_back(1);
+    dataX.push_back(14);
+
+    std::vector<double> dataY;
+    dataY.push_back(3);
+    dataY.push_back(3);
+
+    model_->updateBaseChart(dataX, dataY);
+    model_->updateOptimizedChart(dataX, dataY);
 }
 
 View::~View()
@@ -23,9 +34,33 @@ const AviationProfileParameters& View::getInitialProfileParameters()
     return profileParameters_;
 }
 
-void View::drawChart(const std::vector<double> & dataX, const std::vector<double> & dataY)
+void View::drawBaseChart(const std::vector<double> & dataX, const std::vector<double> & dataY)
 {
+    QVariantList x, y;
 
+    for(int i=0; i<dataX.size(); ++i)
+    {
+        x << dataX[i];
+        y << dataY[i];
+    }
+
+    QMetaObject::invokeMethod(guiObjects_.basePlot, "addData",
+                        Q_ARG(QVariant, x), Q_ARG(QVariant, y));
+
+}
+
+void View::drawOptimizedChart(const std::vector<double> &dataX, const std::vector<double> &dataY)
+{
+    QVariantList x, y;
+
+    for(int i=0; i<dataX.size(); ++i)
+    {
+        x << dataX[i];
+        y << dataY[i];
+    }
+
+    QMetaObject::invokeMethod(guiObjects_.optimizedPlot, "addData",
+                        Q_ARG(QVariant, x), Q_ARG(QVariant, y));
 }
 
 void View::buttonsClicked(QString name)
@@ -190,9 +225,6 @@ void View::initializeChartsFrames()
     guiObjects_.optimizedPlot = guiObjects_.optimizeChartFrame.object->findChild<QObject *>("optimizedPlot");
     if(!guiObjects_.optimizedPlot)
         throw ExceptionHandler("Gui object - optimizedPlot didn't initialize.");
-
-
-//    guiObjects_.optimizedPlot-
 }
 
 void View::initializeBusyIndicator()
@@ -206,7 +238,10 @@ void View::initializeBusyIndicator()
 void View::initializeModelViewConnection()
 {
     //connect model with view
-    QObject::connect(model_, SIGNAL(updateChart(const std::vector<double> &,const std::vector<double> &)), this, SLOT(drawChart(const std::vector<double> &,const std::vector<double> &)));
+    QObject::connect(model_, SIGNAL(updateBaseChart(const std::vector<double> &,const std::vector<double> &)),
+                     this, SLOT(drawBaseChart(const std::vector<double> &,const std::vector<double> &)));
+    QObject::connect(model_, SIGNAL(updateOptimizedChart(const std::vector<double> &,const std::vector<double> &)),
+                     this, SLOT(drawOptimizedChart(const std::vector<double> &,const std::vector<double> &)));
     QObject::connect(model_, SIGNAL(setFitnessParameters(AviationProfileParameters)), this, SLOT(getFitnessParametersLabel(AviationProfileParameters)));
     QObject::connect(this, SIGNAL(setBaseProfileVlues(AviationProfileParameters)), model_, SLOT(getBaseProfileValues(AviationProfileParameters)));
     QObject::connect(this, SIGNAL(setTargetProfileValues(AviationProfileParameters)), model_, SLOT(getTargetProfileValues(AviationProfileParameters)));

@@ -15,7 +15,8 @@ public:
 	~Model();
 
 signals:
-    void updateChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
+    void updateBaseChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
+    void updateOptimizedChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
     void setFitnessParameters(AviationProfileParameters data);
 
 public slots:

@@ -23,7 +23,8 @@ signals:
     void setTargetProfileValues(AviationProfileParameters data);
 
 public slots:
-    void drawChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
+    void drawBaseChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
+    void drawOptimizedChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
     void buttonsClicked(QString);
     void getFitnessParametersLabel(AviationProfileParameters data);
 	

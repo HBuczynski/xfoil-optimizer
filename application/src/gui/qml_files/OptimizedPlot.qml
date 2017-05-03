@@ -8,15 +8,31 @@ ChartView {
     backgroundColor: "#CED1D2"
     legend.visible: false
 
-    SplineSeries {
+    ValueAxis {
+        id: axisX
+        min: 0
+        max: 10
+        tickCount: 5
+    }
 
-//        XYPoint { x: 0; y: 0.0 }
-//        XYPoint { x: 1.1; y: 3.2 }
-//        XYPoint { x: 1.9; y: 2.4 }
-//        XYPoint { x: 2.1; y: 2.1 }
-//        XYPoint { x: 2.9; y: 2.6 }
-//        XYPoint { x: 3.4; y: 2.3 }
-//        XYPoint { x: 4.1; y: 3.1 }
+    ValueAxis {
+         id: axisY
+         min: -5
+         max: 15
+     }
+
+    SplineSeries {
+        id: series
+        axisX: axisX
+        axisY: axisY
+
+    }
+
+    function addData(x, y)
+    {
+        for (var i = 0; i <= x.length; i++) {
+            series.append(x[i], y[i]);
+        }
     }
 }
 
