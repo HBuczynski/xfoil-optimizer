@@ -11,14 +11,13 @@ ChartView {
     ValueAxis {
         id: axisX
         min: 0
-        max: 10
-        tickCount: 5
+        max: 1
     }
 
     ValueAxis {
          id: axisY
-         min: -5
-         max: 15
+         min: 0
+         max: 1
      }
 
     SplineSeries {

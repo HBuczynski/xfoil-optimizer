@@ -16,8 +16,6 @@ public:
     explicit View(Model *model);
 	~View();
 
-    const AviationProfileParameters& getInitialProfileParameters();
-
 signals:
     void setBaseProfileVlues(AviationProfileParameters data);
     void setTargetProfileValues(AviationProfileParameters data);

@@ -13,12 +13,19 @@ View::View(Model *model): model_(model),
 
     //only for tests
     std::vector<double> dataX;
-    dataX.push_back(1);
-    dataX.push_back(14);
+    dataX.push_back(0.15);
+    dataX.push_back(0.3);
+    dataX.push_back(0.74);
+    dataX.push_back(0.3);
+    dataX.push_back(0.15);
+
 
     std::vector<double> dataY;
-    dataY.push_back(3);
-    dataY.push_back(3);
+    dataY.push_back(0.45);
+    dataY.push_back(0.6);
+    dataY.push_back(0.24);
+    dataY.push_back(0.3);
+    dataY.push_back(0.45);
 
     model_->updateBaseChart(dataX, dataY);
     model_->updateOptimizedChart(dataX, dataY);
@@ -27,11 +34,6 @@ View::View(Model *model): model_(model),
 View::~View()
 {
 
-}
-
-const AviationProfileParameters& View::getInitialProfileParameters()
-{
-    return profileParameters_;
 }
 
 void View::drawBaseChart(const std::vector<double> & dataX, const std::vector<double> & dataY)
@@ -44,8 +46,7 @@ void View::drawBaseChart(const std::vector<double> & dataX, const std::vector<do
         y << dataY[i];
     }
 
-    QMetaObject::invokeMethod(guiObjects_.basePlot, "addData",
-                        Q_ARG(QVariant, x), Q_ARG(QVariant, y));
+    QMetaObject::invokeMethod(guiObjects_.basePlot, "addData", Q_ARG(QVariant, x), Q_ARG(QVariant, y));
 
 }
 
@@ -59,8 +60,7 @@ void View::drawOptimizedChart(const std::vector<double> &dataX, const std::vecto
         y << dataY[i];
     }
 
-    QMetaObject::invokeMethod(guiObjects_.optimizedPlot, "addData",
-                        Q_ARG(QVariant, x), Q_ARG(QVariant, y));
+    QMetaObject::invokeMethod(guiObjects_.optimizedPlot, "addData", Q_ARG(QVariant, x), Q_ARG(QVariant, y));
 }
 
 void View::buttonsClicked(QString name)
