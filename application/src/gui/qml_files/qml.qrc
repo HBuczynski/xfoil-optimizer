@@ -7,5 +7,7 @@
         <file>Buttons.qml</file>
         <file>BasePlot.qml</file>
         <file>OptimizedPlot.qml</file>
+        <file>OptimizerSettings.qml</file>
+        <file>FileDialog.qml</file>
     </qresource>
 </RCC>

@@ -5,8 +5,9 @@
 #include <QQmlComponent>
 
 #include "model/profile_parameters.h"
-#include "gui/gui_objects.h"
 #include "model/model.h"
+#include "gui/settings_dialog.h"
+#include "gui/file_dialog.h"
 
 class View : public QObject
 {
@@ -36,14 +37,19 @@ private:
     void initializeFitnessParametersLabels();
     void initializeChartsFrames();
     void initializeBusyIndicator();
+    void initializeOptimizerSettings();
+    void initializeFileDialog();
 
     void initializeModelViewConnection();
 
     QQmlApplicationEngine engine_;
     QQmlComponent *componentMainWindow_;
 
+    SettingsDialog settingDialog_;
+    FileDialog fileDialog_;
+
     Model *model_;
-	GuiObjects guiObjects_;
+    MainWindowObjects guiObjects_;
     AviationProfileParameters baseParameters_;
     AviationProfileParameters targetParameters_;
 };

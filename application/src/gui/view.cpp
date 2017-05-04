@@ -71,11 +71,11 @@ void View::buttonsClicked(QString name)
     {
         //TO DO
         //add new window to search and set base profile
+        fileDialog_.showDialog();
     }
     else if(name == "button2")
     {
-        //TO DO
-        //add new optimizer settings - qDialog
+         settingDialog_.showDialog();
     }
     else if(name == "button3")
     {
@@ -112,6 +112,7 @@ void View::initializeGuiObjects()
         initializeTargetValuesFields();
         initializeChartsFrames();
         initializeBusyIndicator();
+        initializeOptimizerSettings();
     }
     catch(const ExceptionHandler &ex)
     {
@@ -260,6 +261,16 @@ void View::initializeBusyIndicator()
     guiObjects_.busyIndicator.object = guiObjects_.mainWindow->findChild<QObject*>(guiObjects_.busyIndicator.name.c_str());
     if(!guiObjects_.busyIndicator.object)
         throw ExceptionHandler("Gui object - " + guiObjects_.busyIndicator.name + " didn't initialize.");
+}
+
+void View::initializeOptimizerSettings()
+{
+    settingDialog_.initialize(engine_);
+}
+
+void View::initializeFileDialog()
+{
+    fileDialog_.initialize(engine_);
 }
 
 void View::initializeModelViewConnection()

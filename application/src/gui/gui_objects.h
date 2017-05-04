@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include <QDialog>
 #include <vector>
 
 struct Component
@@ -9,7 +10,7 @@ struct Component
     std::string name;
 };
 
-struct GuiObjects
+struct MainWindowObjects
 {
     QObject* mainWindow;
     Component settingsButtonsRoot;
@@ -29,9 +30,16 @@ struct GuiObjects
     std::vector<QObject*> targetValues;
     std::vector<QObject*> fitnessValues;
 
+    QObject* optimizerSettings;
+
     const int buttonsCount = 3;
     const int parametersLabelCount = 3;
 
     bool SET_TARGET = false;
     bool SET_BASE = false;
+};
+
+struct SettingsObjects
+{
+    QObject* settingsWindow;
 };
