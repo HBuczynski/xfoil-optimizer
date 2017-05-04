@@ -31,4 +31,7 @@ struct GuiObjects
 
     const int buttonsCount = 3;
     const int parametersLabelCount = 3;
+
+    bool SET_TARGET = false;
+    bool SET_BASE = false;
 };

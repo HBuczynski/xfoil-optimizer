@@ -19,7 +19,7 @@ View::View(Model *model): model_(model),
     dataX.push_back(0.3);
     dataX.push_back(0.15);
 
-
+    //only for tests
     std::vector<double> dataY;
     dataY.push_back(0.45);
     dataY.push_back(0.6);
@@ -47,7 +47,6 @@ void View::drawBaseChart(const std::vector<double> & dataX, const std::vector<do
     }
 
     QMetaObject::invokeMethod(guiObjects_.basePlot, "addData", Q_ARG(QVariant, x), Q_ARG(QVariant, y));
-
 }
 
 void View::drawOptimizedChart(const std::vector<double> &dataX, const std::vector<double> &dataY)
@@ -67,11 +66,39 @@ void View::buttonsClicked(QString name)
 {
     //only for test
     qDebug() << name;
+
+    if(name == "button1")
+    {
+        //TO DO
+        //add new window to search and set base profile
+    }
+    else if(name == "button2")
+    {
+        //TO DO
+        //add new optimizer settings - qDialog
+    }
+    else if(name == "button3")
+    {
+        //TO DO
+        // check target values
+        // zabezpieczenie przed ponownym kliknięciem przycisku RUN ??
+
+        if(guiObjects_.SET_BASE && guiObjects_.SET_TARGET)
+        {
+            emit setBaseProfileValues(baseParameters_);
+            emit setTargetProfileValues(targetParameters_);
+
+            //TO DO
+            //run optimization
+        }
+    }
 }
 
 void View::getFitnessParametersLabel(AviationProfileParameters data)
 {
-
+   guiObjects_.fitnessValues.at(0)->setProperty("text", data.alfa);
+   guiObjects_.fitnessValues.at(1)->setProperty("text", data.clMax);
+   guiObjects_.fitnessValues.at(2)->setProperty("text", data.thickness);
 }
 
 void View::initializeGuiObjects()
@@ -243,7 +270,7 @@ void View::initializeModelViewConnection()
     QObject::connect(model_, SIGNAL(updateOptimizedChart(const std::vector<double> &,const std::vector<double> &)),
                      this, SLOT(drawOptimizedChart(const std::vector<double> &,const std::vector<double> &)));
     QObject::connect(model_, SIGNAL(setFitnessParameters(AviationProfileParameters)), this, SLOT(getFitnessParametersLabel(AviationProfileParameters)));
-    QObject::connect(this, SIGNAL(setBaseProfileVlues(AviationProfileParameters)), model_, SLOT(getBaseProfileValues(AviationProfileParameters)));
+    QObject::connect(this, SIGNAL(setBaseProfileValues(AviationProfileParameters)), model_, SLOT(getBaseProfileValues(AviationProfileParameters)));
     QObject::connect(this, SIGNAL(setTargetProfileValues(AviationProfileParameters)), model_, SLOT(getTargetProfileValues(AviationProfileParameters)));
 
     //initialize connection with buttons

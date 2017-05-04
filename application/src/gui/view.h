@@ -17,7 +17,7 @@ public:
 	~View();
 
 signals:
-    void setBaseProfileVlues(AviationProfileParameters data);
+    void setBaseProfileValues(AviationProfileParameters data);
     void setTargetProfileValues(AviationProfileParameters data);
 
 public slots:
@@ -25,6 +25,7 @@ public slots:
     void drawOptimizedChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
     void buttonsClicked(QString);
     void getFitnessParametersLabel(AviationProfileParameters data);
+
 	
 private:
 	void initializeGuiObjects();
@@ -43,5 +44,6 @@ private:
 
     Model *model_;
 	GuiObjects guiObjects_;
-	AviationProfileParameters profileParameters_;
+    AviationProfileParameters baseParameters_;
+    AviationProfileParameters targetParameters_;
 };

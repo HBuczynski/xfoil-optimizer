@@ -8,4 +8,3 @@ struct AviationProfileParameters
 
 };
 
-//Q_DECLARE_METATYPE(AviationProfileParameters);

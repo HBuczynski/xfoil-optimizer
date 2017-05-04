@@ -5,9 +5,7 @@
 Model::Model()
 {
     initializeLogger();
-
     initializeConfigurationReader();
-
 }
 
 Model::~Model()
