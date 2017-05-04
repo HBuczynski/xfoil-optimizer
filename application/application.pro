@@ -14,7 +14,8 @@ SOURCES += \
     src/main.cpp \
     src/utility/utility.cpp \
     src/gui/settings_dialog.cpp \
-    src/gui/file_dialog.cpp
+    src/gui/file_dialog.cpp \
+    src/xfoil/simulation.cpp
 
 RESOURCES += src/gui/qml_files/qml.qrc \
     src/gui/qml_files/qml.qrc
