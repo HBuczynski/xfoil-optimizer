@@ -43,6 +43,9 @@ struct MainWindowObjects
 struct SettingsObjects
 {
     QObject* settingsWindow;
+    QObject* windowFrame;
+    QObject* applyButton;
+    QObject* cancelButton;
 };
 
 struct Plot

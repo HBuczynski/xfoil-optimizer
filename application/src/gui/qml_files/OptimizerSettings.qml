@@ -9,6 +9,7 @@ Dialog {
     title: "Optimizer settings"
 
     contentItem: Rectangle {
+        objectName: "frame"
         color: "white"
         implicitWidth: 300
         implicitHeight: 400
@@ -58,7 +59,7 @@ Dialog {
                 id:cancelButtonArea
                 anchors.top: parent.top
                 anchors.fill: cancelButton
-                onClicked: rcancelButton.buttonClick("cancelButton")
+                onClicked: cancelButton.buttonClick("cancelButton")
             }
 
             Text {

@@ -3,19 +3,26 @@
 
 #include <QQmlApplicationEngine>
 #include <QQmlComponent>
+#include <QObject>
 
 #include "gui/gui_objects.h"
 
-class SettingsDialog
+class SettingsDialog : QObject
 {
+    Q_OBJECT
+
 public:
     SettingsDialog();
     void initialize(QQmlApplicationEngine &engine);
     void showDialog();
 
-private:
-    QQmlComponent *dialogComponent_;
+public slots:
+    void buttonsClicked(QString name);
 
+private:
+    void buttonsConnection();
+
+    QQmlComponent *dialogComponent_;
     SettingsObjects guiObjects_;
 };
 

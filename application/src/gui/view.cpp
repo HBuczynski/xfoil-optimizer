@@ -29,6 +29,7 @@ View::View(Model *model): model_(model),
     dataY.push_back(0.3);
     dataY.push_back(0.45);
 
+    //only for tests
     model_->updateBaseChart(dataX, dataY);
     model_->updateOptimizedChart(dataX, dataY);
     model_->updateGeneticChart(dataX, dataY);
