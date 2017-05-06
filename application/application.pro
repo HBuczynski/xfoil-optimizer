@@ -13,8 +13,7 @@ SOURCES += \
     src/utility/time_manager.cpp \
     src/main.cpp \
     src/utility/utility.cpp \
-    src/gui/settings_dialog.cpp \
-    src/gui/file_dialog.cpp
+    src/gui/settings_dialog.cpp
 
 RESOURCES += src/gui/qml_files/qml.qrc \
     src/gui/qml_files/qml.qrc
@@ -43,8 +42,7 @@ HEADERS += \
     src/optimizer/geometry.h \
     src/utility/config.h \
     src/xfoil/simulation_results.h \
-    src/gui/settings_dialog.h \
-    src/gui/file_dialog.h
+    src/gui/settings_dialog.h
 
 QMAKE_CXXFLAGS_RELEASE -= -O
 QMAKE_CXXFLAGS_RELEASE -= -O1

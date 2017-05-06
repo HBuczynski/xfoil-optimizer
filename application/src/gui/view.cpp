@@ -1,6 +1,8 @@
 #include "view.h"
 
 #include <QDebug>
+#include <QFileDialog>
+
 #include <sstream>
 
 #include "utility/utility.h"
@@ -71,7 +73,8 @@ void View::buttonsClicked(QString name)
     {
         //TO DO
         //add new window to search and set base profile
-        fileDialog_.showDialog();
+        getFilePath();
+
     }
     else if(name == "button2")
     {
@@ -268,9 +271,11 @@ void View::initializeOptimizerSettings()
     settingDialog_.initialize(engine_);
 }
 
-void View::initializeFileDialog()
+void View::getFilePath()
 {
-    fileDialog_.initialize(engine_);
+    //TO DO:
+    // Add initial directory to files
+    baseFilePath_ = QFileDialog::getOpenFileName(Q_NULLPTR,QString(),QString(),"*.pdf");
 }
 
 void View::initializeModelViewConnection()

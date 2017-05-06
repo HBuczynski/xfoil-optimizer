@@ -17,10 +17,6 @@ ApplicationWindow {
     property color bright: "#85878A"
     property color dark: "#47494A"
 
-    FileDialog {
-
-    }
-
     Frame {
         id: parametersFrame
         objectName: "parametersFrame"
