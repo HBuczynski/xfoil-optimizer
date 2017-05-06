@@ -176,19 +176,8 @@ ApplicationWindow {
         }
     }
 
-    ProgressBar {
-        id: progressBar
-        objectName: "busyIndicator"
-        height: 40
-        anchors.top: frameOptimizeChart.bottom
-        anchors.topMargin: 6
-        anchors.left: parent.left
-        anchors.leftMargin: 618
-        anchors.right: parent.right
-        anchors.rightMargin: 32
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-        value: 0
+    ProgBar {
+
     }
 }
 

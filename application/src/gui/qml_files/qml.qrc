@@ -9,5 +9,6 @@
         <file>OptimizedPlot.qml</file>
         <file>OptimizerSettings.qml</file>
         <file>GeneticPlot.qml</file>
+        <file>ProgBar.qml</file>
     </qresource>
 </RCC>

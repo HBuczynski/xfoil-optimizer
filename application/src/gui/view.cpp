@@ -117,6 +117,8 @@ void View::buttonsClicked(QString name)
             //TO DO
             //run optimization
         }
+
+        enableProgressBar();
     }
 }
 

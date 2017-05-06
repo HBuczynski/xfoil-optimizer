@@ -47,7 +47,7 @@ void SettingsDialog::buttonsClicked(QString name)
     }
     else if (name == "cancelButton")
     {
-
+        guiObjects_.settingsWindow->setProperty("visible", "false");
     }
 }
 
