@@ -7,6 +7,7 @@
 #include "model/profile_parameters.h"
 #include "model/model.h"
 #include "gui/settings_dialog.h"
+#include "gui/plot_dialog.h"
 
 
 class View : public QObject
@@ -38,6 +39,7 @@ private:
     void initializeChartsFrames();
     void initializeBusyIndicator();
     void initializeOptimizerSettings();
+    void initializePlotDialog();
 
     void getFilePath();
 
@@ -47,6 +49,8 @@ private:
     QQmlComponent *componentMainWindow_;
 
     SettingsDialog settingDialog_;
+    PlotDialog plotDialog_;
+
     QString baseFilePath_;
 
 

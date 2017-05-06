@@ -82,6 +82,10 @@ void View::buttonsClicked(QString name)
     }
     else if(name == "button3")
     {
+        plotDialog_.showDialog();
+    }
+    else if(name == "runButton")
+    {
         //TO DO
         // check target values
         // zabezpieczenie przed ponownym kliknięciem przycisku RUN ??
@@ -94,10 +98,6 @@ void View::buttonsClicked(QString name)
             //TO DO
             //run optimization
         }
-    }
-    else if(name == "runButton")
-    {
-
     }
 }
 
@@ -120,6 +120,7 @@ void View::initializeGuiObjects()
         initializeChartsFrames();
         initializeBusyIndicator();
         initializeOptimizerSettings();
+        initializePlotDialog();
     }
     catch(const ExceptionHandler &ex)
     {
@@ -277,6 +278,11 @@ void View::initializeBusyIndicator()
 void View::initializeOptimizerSettings()
 {
     settingDialog_.initialize(engine_);
+}
+
+void View::initializePlotDialog()
+{
+    plotDialog_.initialize(engine_);
 }
 
 void View::getFilePath()

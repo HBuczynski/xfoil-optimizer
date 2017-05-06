@@ -25,7 +25,6 @@ Frame {
         y: -12
         width: 120
         height: 40
-        text: qsTr("Load Profile")
         anchors.bottom: button2.top
         anchors.bottomMargin: 15
         anchors.horizontalCenterOffset: -1
@@ -39,14 +38,22 @@ Frame {
             anchors.fill: button1
             onClicked: button1.buttonClick(buttonName1)
         }
+
+        Text {
+            id: buttonText
+            text: "LOAD PROFILE"
+            anchors.centerIn: parent
+            font.pointSize: 8
+        }
     }
 
     Button {
         id: button2
         objectName: buttonName2
-        text: qsTr("Optimizer Settings")
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
+        width: 120
+        height: 40
 
         signal buttonClick(string name)
         x: 0
@@ -57,6 +64,13 @@ Frame {
             anchors.fill: button2
             onClicked: button2.buttonClick(buttonName2)
         }
+
+        Text {
+            id: buttonText2
+            text: "OPTIMIZER\nSETTINGS"
+            anchors.centerIn: parent
+            font.pointSize: 8
+        }
     }
 
     Button {
@@ -65,7 +79,6 @@ Frame {
         x: 0
         width: 120
         height: 40
-        text: qsTr("Plot")
         anchors.top: button2.bottom
         anchors.topMargin: 15
         anchors.horizontalCenter: parent.horizontalCenter
@@ -77,6 +90,13 @@ Frame {
             anchors.top: parent.top
             anchors.fill: button3
             onClicked: button3.buttonClick(buttonName3)
+        }
+
+        Text {
+            id: buttonText3
+            text: "PLOT"
+            anchors.centerIn: parent
+            font.pointSize: 8
         }
     }
 }

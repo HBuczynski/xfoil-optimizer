@@ -44,3 +44,8 @@ struct SettingsObjects
 {
     QObject* settingsWindow;
 };
+
+struct Plot
+{
+    QObject* plotWindow;
+};
