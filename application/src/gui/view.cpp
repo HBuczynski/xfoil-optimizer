@@ -95,6 +95,10 @@ void View::buttonsClicked(QString name)
             //run optimization
         }
     }
+    else if(name == "runButton")
+    {
+
+    }
 }
 
 void View::getFitnessParametersLabel(AviationProfileParameters data)
@@ -153,6 +157,10 @@ void View::initializeButtons()
         name.str(std::string());
         name.clear();
     }
+
+    //initialize run button
+    guiObjects_.runButton = guiObjects_.mainWindow->findChild<QObject*>("runButton");
+    isSuccess = isSuccess && guiObjects_.runButton;
 
     if(!isSuccess)
         throw ExceptionHandler("Gui buttons object didn't initialize.");
@@ -292,4 +300,6 @@ void View::initializeModelViewConnection()
     //initialize connection with buttons
     for(int i=0; i<guiObjects_.buttonsCount; ++i)
         QObject::connect(guiObjects_.settingsButtons.at(i), SIGNAL(buttonClick(QString)), this,  SLOT(buttonsClicked(QString)));
+
+    QObject::connect(guiObjects_.runButton, SIGNAL(buttonClick(QString)), this,  SLOT(buttonsClicked(QString)));
 }
