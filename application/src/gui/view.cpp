@@ -274,8 +274,8 @@ void View::initializeOptimizerSettings()
 void View::getFilePath()
 {
     //TO DO:
-    // Add initial directory to files
-    baseFilePath_ = QFileDialog::getOpenFileName(Q_NULLPTR,QString(),QString(),"*.pdf");
+    // Add initial directory to dat files
+    baseFilePath_ = QFileDialog::getOpenFileName(Q_NULLPTR,QString(),QString(),"*.dat");
 }
 
 void View::initializeModelViewConnection()
