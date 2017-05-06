@@ -16,6 +16,12 @@ class View : public QObject
 
 public:
     explicit View(Model *model);
+
+    void enableProgressBar();
+    void disableProgressBar();
+
+    const QString &getFilePath();
+
 	~View();
 
 signals:
@@ -25,10 +31,10 @@ signals:
 public slots:
     void drawBaseChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
     void drawOptimizedChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
-    void buttonsClicked(QString);
+    void drawGeneticPlot(const std::vector<double> &dataX, const std::vector<double> &dataY);
+    void buttonsClicked(QString name);
     void getFitnessParametersLabel(AviationProfileParameters data);
 
-	
 private:
 	void initializeGuiObjects();
     void initializeMainWindow();
@@ -41,9 +47,9 @@ private:
     void initializeOptimizerSettings();
     void initializePlotDialog();
 
-    void getFilePath();
-
     void initializeModelViewConnection();
+
+    void setFilePath();
 
     QQmlApplicationEngine engine_;
     QQmlComponent *componentMainWindow_;

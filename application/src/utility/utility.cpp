@@ -1,6 +1,6 @@
 #include "utility/utility.h"
 
-ExceptionHandler::ExceptionHandler(const std::string ex) : e(ex)
+ExceptionHandler::ExceptionHandler(const std::string &ex) : e(ex)
 {
 
 }

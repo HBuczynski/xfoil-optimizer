@@ -11,8 +11,9 @@ Dialog {
     height: 500
 
     contentItem: Rectangle {
+        objectName: "frame"
             ChartView {
-                objectName: "basePlot"
+                objectName: "geneticPlot"
                 anchors.fill: parent
                 antialiasing: true
                 backgroundColor: "#CED1D2"

@@ -31,6 +31,22 @@ View::View(Model *model): model_(model),
 
     model_->updateBaseChart(dataX, dataY);
     model_->updateOptimizedChart(dataX, dataY);
+    model_->updateGeneticChart(dataX, dataY);
+}
+
+void View::enableProgressBar()
+{
+    guiObjects_.busyIndicator.object->setProperty("indeterminate", "true");
+}
+
+void View::disableProgressBar()
+{
+    guiObjects_.busyIndicator.object->setProperty("indeterminate", "false");
+}
+
+const QString &View::getFilePath()
+{
+    return baseFilePath_;
 }
 
 View::~View()
@@ -64,6 +80,11 @@ void View::drawOptimizedChart(const std::vector<double> &dataX, const std::vecto
     QMetaObject::invokeMethod(guiObjects_.optimizedPlot, "addData", Q_ARG(QVariant, x), Q_ARG(QVariant, y));
 }
 
+void View::drawGeneticPlot(const std::vector<double> &dataX, const std::vector<double> &dataY)
+{
+    plotDialog_.drawChart(dataX, dataY);
+}
+
 void View::buttonsClicked(QString name)
 {
     //only for test
@@ -71,14 +92,11 @@ void View::buttonsClicked(QString name)
 
     if(name == "button1")
     {
-        //TO DO
-        //add new window to search and set base profile
-        getFilePath();
-
+        setFilePath();
     }
     else if(name == "button2")
     {
-         settingDialog_.showDialog();
+        settingDialog_.showDialog();
     }
     else if(name == "button3")
     {
@@ -285,7 +303,7 @@ void View::initializePlotDialog()
     plotDialog_.initialize(engine_);
 }
 
-void View::getFilePath()
+void View::setFilePath()
 {
     //TO DO:
     // Add initial directory to dat files
@@ -299,6 +317,8 @@ void View::initializeModelViewConnection()
                      this, SLOT(drawBaseChart(const std::vector<double> &,const std::vector<double> &)));
     QObject::connect(model_, SIGNAL(updateOptimizedChart(const std::vector<double> &,const std::vector<double> &)),
                      this, SLOT(drawOptimizedChart(const std::vector<double> &,const std::vector<double> &)));
+    QObject::connect(model_, SIGNAL(updateGeneticChart(const std::vector<double> &,const std::vector<double> &)),
+                     this, SLOT(drawGeneticPlot(std::vector<double>,std::vector<double>)));
     QObject::connect(model_, SIGNAL(setFitnessParameters(AviationProfileParameters)), this, SLOT(getFitnessParametersLabel(AviationProfileParameters)));
     QObject::connect(this, SIGNAL(setBaseProfileValues(AviationProfileParameters)), model_, SLOT(getBaseProfileValues(AviationProfileParameters)));
     QObject::connect(this, SIGNAL(setTargetProfileValues(AviationProfileParameters)), model_, SLOT(getTargetProfileValues(AviationProfileParameters)));
