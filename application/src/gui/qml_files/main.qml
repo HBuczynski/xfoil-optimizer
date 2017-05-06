@@ -66,13 +66,12 @@ ApplicationWindow {
         Button {
             id: runButton
             objectName: "runButton"
-            text: qsTr("RUN")
             anchors.top: parent.top
-            anchors.topMargin: 172
+            anchors.topMargin: 166
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 0
             anchors.left: parent.left
-            anchors.leftMargin: 677
+            anchors.leftMargin: 668
             anchors.right: parent.right
             anchors.rightMargin: 0
 
@@ -81,8 +80,18 @@ ApplicationWindow {
             MouseArea {
                 id:mouseArea4
                 anchors.top: parent.top
+                anchors.fill: runButton
                 onClicked: runButton.buttonClick("runButton")
             }
+
+            Text {
+                id: buttonText
+                text: "RUN"
+                anchors.centerIn: parent
+                font.bold: true
+                font.pointSize: 8
+            }
+
         }
     }
 
@@ -178,7 +187,7 @@ ApplicationWindow {
         anchors.rightMargin: 32
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
-        value: 0.5
+        value: 0
     }
 }
 

@@ -36,6 +36,7 @@ Frame {
         MouseArea {
             id:mouseArea1
             anchors.top: parent.top
+            anchors.fill: button1
             onClicked: button1.buttonClick(buttonName1)
         }
     }
@@ -53,6 +54,7 @@ Frame {
 
         MouseArea {
             id:mouseArea2
+            anchors.fill: button2
             onClicked: button2.buttonClick(buttonName2)
         }
     }
@@ -73,6 +75,7 @@ Frame {
         MouseArea {
             id:mouseArea3
             anchors.top: parent.top
+            anchors.fill: button3
             onClicked: button3.buttonClick(buttonName3)
         }
     }
