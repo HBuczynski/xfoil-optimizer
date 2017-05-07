@@ -21,7 +21,7 @@ Dialog {
 
             objectName: "applyButton"
             anchors.top: parent.top
-            anchors.topMargin:350
+            anchors.topMargin:360
             anchors.left: parent.left
             anchors.leftMargin: 200
 
@@ -49,7 +49,7 @@ Dialog {
             height: 30
             objectName: "cancelButton"
             anchors.top: parent.top
-            anchors.topMargin:350
+            anchors.topMargin:360
             anchors.right: applyButton.left
             anchors.rightMargin: 16
 
@@ -68,6 +68,15 @@ Dialog {
                 anchors.centerIn: parent
                 font.pointSize: 8
             }
+
+        }
+
+        GroupBox {
+            id: groupBox1
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width - 34
+            height: parent.height - 55
+            title: qsTr("Settings")
 
         }
 
