@@ -9,5 +9,4 @@ public:
 	~ConfigurationReader();
 
 	bool initialize();
-	std::string getFilePath();
 };
