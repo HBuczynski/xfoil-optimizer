@@ -177,6 +177,8 @@ ApplicationWindow {
     }
 
     ProgBar {
+        anchors.topMargin: 6
+        anchors.bottomMargin: 9
 
     }
 }
