@@ -22,7 +22,7 @@ public:
     void addErrorMessage(const char *message);
 
     void addWarningMessage(const char *message);
-    void write(char * message);
+    void write(const char * message);
 
 private:
 	LogWriter();

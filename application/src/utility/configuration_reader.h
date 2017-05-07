@@ -23,4 +23,6 @@ private:
 
 private:
     LogWriter *logger_;
+
+    std::string projectParameterstPath_;
 };

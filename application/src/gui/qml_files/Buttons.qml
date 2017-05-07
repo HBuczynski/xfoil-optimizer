@@ -68,6 +68,8 @@ Frame {
         Text {
             id: buttonText2
             text: "OPTIMIZER\nSETTINGS"
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
             anchors.centerIn: parent
             font.pointSize: 8
         }
