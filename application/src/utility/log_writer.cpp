@@ -146,7 +146,7 @@ void LogWriter::addWarningMessage(const char *message)
 
 }
 
-void LogWriter::write(char * message)
+void LogWriter::write(const char * message)
 {
 
     if (isFileOpened_)

@@ -1,6 +1,8 @@
 #include "view.h"
 
 #include <QDebug>
+#include <QFileDialog>
+
 #include <sstream>
 
 #include "utility/utility.h"
@@ -27,8 +29,25 @@ View::View(Model *model): model_(model),
     dataY.push_back(0.3);
     dataY.push_back(0.45);
 
+    //only for tests
     model_->updateBaseChart(dataX, dataY);
     model_->updateOptimizedChart(dataX, dataY);
+    model_->updateGeneticChart(dataX, dataY);
+}
+
+void View::enableProgressBar()
+{
+    guiObjects_.busyIndicator.object->setProperty("indeterminate", "true");
+}
+
+void View::disableProgressBar()
+{
+    guiObjects_.busyIndicator.object->setProperty("indeterminate", "false");
+}
+
+const QString &View::getFilePath()
+{
+    return baseFilePath_;
 }
 
 View::~View()
@@ -62,6 +81,11 @@ void View::drawOptimizedChart(const std::vector<double> &dataX, const std::vecto
     QMetaObject::invokeMethod(guiObjects_.optimizedPlot, "addData", Q_ARG(QVariant, x), Q_ARG(QVariant, y));
 }
 
+void View::drawGeneticPlot(const std::vector<double> &dataX, const std::vector<double> &dataY)
+{
+    plotDialog_.drawChart(dataX, dataY);
+}
+
 void View::buttonsClicked(QString name)
 {
     //only for test
@@ -69,15 +93,17 @@ void View::buttonsClicked(QString name)
 
     if(name == "button1")
     {
-        //TO DO
-        //add new window to search and set base profile
-        fileDialog_.showDialog();
+        setFilePath();
     }
     else if(name == "button2")
     {
-         settingDialog_.showDialog();
+        settingDialog_.showDialog();
     }
     else if(name == "button3")
+    {
+        plotDialog_.showDialog();
+    }
+    else if(name == "runButton")
     {
         //TO DO
         // check target values
@@ -91,6 +117,8 @@ void View::buttonsClicked(QString name)
             //TO DO
             //run optimization
         }
+
+        enableProgressBar();
     }
 }
 
@@ -113,6 +141,7 @@ void View::initializeGuiObjects()
         initializeChartsFrames();
         initializeBusyIndicator();
         initializeOptimizerSettings();
+        initializePlotDialog();
     }
     catch(const ExceptionHandler &ex)
     {
@@ -150,6 +179,10 @@ void View::initializeButtons()
         name.str(std::string());
         name.clear();
     }
+
+    //initialize run button
+    guiObjects_.runButton = guiObjects_.mainWindow->findChild<QObject*>("runButton");
+    isSuccess = isSuccess && guiObjects_.runButton;
 
     if(!isSuccess)
         throw ExceptionHandler("Gui buttons object didn't initialize.");
@@ -268,9 +301,16 @@ void View::initializeOptimizerSettings()
     settingDialog_.initialize(engine_);
 }
 
-void View::initializeFileDialog()
+void View::initializePlotDialog()
 {
-    fileDialog_.initialize(engine_);
+    plotDialog_.initialize(engine_);
+}
+
+void View::setFilePath()
+{
+    //TO DO:
+    // Add initial directory to dat files
+    baseFilePath_ = QFileDialog::getOpenFileName(Q_NULLPTR,QString(),QString(),"*.dat");
 }
 
 void View::initializeModelViewConnection()
@@ -280,6 +320,8 @@ void View::initializeModelViewConnection()
                      this, SLOT(drawBaseChart(const std::vector<double> &,const std::vector<double> &)));
     QObject::connect(model_, SIGNAL(updateOptimizedChart(const std::vector<double> &,const std::vector<double> &)),
                      this, SLOT(drawOptimizedChart(const std::vector<double> &,const std::vector<double> &)));
+    QObject::connect(model_, SIGNAL(updateGeneticChart(const std::vector<double> &,const std::vector<double> &)),
+                     this, SLOT(drawGeneticPlot(std::vector<double>,std::vector<double>)));
     QObject::connect(model_, SIGNAL(setFitnessParameters(AviationProfileParameters)), this, SLOT(getFitnessParametersLabel(AviationProfileParameters)));
     QObject::connect(this, SIGNAL(setBaseProfileValues(AviationProfileParameters)), model_, SLOT(getBaseProfileValues(AviationProfileParameters)));
     QObject::connect(this, SIGNAL(setTargetProfileValues(AviationProfileParameters)), model_, SLOT(getTargetProfileValues(AviationProfileParameters)));
@@ -287,4 +329,6 @@ void View::initializeModelViewConnection()
     //initialize connection with buttons
     for(int i=0; i<guiObjects_.buttonsCount; ++i)
         QObject::connect(guiObjects_.settingsButtons.at(i), SIGNAL(buttonClick(QString)), this,  SLOT(buttonsClicked(QString)));
+
+    QObject::connect(guiObjects_.runButton, SIGNAL(buttonClick(QString)), this,  SLOT(buttonsClicked(QString)));
 }

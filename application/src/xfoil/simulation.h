@@ -41,6 +41,7 @@ public:
     enum Status
     {
         NotRunning,
+        Idle,
         Running,
         Finished,
         NotConverged,
@@ -48,9 +49,14 @@ public:
     };
 
     void Run();
-    Status GetStatus()
+    void Terminate();
+    Status const GetSimulationStatus()
     {
         return status_;
+    }
+    bool const IsRunning()
+    {
+        return started_;
     }
 
     SimResults GetResults();
@@ -73,4 +79,5 @@ private:
     QProcess * process_;
     //TMP configuration variables, TODO - move to config file as they are common to sims
     std::string exePath_ = "C:\Users\Kub\Documents\workspace\xfoil-optimizer\xfoil\win32\xfoil.exe";
+    const int TIMEOUT_MS = 1500;
 };

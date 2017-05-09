@@ -23,12 +23,27 @@ SimulationProxy::SimulationProxy(QObject *parent):
 }
 void SimulationProxy::Run()
 {
-    started_ = true;
-    status_ = Running;
     QString program = QString::fromStdString(exePath_);
     QStringList arglist;
     process_->start(program, arglist);
     Q_EMIT feedbackLog(process_->readAllStandardOutput());
+    if(process_->waitForStarted(TIMEOUT_MS))
+    {
+        status_ = Idle;
+        started_ = true;
+    }
+    else
+    {
+        status_ = Error;
+        started_ = false;
+        //Error - did program did not start TODO handling approach
+    }
+
+
+    //qDebug() << "SimulationProxy::Run";
+}
+void SimulationProxy::Terminate()
+{
 }
 void SimulationProxy::error(QProcess::ProcessError error)
 {
@@ -44,7 +59,7 @@ void SimulationProxy::finished(int exitCode, QProcess::ExitStatus status)
 
 void SimulationProxy::stateChanged(QProcess::ProcessState state)
 {
-    qDebug() << "SimulationProxy::stateChanged" << state;
+    //qDebug() << "SimulationProxy::stateChanged" << state;
 }
 void feedbackLog(QString log)
 {

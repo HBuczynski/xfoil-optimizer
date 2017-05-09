@@ -9,7 +9,7 @@ struct ApplicationParameters
 
 struct ExceptionHandler : public std::exception
 {
-    ExceptionHandler(const std::string ex);
+    ExceptionHandler(const std::string &ex);
     ~ExceptionHandler();
 
     std::string e;

@@ -7,7 +7,8 @@
 #include "model/profile_parameters.h"
 #include "model/model.h"
 #include "gui/settings_dialog.h"
-#include "gui/file_dialog.h"
+#include "gui/plot_dialog.h"
+
 
 class View : public QObject
 {
@@ -15,6 +16,12 @@ class View : public QObject
 
 public:
     explicit View(Model *model);
+
+    void enableProgressBar();
+    void disableProgressBar();
+
+    const QString &getFilePath();
+
 	~View();
 
 signals:
@@ -24,10 +31,10 @@ signals:
 public slots:
     void drawBaseChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
     void drawOptimizedChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
-    void buttonsClicked(QString);
+    void drawGeneticPlot(const std::vector<double> &dataX, const std::vector<double> &dataY);
+    void buttonsClicked(QString name);
     void getFitnessParametersLabel(AviationProfileParameters data);
 
-	
 private:
 	void initializeGuiObjects();
     void initializeMainWindow();
@@ -38,15 +45,20 @@ private:
     void initializeChartsFrames();
     void initializeBusyIndicator();
     void initializeOptimizerSettings();
-    void initializeFileDialog();
+    void initializePlotDialog();
 
     void initializeModelViewConnection();
+
+    void setFilePath();
 
     QQmlApplicationEngine engine_;
     QQmlComponent *componentMainWindow_;
 
     SettingsDialog settingDialog_;
-    FileDialog fileDialog_;
+    PlotDialog plotDialog_;
+
+    QString baseFilePath_;
+
 
     Model *model_;
     MainWindowObjects guiObjects_;

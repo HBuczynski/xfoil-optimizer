@@ -17,67 +17,94 @@ ApplicationWindow {
     property color bright: "#85878A"
     property color dark: "#47494A"
 
-    FileDialog {
-
-    }
-
     Frame {
         id: parametersFrame
-        objectName: "parametersFrame"
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 507
-        anchors.top: parent.top
-        anchors.topMargin: 18
+        anchors.bottom: frameBaseChart.top
+        anchors.bottomMargin: 13
         anchors.right: parent.right
-        anchors.rightMargin: 45
+        anchors.rightMargin: 198
         anchors.left: parent.left
-        anchors.leftMargin: 336
+        anchors.leftMargin: 32
+        objectName: "parametersFrame"
+        anchors.top: parent.top
+        anchors.topMargin: 16
         spacing: 3
 
         InitialParameters{
             id: baseParametersBox
+            anchors.right: targetParametersBox.left
+            anchors.rightMargin: 23
             objectName: "baseParametersBox"
-            anchors.right: parent.right
-            anchors.rightMargin: 386
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 19
-            anchors.leftMargin: 33
+            anchors.leftMargin: 8
             anchors.topMargin: 7
         }
 
         TargetValues {
             id: targetParametersBox
+            x: 239
+            anchors.topMargin: 7
             objectName: "targetParametersBox"
-            anchors.left: parent.left
-            anchors.leftMargin: 397
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 19
-            anchors.rightMargin: 19
+            anchors.rightMargin: 349
+        }
+
+        FitnessParameters {
+            id: fitnessBox
+            objectName: "fitnessParameters"
+            x: 459
+            width: 195
+            anchors.top: parent.top
+            anchors.topMargin: 7
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 19
+
+        }
+
+        Button {
+            id: runButton
+            objectName: "runButton"
+            anchors.top: parent.top
+            anchors.topMargin: 166
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 0
+            anchors.left: parent.left
+            anchors.leftMargin: 668
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+
+            signal buttonClick(string name)
+
+            MouseArea {
+                id:mouseArea4
+                anchors.top: parent.top
+                anchors.fill: runButton
+                onClicked: runButton.buttonClick("runButton")
+            }
+
+            Text {
+                id: buttonText
+                text: "RUN"
+                anchors.centerIn: parent
+                font.bold: true
+                font.pointSize: 8
+            }
+
         }
     }
 
     Buttons {
+        anchors.left: parametersFrame.right
+        anchors.leftMargin: 21
+        anchors.bottom: frameBaseChart.top
+        anchors.bottomMargin: 13
+        anchors.rightMargin: -960
+        anchors.topMargin: 16
 
     }
 
-    BusyIndicator {
-        id: busyIndicator
-        objectName: "busyIndicator"
-        x: 855
-        y: 338
-        width: 88
-        height: 92
-        running: true
-    }
-
-    FitnessParameters {
-        id: fitnessBox
-        objectName: "fitnessParameters"
-        x: 799
-        y: 519
-        width: 200
-        height: 220
-    }
 
     Rectangle {
         id: frameBaseChart
@@ -85,11 +112,11 @@ ApplicationWindow {
         color: "#CED1D2"
         radius: 13
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 275
+        anchors.bottomMargin: 284
         anchors.top: parent.top
-        anchors.topMargin: 280
+        anchors.topMargin: 248
         anchors.right: parent.right
-        anchors.rightMargin: 264
+        anchors.rightMargin: 32
         anchors.left: parent.left
         anchors.leftMargin: 32
         border.width: 4
@@ -120,11 +147,11 @@ ApplicationWindow {
         color: "#CED1D2"
         radius: 13
         anchors.top: parent.top
-        anchors.topMargin: 517
+        anchors.topMargin: 490
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 29
         anchors.right: parent.right
-        anchors.rightMargin: 264
+        anchors.rightMargin: 32
         anchors.left: parent.left
         anchors.leftMargin: 32
         border.width: 4
@@ -147,6 +174,12 @@ ApplicationWindow {
             anchors.top: parent.top
             anchors.topMargin: 13
         }
+    }
+
+    ProgBar {
+        anchors.topMargin: 6
+        anchors.bottomMargin: 9
+
     }
 }
 

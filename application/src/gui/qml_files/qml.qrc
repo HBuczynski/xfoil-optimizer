@@ -8,6 +8,7 @@
         <file>BasePlot.qml</file>
         <file>OptimizedPlot.qml</file>
         <file>OptimizerSettings.qml</file>
-        <file>FileDialog.qml</file>
+        <file>GeneticPlot.qml</file>
+        <file>ProgBar.qml</file>
     </qresource>
 </RCC>

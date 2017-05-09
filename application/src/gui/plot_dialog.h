@@ -1,29 +1,29 @@
-#ifndef SETTINGSDIALOG_H
-#define SETTINGSDIALOG_H
+#ifndef PLOT_DIALOG_H
+#define PLOT_DIALOG_H
 
 #include <QQmlApplicationEngine>
 #include <QQmlComponent>
+#include <vector>
 #include <QObject>
 
 #include "gui/gui_objects.h"
 
-class SettingsDialog : QObject
+class PlotDialog :QObject
 {
     Q_OBJECT
 
 public:
-    SettingsDialog();
+    PlotDialog();
+
     void initialize(QQmlApplicationEngine &engine);
     void showDialog();
 
-public slots:
-    void buttonsClicked(QString name);
+    void drawChart(const std::vector<double> &dataX_, const std::vector<double> &dataY_);
 
 private:
-    void buttonsConnection();
-
     QQmlComponent *dialogComponent_;
-    SettingsObjects guiObjects_;
+
+    Plot guiObjects_;
 };
 
-#endif // SETTINGSDIALOG_H
+#endif // PLOT_DIALOG_H
