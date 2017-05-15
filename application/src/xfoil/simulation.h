@@ -78,6 +78,6 @@ private:
     Geometry geometry_;
     QProcess * process_;
     //TMP configuration variables, TODO - move to config file as they are common to sims
-    std::string exePath_ = "C:\Users\Kub\Documents\workspace\xfoil-optimizer\xfoil\win32\xfoil.exe";
+    std::string exePath_ = "C:\\Users\\Kub\\Documents\\workspace\\xfoil-optimizer\\xfoil\\win32";
     const int TIMEOUT_MS = 1500;
 };
