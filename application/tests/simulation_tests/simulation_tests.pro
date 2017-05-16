@@ -26,11 +26,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
-SOURCES += tst_simulation_tests.cpp ../../src/xfoil/simulation.cpp
+SOURCES += tst_simulation_tests.cpp ../../src/xfoil/simulation.cpp ../../src/xfoil/qsimulation.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 INCLUDEPATH += ../../src
 
 HEADERS += \
     ../../src/xfoil/simulation.h \
-    ../../src/xfoil/simulation_results.h
+    ../../src/xfoil/qsimulation.h \
+    ../../src/xfoil/simulation_results.h\
+    ../../src/xfoil/simulation_proxy.h

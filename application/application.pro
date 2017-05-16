@@ -20,7 +20,8 @@ SOURCES += \
     src/utility/tiny_xml/tinystr.cpp \
     src/utility/tiny_xml/tinyxml.cpp \
     src/utility/tiny_xml/tinyxmlerror.cpp \
-    src/utility/tiny_xml/tinyxmlparser.cpp
+    src/utility/tiny_xml/tinyxmlparser.cpp \
+    src/xfoil/qsimulation.cpp
 
 RESOURCES += src/gui/qml_files/qml.qrc \
     src/gui/qml_files/qml.qrc
@@ -52,7 +53,9 @@ HEADERS += \
     src/gui/settings_dialog.h \
     src/gui/plot_dialog.h \
     src/utility/tiny_xml/tinystr.h \
-    src/utility/tiny_xml/tinyxml.h
+    src/utility/tiny_xml/tinyxml.h \
+    src/xfoil/qsimulation.h \
+    src/xfoil/simulation_proxy.h
 
 QMAKE_CXXFLAGS_RELEASE -= -O
 QMAKE_CXXFLAGS_RELEASE -= -O1

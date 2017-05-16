@@ -1,9 +1,11 @@
 #pragma once
 
 #include <vector>
-#include <qprocess.h>
 #include "xfoil/simulation_results.h"
 #include "optimizer/geometry.h"
+#include "xfoil/simulation_proxy.h"
+#include "xfoil/qsimulation.h"
+
 //!  Class controlling execution of external simulation tools
 /*!
   Controls multiple instances of xfoil optimizer running in parallel
@@ -18,66 +20,26 @@ private:
 
 
 };
-
-//!  IO stream interface proxy for external optimizer
+//!  Class controlling execution single simulation tool using proxy interface
 /*!
-  A more elaborate class description. [TODO]
+  Controls single instance of xfoil optimizer
 */
-class SimulationProxy : public QObject
+class SimulationHandler
 {
-    Q_OBJECT
 public:
-    explicit SimulationProxy(QObject *parent = 0);
-    ~SimulationProxy()
+    SimulationHandler()
     {
-        if(results_ != nullptr)
-            delete results_;
-        if(started_ && process_->state() != QProcess::NotRunning)
-        {
-            process_->kill();
-        }
+        proxy_ = new QSimulationProxy();
+    }
+    ~SimulationHandler()
+    {
+        delete proxy_;
     }
 
-    enum Status
-    {
-        NotRunning,
-        Idle,
-        Running,
-        Finished,
-        NotConverged,
-        Error
-    };
-
-    void Run();
-    void Terminate();
-    Status const GetSimulationStatus()
-    {
-        return status_;
-    }
-    bool const IsRunning()
-    {
-        return started_;
-    }
-
-    SimResults GetResults();
-
-Q_SIGNALS:
-    void feedbackLog(QString log);
-//public Q_SLOTS:
-//    void launch(QString program, QStringList argList);
 private:
-private Q_SLOTS:
-    void error(QProcess::ProcessError error);
-    void finished(int exitCode, QProcess::ExitStatus status);
-    void stateChanged(QProcess::ProcessState state);
-private:
-    std::string workingDirectory_;
-    SimResults *results_;
-    Status status_;
-    bool started_;
+    SimulationProxy *proxy_;
     Geometry geometry_;
-    QProcess * process_;
-    //TMP configuration variables, TODO - move to config file as they are common to sims
-    std::string exePath_ = "C:\\Users\\Kub\\Documents\\workspace\\xfoil-optimizer\\xfoil\\win32";
-    const int TIMEOUT_MS = 1500;
+    SimResults *results_;
 };
+
+

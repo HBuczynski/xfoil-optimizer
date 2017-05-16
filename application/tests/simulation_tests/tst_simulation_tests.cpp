@@ -1,6 +1,8 @@
 #include <QString>
 #include <QtTest>
 #include "xfoil/simulation.h"
+#include "xfoil/simulation_proxy.h"
+#include "xfoil/qsimulation.h"
 #include "xfoil/simulation_results.h"
 
 class Simulation_tests : public QObject
@@ -22,19 +24,16 @@ Simulation_tests::Simulation_tests()
 
 void Simulation_tests::CreateProxyObjectNotRunsTheXfoil()
 {
-    SimulationProxy proxy;
-    QVERIFY(proxy.IsRunning() == false);
-    QVERIFY2(proxy.GetSimulationStatus() == SimulationProxy::NotRunning, "Failure - Bad object creation");
+    QSimulationProxy proxy;
+    QVERIFY2(proxy.GetStatus() == SimulationProxy::Error, "Failure - Bad object creation");
 }
 void Simulation_tests::RunAndTerminateTheProgram()
 {
-    SimulationProxy proxy;
+    QSimulationProxy proxy;
     proxy.Run();
-    QVERIFY2(proxy.IsRunning() == true, "Failure - process did not start - proecss not running");
-    QVERIFY2(proxy.GetSimulationStatus() == SimulationProxy::Idle, "Failure - process did not start - invalid state");
+    QVERIFY2(proxy.GetStatus() == SimulationProxy::NotRunning, "Failure - process did not start - invalid state");
     proxy.Terminate();
-    QVERIFY2(proxy.IsRunning() == false, "Failure - process not terminated - did not stop");
-    QVERIFY2(proxy.GetSimulationStatus() == SimulationProxy::NotRunning, "Failure - process not terminated - invalid state");
+    QVERIFY2(proxy.GetStatus() != SimulationProxy::NotRunning, "Failure - process not terminated - invalid state");
 }
 
 QTEST_APPLESS_MAIN(Simulation_tests)
