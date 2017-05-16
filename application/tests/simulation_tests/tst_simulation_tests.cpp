@@ -15,6 +15,7 @@ public:
 private Q_SLOTS:
     void CreateProxyObjectNotRunsTheXfoil();
     void RunAndTerminateTheProgram();
+    void RunAndEnterMenuThenTerminate();
 };
 
 Simulation_tests::Simulation_tests()
@@ -30,6 +31,17 @@ void Simulation_tests::CreateProxyObjectNotRunsTheXfoil()
 void Simulation_tests::RunAndTerminateTheProgram()
 {
     QSimulationProxy proxy;
+    proxy.Run();
+    QVERIFY2(proxy.GetStatus() != SimulationProxy::NotRunning, "Failure - process did not start - invalid state");
+    proxy.Terminate();
+    QVERIFY2(proxy.GetStatus() == SimulationProxy::NotRunning, "Failure - process not terminated - invalid state");
+}
+void Simulation_tests::RunAndEnterMenuThenTerminate()
+{
+    QSimulationProxy proxy;
+    proxy.AddCommand("OPER");
+    proxy.AddCommand("ALFA 0.0");
+    proxy.AddCommand("CPWR test.dat");
     proxy.Run();
     QVERIFY2(proxy.GetStatus() != SimulationProxy::NotRunning, "Failure - process did not start - invalid state");
     proxy.Terminate();

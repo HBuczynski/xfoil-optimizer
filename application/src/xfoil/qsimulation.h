@@ -21,6 +21,10 @@ public:
     }
 
 
+    virtual void AddCommand(std::string command) override
+    {
+        commands_.push_back(command);
+    }
 
     virtual void Run() override;
     virtual void Terminate() override;
@@ -28,7 +32,10 @@ public:
     {
         return status_;
     }
-
+    virtual std::string const GetProgramOutput() override
+    {
+        return programOutput_;
+    }
 private:
 private Q_SLOTS:
     void error(QProcess::ProcessError error);
@@ -41,6 +48,8 @@ private:
     QProcess * process_;
     //TMP configuration variables, TODO - move to config file as they are common to sims
     std::string exePath_ = "C:\\Users\\Kub\\Documents\\workspace\\xfoil-optimizer\\xfoil\\win32";
+    std::string programOutput_;
+    std::vector<std::string> commands_;
     const int TIMEOUT_MS = 1500;
 };
 

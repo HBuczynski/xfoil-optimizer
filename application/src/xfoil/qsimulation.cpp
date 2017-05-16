@@ -37,12 +37,18 @@ void QSimulationProxy::Run()
     if(process_->waitForStarted(TIMEOUT_MS))
     {
         status_ = Running;
-        qDebug() << "SimulationProxy::PROCESSSTARTED\r\n";
+        for(std::string s : commands_)
+        {
+            process_->write((s + "\r\n").c_str(),32);
+            std::cout << s + "\r\n";
+            process_->waitForBytesWritten();
+        }
+        //qDebug() << "SimulationProxy::PROCESSSTARTED\r\n";
     }
     else
     {
         status_ = Error;
-        qDebug() << "SimulationProxy::PROCESS Start fail\r\n";
+        qDebug() << "QSimulationProxy::Run() start fail\r\n";
         //Error - did program did not start TODO handling approach
     }
 
@@ -51,20 +57,15 @@ void QSimulationProxy::Terminate()
 {
     //TODO - exit from any menu - enter exits submenu//
     std::cout<<"Program returned:\r\n";
-     qDebug() << "Program returned:\r\n";
-    int no_written = process_->write("QUIT\n\r",10);
+    qDebug() << "Program returned:\r\n";
+    process_->write("\n\r\n\r",4);
+    process_->write("QUIT\n\r",6);
     process_->waitForBytesWritten();
     process_->closeWriteChannel();
     if(!process_->waitForFinished(100))
     {
-        std::cout<< "Process did not finish, force closing, written "<<no_written<<"\r\n";
+        qDebug() << "QSimulationProxy::Terminate() - process did not finish - forcing...\r\n";
         process_->terminate();
-        if(!process_->waitForFinished(100))
-        {
-            std::cout<< "Process did not finish, force closing 2\r\n";
-            process_->terminate();
-            process_->waitForFinished(100);
-        }
     }
     //Here we must navigate backwards and exit the program safely or just kill it
 }
@@ -78,7 +79,7 @@ void QSimulationProxy::finished(int exitCode, QProcess::ExitStatus status)
 {
     status_ = NotRunning;
     /* feedback some text about finished */
-       std::cout<<"PROCESS FINSEHD\r\n";
+       std::cout<<"PROCESS FINSHED\r\n";
 } // end_slot (SimulationProxy::finished)
 
 void QSimulationProxy::stateChanged(QProcess::ProcessState state)
