@@ -37,15 +37,12 @@ void QSimulationProxy::Run()
     if(process_->waitForStarted(TIMEOUT_MS))
     {
         status_ = Running;
-        //We want to wait for the prompt//
-        process_->waitForReadyRead(100);
-        if(process_->canReadLine())
-            std::cout<<"LOLHOW";
-        qDebug() << "SimulationProxy::PROCESSSTARTED";
+        qDebug() << "SimulationProxy::PROCESSSTARTED\r\n";
     }
     else
     {
         status_ = Error;
+        qDebug() << "SimulationProxy::PROCESS Start fail\r\n";
         //Error - did program did not start TODO handling approach
     }
 
@@ -54,7 +51,8 @@ void QSimulationProxy::Terminate()
 {
     //TODO - exit from any menu - enter exits submenu//
     std::cout<<"Program returned:\r\n";
-    int no_written = process_->write("\n\r\n\rQUIT\n\r",10);
+     qDebug() << "Program returned:\r\n";
+    int no_written = process_->write("QUIT\n\r",10);
     process_->waitForBytesWritten();
     process_->closeWriteChannel();
     if(!process_->waitForFinished(100))

@@ -25,15 +25,15 @@ Simulation_tests::Simulation_tests()
 void Simulation_tests::CreateProxyObjectNotRunsTheXfoil()
 {
     QSimulationProxy proxy;
-    QVERIFY2(proxy.GetStatus() == SimulationProxy::Error, "Failure - Bad object creation");
+    QVERIFY2(proxy.GetStatus() == SimulationProxy::NotRunning, "Failure - Bad object creation");
 }
 void Simulation_tests::RunAndTerminateTheProgram()
 {
     QSimulationProxy proxy;
     proxy.Run();
-    QVERIFY2(proxy.GetStatus() == SimulationProxy::NotRunning, "Failure - process did not start - invalid state");
+    QVERIFY2(proxy.GetStatus() != SimulationProxy::NotRunning, "Failure - process did not start - invalid state");
     proxy.Terminate();
-    QVERIFY2(proxy.GetStatus() != SimulationProxy::NotRunning, "Failure - process not terminated - invalid state");
+    QVERIFY2(proxy.GetStatus() == SimulationProxy::NotRunning, "Failure - process not terminated - invalid state");
 }
 
 QTEST_APPLESS_MAIN(Simulation_tests)
