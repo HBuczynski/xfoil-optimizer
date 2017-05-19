@@ -42,11 +42,9 @@ void QSimulationProxy::Run()
         {
             std::string command = s + "\r\n";
             process_->write(command.c_str(),command.length());
-            std::cout << command;
             process_->waitForBytesWritten();
             process_->waitForReadyRead(100);
         }
-        //qDebug() << "SimulationProxy::PROCESSSTARTED\r\n";
     }
     else
     {
@@ -59,8 +57,9 @@ void QSimulationProxy::Run()
 void QSimulationProxy::Terminate()
 {
     //TODO - exit from any menu - enter exits submenu//
-    std::cout<<"Program returned:\r\n";
-    qDebug() << "Program returned:\r\n";
+    //std::cout<<"Program returned:\r\n";
+    //qDebug() << "Program returned:\r\n";
+
     process_->write("\n\r\n\r",4);
     process_->waitForBytesWritten();
     process_->waitForReadyRead(100);
@@ -85,16 +84,15 @@ void QSimulationProxy::finished(int exitCode, QProcess::ExitStatus status)
 {
     status_ = NotRunning;
     /* feedback some text about finished */
-       std::cout<<"PROCESS FINSHED\r\n";
+    //std::cout<<"PROCESS FINSHED\r\n";
 } // end_slot (SimulationProxy::finished)
 
 void QSimulationProxy::stateChanged(QProcess::ProcessState state)
 {
     //std::cout<<"STATECHANGED\r\n"<<state.t;
-    qDebug() << "SimulationProxy::stateChanged" << state;
+    //qDebug() << "SimulationProxy::stateChanged" << state;
 }
 void QSimulationProxy::read()
 {
-    std::cout<<"READ()r\n";
-    qDebug() << process_->readAllStandardOutput();
+    programOutput_ += std::string(process_->readAllStandardOutput().data());
 }
