@@ -23,5 +23,6 @@ public:
     virtual void Terminate() = 0;
     virtual Status const GetStatus() = 0;
     virtual std::string const GetProgramOutput() = 0;
+    virtual std::string const GetExePath() = 0;
     //virtual void Configure() = 0;
 };

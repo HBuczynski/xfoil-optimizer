@@ -39,6 +39,9 @@ void Simulation_tests::RunAndTerminateTheProgram()
 void Simulation_tests::RunAndEnterMenuThenTerminate()
 {
     QSimulationProxy proxy;
+    proxy.AddCommand("PLOP");
+    proxy.AddCommand("G F");
+    proxy.AddCommand("\r\n");
     proxy.AddCommand("NACA 0012");
     proxy.AddCommand("OPER");
     proxy.AddCommand("ALFA 0.0");
@@ -47,6 +50,11 @@ void Simulation_tests::RunAndEnterMenuThenTerminate()
     QVERIFY2(proxy.GetStatus() != SimulationProxy::NotRunning, "Failure - process did not start - invalid state");
     proxy.Terminate();
     QVERIFY2(proxy.GetStatus() == SimulationProxy::NotRunning, "Failure - process not terminated - invalid state");
+    QString resFile = QString::fromStdString(proxy.GetExePath() + "/test.dat");
+    QVERIFY(QFile::exists(resFile));
+    QFile::remove(resFile);
+    QVERIFY(!QFile::exists(resFile));
+
 }
 
 QTEST_APPLESS_MAIN(Simulation_tests)

@@ -36,6 +36,10 @@ public:
     {
         return programOutput_;
     }
+    virtual std::string const GetExePath() override
+    {
+        return exePath_;
+    }
 private:
 private Q_SLOTS:
     void error(QProcess::ProcessError error);
