@@ -39,6 +39,7 @@ void Simulation_tests::RunAndTerminateTheProgram()
 void Simulation_tests::RunAndEnterMenuThenTerminate()
 {
     QSimulationProxy proxy;
+    proxy.AddCommand("NACA 0012");
     proxy.AddCommand("OPER");
     proxy.AddCommand("ALFA 0.0");
     proxy.AddCommand("CPWR test.dat");

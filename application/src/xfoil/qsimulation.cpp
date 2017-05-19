@@ -33,15 +33,18 @@ void QSimulationProxy::Run()
     QStringList arglist;
 
     process_->setWorkingDirectory(programPath);
-    process_->start(program, arglist,QIODevice::Text | QIODevice::ReadWrite);
+    process_->start(program, arglist,/*QIODevice::Text |*/ QIODevice::ReadWrite);
     if(process_->waitForStarted(TIMEOUT_MS))
     {
         status_ = Running;
+        process_->waitForReadyRead(100);
         for(std::string s : commands_)
         {
-            process_->write((s + "\r\n").c_str(),32);
-            std::cout << s + "\r\n";
+            std::string command = s + "\r\n";
+            process_->write(command.c_str(),command.length());
+            std::cout << command;
             process_->waitForBytesWritten();
+            process_->waitForReadyRead(100);
         }
         //qDebug() << "SimulationProxy::PROCESSSTARTED\r\n";
     }
@@ -59,8 +62,11 @@ void QSimulationProxy::Terminate()
     std::cout<<"Program returned:\r\n";
     qDebug() << "Program returned:\r\n";
     process_->write("\n\r\n\r",4);
+    process_->waitForBytesWritten();
+    process_->waitForReadyRead(100);
     process_->write("QUIT\n\r",6);
     process_->waitForBytesWritten();
+    process_->waitForReadyRead(100);
     process_->closeWriteChannel();
     if(!process_->waitForFinished(100))
     {
