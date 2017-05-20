@@ -27,16 +27,20 @@ private:
 class SimulationHandler
 {
 public:
-    SimulationHandler()
+    SimulationHandler(int handler_id):
+        id_(handler_id)
     {
         proxy_ = new QSimulationProxy();
     }
     ~SimulationHandler()
     {
+        if(proxy_->PollStatus() != QSimulationProxy::NotRunning)
+            proxy_->Terminate();
         delete proxy_;
     }
 
 private:
+    const int id_;
     SimulationProxy *proxy_;
     Geometry geometry_;
     SimResults *results_;

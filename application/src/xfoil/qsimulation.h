@@ -28,8 +28,13 @@ public:
 
     virtual void Run() override;
     virtual void Terminate() override;
-    virtual Status const GetStatus() override
+    virtual Status PollStatus() override
     {
+        if(status_ == Running)
+        {
+            process_->waitForReadyRead(TIMEOUT_SHORT);
+            process_->waitForBytesWritten(TIMEOUT_SHORT);
+        }
         return status_;
     }
     virtual std::string const GetProgramOutput() override
@@ -54,6 +59,7 @@ private:
     std::string exePath_ = "C:\\Users\\Kub\\Documents\\workspace\\xfoil-optimizer\\xfoil\\win32";
     std::string programOutput_;
     std::vector<std::string> commands_;
-    const int TIMEOUT_MS = 1500;
+    const int TIMEOUT_SHORT = 10;
+    const int TIMEOUT_LONG = 100;
 };
 

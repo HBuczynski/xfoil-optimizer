@@ -34,17 +34,19 @@ void QSimulationProxy::Run()
 
     process_->setWorkingDirectory(programPath);
     process_->start(program, arglist,/*QIODevice::Text |*/ QIODevice::ReadWrite);
-    if(process_->waitForStarted(TIMEOUT_MS))
+    if(process_->waitForStarted(TIMEOUT_LONG))
     {
         status_ = Running;
-        process_->waitForReadyRead(100);
         for(std::string s : commands_)
         {
             std::string command = s + "\r\n";
             process_->write(command.c_str(),command.length());
-            process_->waitForBytesWritten();
-            process_->waitForReadyRead(100);
         }
+        // Write commands for program termination//
+        process_->write("\n\r\n\r",4);
+        process_->write("QUIT\n\r",6);
+        process_->waitForBytesWritten(TIMEOUT_SHORT);
+        process_->closeWriteChannel();
     }
     else
     {
@@ -56,33 +58,25 @@ void QSimulationProxy::Run()
 }
 void QSimulationProxy::Terminate()
 {
-    //TODO - exit from any menu - enter exits submenu//
-    //std::cout<<"Program returned:\r\n";
-    //qDebug() << "Program returned:\r\n";
-
-    process_->write("\n\r\n\r",4);
-    process_->waitForBytesWritten();
-    process_->waitForReadyRead(100);
-    process_->write("QUIT\n\r",6);
-    process_->waitForBytesWritten();
-    process_->waitForReadyRead(100);
-    process_->closeWriteChannel();
-    if(!process_->waitForFinished(100))
+    if(status_ == NotRunning || status_ == Finished)
+        return;
+    if(!process_->waitForFinished(TIMEOUT_LONG))
     {
         qDebug() << "QSimulationProxy::Terminate() - process did not finish - forcing...\r\n";
         process_->terminate();
     }
-    //Here we must navigate backwards and exit the program safely or just kill it
+
 }
 void QSimulationProxy::error(QProcess::ProcessError error)
 {
     /* just feedback some text about the error */
     qDebug() << "SimulationProxy::error - " << error;
+    status_ = Error;
 } // end_slot(SimulationProxy::error)
 
 void QSimulationProxy::finished(int exitCode, QProcess::ExitStatus status)
 {
-    status_ = NotRunning;
+    status_ = Finished;
     /* feedback some text about finished */
     //std::cout<<"PROCESS FINSHED\r\n";
 } // end_slot (SimulationProxy::finished)
@@ -90,6 +84,18 @@ void QSimulationProxy::finished(int exitCode, QProcess::ExitStatus status)
 void QSimulationProxy::stateChanged(QProcess::ProcessState state)
 {
     //std::cout<<"STATECHANGED\r\n"<<state.t;
+    switch(state)
+    {
+     case QProcess::NotRunning:
+        status_ = Finished;
+        break;
+     case QProcess::Running:
+        status_ = Running;
+        break;
+     default:
+        break;
+    }
+
     //qDebug() << "SimulationProxy::stateChanged" << state;
 }
 void QSimulationProxy::read()
