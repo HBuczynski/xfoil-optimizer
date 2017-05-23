@@ -8,7 +8,7 @@ QT       += testlib core
 
 QT       -= gui
 
-TARGET = tst_qsimulation_proxy_tests
+TARGET = tst_simulation_handler_tests
 CONFIG   += console
 CONFIG   -= app_bundle
 
@@ -27,7 +27,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += ../../src/xfoil/simulation.cpp ../../src/xfoil/qsimulation.cpp \
-    tst_qsimulation_proxy_tests.cpp
+    tst_simulation_handler_tests.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 INCLUDEPATH += ../../src
