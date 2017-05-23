@@ -17,6 +17,9 @@ public:
         Finished,
         Error
     };
+
+    virtual ~SimulationProxy()
+    {}
     virtual void AddCommand(std::string command) = 0;
     virtual void Run() = 0;
     virtual void Terminate() = 0;

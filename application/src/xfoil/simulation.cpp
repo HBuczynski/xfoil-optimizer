@@ -18,10 +18,18 @@ void SimulationHandler::ReadResults()
 }
 std::string SimulationHandler::InstantiateFilename(std::string filename)
 {
-    //if(fn.substr(fn.find_last_of(".") + 1) == "conf") {
-    //  std::cout << "Yes..." << std::endl;
-    //} else {
-    //  std::cout << "No..." << std::endl;
-    //}
-    return "";
+    std::string result;
+    std::string::size_type idx = filename.rfind('.');
+    if(idx != std::string::npos)
+    {
+        //Found externsion can add number
+        result = filename.substr(0,idx);
+        result += std::to_string(id_) + filename.substr(idx);
+    }
+    else
+    {
+        result = filename + std::to_string(id_);
+    }
+    std::cout<< result<<std::endl;
+    return result;
 }
