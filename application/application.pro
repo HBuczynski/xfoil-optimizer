@@ -21,7 +21,8 @@ SOURCES += \
     src/utility/tiny_xml/tinyxml.cpp \
     src/utility/tiny_xml/tinyxmlerror.cpp \
     src/utility/tiny_xml/tinyxmlparser.cpp \
-    src/xfoil/qsimulation.cpp
+    src/xfoil/qsimulation.cpp \
+    src/optimizer/geometry.cpp
 
 RESOURCES += src/gui/qml_files/qml.qrc \
     src/gui/qml_files/qml.qrc

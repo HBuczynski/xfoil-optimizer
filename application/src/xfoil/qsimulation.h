@@ -12,7 +12,7 @@ class QSimulationProxy : public QObject, public SimulationProxy
     Q_OBJECT
 public:
     explicit QSimulationProxy(QObject *parent = 0);
-    ~QSimulationProxy()
+    virtual ~QSimulationProxy() override
     {
         if(process_->state() != QProcess::NotRunning)
         {

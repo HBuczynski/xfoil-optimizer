@@ -28,15 +28,21 @@ class SimulationHandler
 {
 public:
     SimulationHandler(int handler_id):
-        id_(handler_id)
+        id_(handler_id),
+        results_(nullptr)
     {
+        InstantiateFilename("lol.txt");
+        InstantiateFilename("lol");
         proxy_ = new QSimulationProxy();
+
     }
     ~SimulationHandler()
     {
         if(proxy_->PollStatus() != QSimulationProxy::NotRunning)
             proxy_->Terminate();
+
         delete proxy_;
+
         if(results_ != nullptr)
             delete results_;
     }
