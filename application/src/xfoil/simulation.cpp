@@ -13,13 +13,13 @@ bool SimulationHandler::FileExists(std::string filename)
 
 void SimulationHandler::ReadResults()
 {
-    if(!FileExists("hlor"))
+    if(!FileExists(InstantiateFilename("polar.txt")))
         return;
 }
 std::string SimulationHandler::InstantiateFilename(std::string filename)
 {
     std::string result;
-    std::string::size_type idx = filename.rfind('.');
+    std::string::size_type idx = filename.find_last_of('.');
     if(idx != std::string::npos)
     {
         //Found externsion can add number

@@ -32,6 +32,7 @@ public:
         results_(nullptr)
     {
         InstantiateFilename("lol.txt");
+        InstantiateFilename("lol");
         proxy_ = new QSimulationProxy();
 
     }
