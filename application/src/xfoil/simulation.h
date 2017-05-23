@@ -37,9 +37,15 @@ public:
         if(proxy_->PollStatus() != QSimulationProxy::NotRunning)
             proxy_->Terminate();
         delete proxy_;
+        if(results_ != nullptr)
+            delete results_;
     }
 
 private:
+    void ReadResults();
+    bool FileExists(std::string filenames);
+    void SaveGeometry();
+    std::string InstantiateFilename(std::string filename);
     const int id_;
     SimulationProxy *proxy_;
     Geometry geometry_;
