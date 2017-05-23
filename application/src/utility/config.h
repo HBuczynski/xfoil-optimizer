@@ -1,4 +1,8 @@
 #pragma once
+#include <map>
+
+typedef std::map<std::string, std::string> ApplicationParameters;
+typedef std::map<std::string, double> OptimizationParameters;
 
 class Config
 {
