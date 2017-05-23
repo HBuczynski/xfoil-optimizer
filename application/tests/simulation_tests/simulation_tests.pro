@@ -8,7 +8,7 @@ QT       += testlib core
 
 QT       -= gui
 
-TARGET = tst_simulation_tests
+TARGET = tst_qsimulation_proxy_tests
 CONFIG   += console
 CONFIG   -= app_bundle
 
@@ -26,7 +26,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
-SOURCES += tst_simulation_tests.cpp ../../src/xfoil/simulation.cpp ../../src/xfoil/qsimulation.cpp
+SOURCES += ../../src/xfoil/simulation.cpp ../../src/xfoil/qsimulation.cpp \
+    tst_qsimulation_proxy_tests.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 INCLUDEPATH += ../../src

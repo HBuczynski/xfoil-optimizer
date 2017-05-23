@@ -7,12 +7,12 @@
 #include "xfoil/simulation_results.h"
 
 #include <iostream>
-class Simulation_tests : public QObject
+class QSimulationProxy_tests : public QObject
 {
     Q_OBJECT
 
 public:
-    Simulation_tests();
+    QSimulationProxy_tests();
 
 private Q_SLOTS:
     void CreateProxyObjectNotRunsTheXfoil();
@@ -20,20 +20,21 @@ private Q_SLOTS:
     void EnterMenuAndTerminate();
     void RunASimulationAndRemoveResultsFile();
     void RunMultipleParallelSimulations();
+    //void RunSequenceSimulation();
 
 };
 
-Simulation_tests::Simulation_tests()
+QSimulationProxy_tests::QSimulationProxy_tests()
 {
 
 }
 
-void Simulation_tests::CreateProxyObjectNotRunsTheXfoil()
+void QSimulationProxy_tests::CreateProxyObjectNotRunsTheXfoil()
 {
     QSimulationProxy proxy;
     QVERIFY2(proxy.PollStatus() == SimulationProxy::NotRunning, "Failure - Bad object creation");
 }
-void Simulation_tests::RunAndTerminateTheProgram()
+void QSimulationProxy_tests::RunAndTerminateTheProgram()
 {
     QSimulationProxy proxy;
     proxy.Run();
@@ -41,7 +42,7 @@ void Simulation_tests::RunAndTerminateTheProgram()
     proxy.Terminate();
     QVERIFY2(proxy.PollStatus() == SimulationProxy::Finished, "Failure - process not terminated - invalid state");
 }
-void Simulation_tests::EnterMenuAndTerminate()
+void QSimulationProxy_tests::EnterMenuAndTerminate()
 {
     QSimulationProxy proxy;
     proxy.AddCommand("PLOP");
@@ -55,7 +56,7 @@ void Simulation_tests::EnterMenuAndTerminate()
     QVERIFY2(proxy.PollStatus() == SimulationProxy::Finished, "Failure - process not terminated - invalid state");
 }
 
-void Simulation_tests::RunASimulationAndRemoveResultsFile()
+void QSimulationProxy_tests::RunASimulationAndRemoveResultsFile()
 {
     QSimulationProxy proxy;
     proxy.AddCommand("PLOP");
@@ -84,7 +85,7 @@ void Simulation_tests::RunASimulationAndRemoveResultsFile()
     QVERIFY(!QFile::exists(resFile));
 
 }
-void Simulation_tests::RunMultipleParallelSimulations()
+void QSimulationProxy_tests::RunMultipleParallelSimulations()
 {
     const unsigned int simCount = 8;
     QSimulationProxy proxy[simCount];
@@ -139,6 +140,6 @@ void Simulation_tests::RunMultipleParallelSimulations()
     }
 }
 
-QTEST_MAIN(Simulation_tests)
+QTEST_MAIN(QSimulationProxy_tests)
 
-#include "tst_simulation_tests.moc"
+#include "tst_qsimulation_proxy_tests.moc"
