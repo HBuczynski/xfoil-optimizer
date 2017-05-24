@@ -7,31 +7,29 @@
 #if defined(WIN64) || defined(_WIN64) || defined(__WIN64) && !defined(__CYGWIN__)
 
     #include <windows.h>
-    std::string getUserName()
-    {
-        WCHAR result[MAX_PATH];
-        std::wstring lol(result, GetModuleFileName(NULL, result, MAX_PATH));
-        std::string str(lol.begin(), lol.end());
-        str = str.substr(0, str.find_last_of("\\"));
-
-        return str;
-    }
     const static std::string separator("\\");
-    const std::string ConfigurationReader::projectPath_ = getUserName()+"\\XFOIL_Optimizer\\";
+    std::string path = []()->std::string {
+                                            WCHAR result[MAX_PATH];
+                                            std::wstring lol(result, GetModuleFileName(NULL, result, MAX_PATH));
+                                            std::string str(lol.begin(), lol.end());
+                                            str = str.substr(0, str.find_last_of("\\"));
+
+                                            return str;
+                                        }();
+    const std::string ConfigurationReader::projectPath_ = path +"\\XFOIL_Optimizer\\";
 
 #else
 
     #include <limits.h>
     #include <unistd.h>
 
-    std::string getUserName()
-    {
-      char result[ PATH_MAX ];
-      ssize_t count = readlink( "/proc/self/exe", result, PATH_MAX );
-      return std::string( result, (count > 0) ? count : 0 );
-    }
-
     static const std::string separator("/");
+    std::string path = []()->std::string {
+                                          char result[ PATH_MAX ];
+                                          ssize_t count = readlink( "/proc/self/exe", result, PATH_MAX );
+                                          return std::string( result, (count > 0) ? count : 0 );
+                                         }();
+
     std::string ConfigurationReader::projectPath_ = getUserName() + "/XFOIL_Optimizer/";
 #endif
 
