@@ -18,5 +18,6 @@ struct ExceptionHandler : public std::exception
 namespace utility
 {
     bool createDirectoryRecursively(const std::string &directory);
+    bool fileExists(std::string file);
 }
 

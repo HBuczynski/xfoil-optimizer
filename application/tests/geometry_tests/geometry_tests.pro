@@ -25,10 +25,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+INCLUDEPATH += ../../src
+
 
 SOURCES += tst_geometry_tests.cpp \
-    ../../src/optimizer/geometry.cpp
+    ../../src/optimizer/geometry.cpp \
+    ../../src/xfoil/qsimulation.cpp \
+    ../../src/xfoil/simulation.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 HEADERS += \
-    ../../src/optimizer/geometry.h
+    ../../src/optimizer/geometry.h \
+    ../../src/xfoil/qsimulation.h \
+    ../../src/xfoil/simulation_proxy.h
+
+DISTFILES += \
+    NACA0008.dat
+

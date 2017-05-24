@@ -20,6 +20,7 @@ private Q_SLOTS:
     void EnterMenuAndTerminate();
     void RunASimulationAndRemoveResultsFile();
     void RunMultipleParallelSimulations();
+    void GenerateNACAProfile();
     //void RunSequenceSimulation();
 
 };
@@ -100,8 +101,6 @@ void QSimulationProxy_tests::RunMultipleParallelSimulations()
         proxy[i].AddCommand("ALFA 0.0");
         snprintf(fnamebuf,sizeof(fnamebuf),"test%d.dat",i);
         proxy[i].AddCommand("CPWR " + std::string(fnamebuf));
-        //proxy[i].AddCommand("\r\n");
-        //proxy[i].AddCommand("QUIT");
     }
     for(unsigned int i = 0; i < simCount; ++i)
     {
@@ -138,6 +137,21 @@ void QSimulationProxy_tests::RunMultipleParallelSimulations()
         QFile::remove(resFile);
         QVERIFY(!QFile::exists(resFile));
     }
+}
+void QSimulationProxy_tests::GenerateNACAProfile()
+{
+    QSimulationProxy proxy;
+    proxy.AddCommand("NACA 0012");
+    proxy.AddCommand("SAVE NACA0012.dat");
+    proxy.AddCommand("\r\n");
+    proxy.Run();
+    QVERIFY2(proxy.PollStatus() != SimulationProxy::NotRunning, "Failure - process did not start - invalid state");
+    proxy.Terminate();
+    QVERIFY2(proxy.PollStatus() == SimulationProxy::Finished, "Failure - process not terminated - invalid state");
+    QString resFile = QString::fromStdString(proxy.GetExePath() + "/NACA0012.dat");
+    QVERIFY(QFile::exists(resFile));
+    QFile::remove(resFile);
+    QVERIFY(!QFile::exists(resFile));
 }
 
 QTEST_MAIN(QSimulationProxy_tests)

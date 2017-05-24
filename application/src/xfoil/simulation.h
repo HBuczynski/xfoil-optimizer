@@ -46,7 +46,7 @@ public:
         if(results_ != nullptr)
             delete results_;
     }
-
+    Geometry GetNACAAirfoil();
 private:
     void ReadResults();
     bool FileExists(std::string filenames);

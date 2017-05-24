@@ -2,7 +2,7 @@
 #include "log_writer.h"
 
 #include <QDir>
-
+#include <fstream>
 ExceptionHandler::ExceptionHandler(const std::string &ex) : e(ex)
 {
 
@@ -58,4 +58,9 @@ bool utility::createDirectoryRecursively(const std::string &directory)
             }
             return true;
     }
+}
+bool utility::fileExists(std::string file)
+{
+    std::ifstream infile(file);
+    return infile.good();
 }
