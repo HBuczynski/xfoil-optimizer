@@ -6,13 +6,18 @@
 
 #if defined(WIN64) || defined(_WIN64) || defined(__WIN64) && !defined(__CYGWIN__)
 
+    #include <windows.h>
     std::string getUserName()
     {
-        return std::string("Hubert");
-    }
+        WCHAR result[MAX_PATH];
+        std::wstring lol(result, GetModuleFileName(NULL, result, MAX_PATH));
+        std::string str(lol.begin(), lol.end());
+        str = str.substr(0, str.find_last_of("\\"));
 
+        return str;
+    }
     const static std::string separator("\\");
-    const std::string ConfigurationReader::projectPath_ = "C:\\Users\\" +  getUserName() +"\\Documents\\XFOIL_Optimizer\\";
+    const std::string ConfigurationReader::projectPath_ = getUserName()+"\\XFOIL_Optimizer\\";
 
 #else
     static const std::string separator("/");
