@@ -31,4 +31,10 @@ void Model::initializeLogger()
 void Model::initializeConfigurationReader()
 {
     configReader_.initialize();
+
+    //to do - do smt if initialize return false
+
+    applicationParameters_ = configReader_.getApplicationParameters();
+    optimizerParameres_ = configReader_.getOptimizerParameters();
+    projectPath_ = configReader_.getProjectPath();
 }

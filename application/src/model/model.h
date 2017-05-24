@@ -5,6 +5,7 @@
 
 #include "utility/log_writer.h"
 #include "utility/configuration_reader.h"
+#include "utility/config.h"
 #include "model/profile_parameters.h"
 
 class Model : public QObject
@@ -33,4 +34,8 @@ private:
     AviationProfileParameters targetProfileData_;
     LogWriter *logger_;
     ConfigurationReader configReader_;
+
+    std::string projectPath_;
+    ApplicationParameters applicationParameters_;
+    OptimizationParameters optimizerParameres_;
 };
