@@ -5,6 +5,8 @@
 #include "tiny_xml/tinystr.h"
 #include "tiny_xml/tinyxml.h"
 #include "log_writer.h"
+#include "config.h"
+
 
 class ConfigurationReader
 {
@@ -14,15 +16,33 @@ public:
 
 	bool initialize();
 
+    static std::string getProjectPath();
+    ApplicationParameters getApplicationParameters();
+    OptimizationParameters getOptimizerParameters();
+
 private:
+    bool initializeDirectories();
+    bool initializeLogger();
+
     void saveToFile(const char * fileName);
     bool loadFromFile(const char* fileName);
-    void parametersInitialization();
-    void addBranchToXML(TiXmlElement *root,std::string parentName, std::string childName);
     void loadApplicationParameters(TiXmlElement *pointerToElement, TiXmlHandle &hRoot);
+    void loadOptimizerParameters(TiXmlElement *pointerToElement, TiXmlHandle &hRoot);
+
+    void addBranchToXML(TiXmlElement *root,std::string parentName, std::string childName, ApplicationParameters map);
+    void addBranchToXML(TiXmlElement *root,std::string parentName, std::string childName, OptimizationParameters map);
+
+    void initializeAppParameters();
+    void initializeOptParameters();
 
 private:
     LogWriter *logger_;
 
-    std::string projectParameterstPath_;
+    ApplicationParameters applicationParameters_;
+    OptimizationParameters optimizationParameters_;
+
+    static const std::string projectPath_;
+    static const std::string folderConfigName_;
+    static const std::string fileConfigName_;
+    std::string fileParametersPath_;
 };

@@ -1,11 +1,11 @@
 #include "model/model.h"
-
+#include "utility/configuration_reader.h"
 #include <QDebug>
 
 Model::Model()
 {
-    initializeLogger();
     initializeConfigurationReader();
+    initializeLogger();
 }
 
 Model::~Model()
@@ -30,5 +30,11 @@ void Model::initializeLogger()
 
 void Model::initializeConfigurationReader()
 {
+    configReader_.initialize();
 
+    //to do - do smt if initialize return false
+
+    applicationParameters_ = configReader_.getApplicationParameters();
+    optimizerParameres_ = configReader_.getOptimizerParameters();
+    projectPath_ = configReader_.getProjectPath();
 }
