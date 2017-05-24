@@ -20,8 +20,19 @@
     const std::string ConfigurationReader::projectPath_ = getUserName()+"\\XFOIL_Optimizer\\";
 
 #else
+
+    #include <limits.h>
+    #include <unistd.h>
+
+    std::string getUserName()
+    {
+      char result[ PATH_MAX ];
+      ssize_t count = readlink( "/proc/self/exe", result, PATH_MAX );
+      return std::string( result, (count > 0) ? count : 0 );
+    }
+
     static const std::string separator("/");
-    std::string ConfigurationReader::projectPath_ = "/home/" + getenv("USER") + "/XFOIL_Optimizer/";
+    std::string ConfigurationReader::projectPath_ = getUserName() + "/XFOIL_Optimizer/";
 #endif
 
 const std::string ConfigurationReader::folderConfigName_ = "Config";
