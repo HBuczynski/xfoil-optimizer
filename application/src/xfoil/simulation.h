@@ -1,10 +1,18 @@
 #pragma once
 
 #include <vector>
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <cstdio>
+
 #include "xfoil/simulation_results.h"
-#include "optimizer/geometry.h"
+//#include "optimizer/geometry.h"
 #include "xfoil/simulation_proxy.h"
 #include "xfoil/qsimulation.h"
+#include "utility/utility.h"
+
+
 
 //!  Class controlling execution of external simulation tools
 /*!
@@ -27,17 +35,17 @@ private:
 class SimulationHandler
 {
 public:
-    SimulationHandler(int handler_id):
-        id_(handler_id),
+    SimulationHandler(Geometry &geom):
+        geometry_(geom),
+        id_(++id_total),
         results_(nullptr)
     {
-        InstantiateFilename("lol.txt");
-        InstantiateFilename("lol");
         proxy_ = new QSimulationProxy();
-
+        SaveGeometry();
     }
     ~SimulationHandler()
     {
+        DeleteGeometry();
         if(proxy_->PollStatus() != QSimulationProxy::NotRunning)
             proxy_->Terminate();
 
@@ -46,16 +54,36 @@ public:
         if(results_ != nullptr)
             delete results_;
     }
-    Geometry GetNACAAirfoil();
+    static Geometry GetNACAAirfoil(std::string code)
+    {
+
+        //Validate code//
+        if(code.length() > 4)
+            throw std::invalid_argument("Code invalid");
+        else if(!std::all_of(code.begin(), code.end(), ::isdigit))
+            throw std::invalid_argument("Code invalid");
+        QSimulationProxy tmpproxy;
+        tmpproxy.AddCommand("NACA 0012");
+        tmpproxy.AddCommand("SAVE NACA0012.dat");
+        tmpproxy.AddCommand("\r\n");
+        tmpproxy.Run();
+        tmpproxy.Terminate();
+        std::string filepath = tmpproxy.GetExePath() + "/NACA0012.dat";
+        Geometry retGeom(filepath);
+        utility::removeFile(filepath);
+
+        return retGeom;
+    }
 private:
     void ReadResults();
-    bool FileExists(std::string filenames);
     void SaveGeometry();
+    void DeleteGeometry();
     std::string InstantiateFilename(std::string filename);
     const int id_;
     SimulationProxy *proxy_;
     Geometry geometry_;
     SimResults *results_;
+    static unsigned int id_total;
 };
 
 

@@ -1,8 +1,9 @@
 #include "utility/utility.h"
-#include "log_writer.h"
+//#include "log_writer.h"
 
 #include <QDir>
 #include <fstream>
+#include <cstdio>
 ExceptionHandler::ExceptionHandler(const std::string &ex) : e(ex)
 {
 
@@ -13,6 +14,7 @@ ExceptionHandler::~ExceptionHandler()
 
 }
 
+using namespace utility;
 bool utility::createDirectoryRecursively(const std::string &directory)
 {
     #if defined(WIN64) || defined(_WIN64) || defined(__WIN64) && !defined(__CYGWIN__)
@@ -21,7 +23,7 @@ bool utility::createDirectoryRecursively(const std::string &directory)
         static const std::string separators("/");
     #endif
 
-    LogWriter *logger = &LogWriter::getInstance();
+    //LogWriter *logger = &LogWriter::getInstance();
 
     // If the specified directory name doesn't exist, do our thing
     bool directoryStatus = QDir().exists(directory.c_str());
@@ -33,7 +35,7 @@ bool utility::createDirectoryRecursively(const std::string &directory)
                 bool isSuccess = utility::createDirectoryRecursively(directory.substr(0, slashIndex));
                 if (!isSuccess)
                 {
-                    logger->addErrorMessage("utility::createDirectoryRecursively could not create parent directory.");
+                    //logger->addErrorMessage("utility::createDirectoryRecursively could not create parent directory.");
                     return false;
                 }
             }
@@ -43,7 +45,7 @@ bool utility::createDirectoryRecursively(const std::string &directory)
             bool result = QDir().mkdir(directory.c_str());
 
             if (result == false) {
-                logger->addErrorMessage("utility::createDirectoryRecursively could not create directory.");
+                //logger->addErrorMessage("utility::createDirectoryRecursively could not create directory.");
                 return false;
             }
             return true;
@@ -52,15 +54,21 @@ bool utility::createDirectoryRecursively(const std::string &directory)
 
             if(false)
             {
-                logger->addErrorMessage("utility::createDirectoryRecursively "
-                    "failed to create directory because a file with the same name exists.");
+                //logger->addErrorMessage("utility::createDirectoryRecursively "
+                 //   "failed to create directory because a file with the same name exists.");
                 return false;
             }
             return true;
     }
 }
+
 bool utility::fileExists(std::string file)
 {
     std::ifstream infile(file);
     return infile.good();
 }
+void utility::removeFile(std::string file)
+{
+    std::remove(file.c_str());
+}
+

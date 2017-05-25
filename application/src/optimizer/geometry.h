@@ -1,5 +1,10 @@
 #pragma once
 #include <vector>
+#include <fstream>
+#include <iostream>
+#include <iterator>
+#include <string>
+
 #include "xfoil/simulation_results.h"
 
 class Point;

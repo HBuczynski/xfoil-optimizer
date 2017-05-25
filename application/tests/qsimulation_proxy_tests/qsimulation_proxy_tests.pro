@@ -12,6 +12,8 @@ TARGET = tst_qsimulation_proxy_tests
 CONFIG   += console
 CONFIG   -= app_bundle
 
+CONFIG += c++11
+
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use

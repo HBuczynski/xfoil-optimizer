@@ -11,6 +11,7 @@ QT       -= gui
 TARGET = tst_simulation_handler_tests
 CONFIG   += console
 CONFIG   -= app_bundle
+CONFIG += c++11
 
 TEMPLATE = app
 
@@ -26,8 +27,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
-SOURCES += ../../src/xfoil/simulation.cpp ../../src/xfoil/qsimulation.cpp \
-    tst_simulation_handler_tests.cpp
+SOURCES += ../../src/utility/utility.cpp \
+    ../../src/xfoil/simulation.cpp \
+    tst_simulation_handler_tests.cpp \
+    ../../src/optimizer/geometry.cpp \
+    ../../src/xfoil/qsimulation.cpp
+
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 INCLUDEPATH += ../../src
@@ -36,4 +41,6 @@ HEADERS += \
     ../../src/xfoil/simulation.h \
     ../../src/xfoil/qsimulation.h \
     ../../src/xfoil/simulation_results.h\
-    ../../src/xfoil/simulation_proxy.h
+    ../../src/xfoil/simulation_proxy.h \
+    ../../src/utility/utility.h \
+    ../../src/optimizer/geometry.h

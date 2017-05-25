@@ -1,9 +1,4 @@
 #include "optimizer/geometry.h"
-#include <fstream>
-#include <iostream>
-#include <vector>
-#include <iterator>
-#include <string>
 
 using std::ofstream;
 using std::ifstream;
