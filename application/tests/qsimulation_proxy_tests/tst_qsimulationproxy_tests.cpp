@@ -140,6 +140,7 @@ void QSimulationProxy_tests::RunMultipleParallelSimulations()
 }
 void QSimulationProxy_tests::GenerateNACAProfile()
 {
+    //TODO - throw if this breaks//
     QSimulationProxy proxy;
     proxy.AddCommand("NACA 0012");
     proxy.AddCommand("SAVE NACA0012.dat");

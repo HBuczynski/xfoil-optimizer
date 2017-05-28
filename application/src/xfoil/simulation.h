@@ -11,20 +11,31 @@
 #include "xfoil/simulation_proxy.h"
 #include "xfoil/qsimulation.h"
 #include "utility/utility.h"
-
+#include <thread>
+#include <queue>
+#include <mutex>
 
 
 //!  Class controlling execution of external simulation tools
 /*!
   Controls multiple instances of xfoil optimizer running in parallel
+  Runs a thread that polls and initiates all xfoil proxy instances
+  Has an internal queue for requests
 */
 class SimulationScheduler
 {
 public:
+    struct Task
+    {
+
+    };
+
 private:
 	const int _parallelInstances = 4;
     std::vector<Geometry*> tasks;
-
+    std::queue<Task*> taskQueue_;
+    std::mutex queueMutex_;
+    std::thread *workerThread_;
 
 
 };
@@ -34,18 +45,31 @@ private:
 */
 class SimulationHandler
 {
+    friend class SimulationHandler_tests;
 public:
+    enum Status
+    {
+        Idle,
+        Running,
+        Finished,
+        Error
+    };
+
     SimulationHandler(Geometry &geom):
         geometry_(geom),
         id_(++id_total),
-        results_(nullptr)
+        results_(nullptr),
+        status_(Idle)
     {
         proxy_ = new QSimulationProxy();
         SaveGeometry();
     }
     ~SimulationHandler()
     {
+        //Tidy up//
         DeleteGeometry();
+        if(status_ != Idle)
+            DeleteResults();
         if(proxy_->PollStatus() != QSimulationProxy::NotRunning)
             proxy_->Terminate();
 
@@ -74,15 +98,19 @@ public:
 
         return retGeom;
     }
+    void Run();
+    Status PollStatus();
 private:
     void ReadResults();
     void SaveGeometry();
     void DeleteGeometry();
+    void DeleteResults();
     std::string InstantiateFilename(std::string filename);
     const int id_;
     SimulationProxy *proxy_;
     Geometry geometry_;
     SimResults *results_;
+    Status status_;
     static unsigned int id_total;
 };
 
