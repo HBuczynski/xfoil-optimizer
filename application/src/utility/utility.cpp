@@ -3,7 +3,7 @@
 
 #include <QDir>
 #include <fstream>
-#include <cstdio>
+
 ExceptionHandler::ExceptionHandler(const std::string &ex) : e(ex)
 {
 

@@ -35,7 +35,8 @@ std::string SimulationHandler::InstantiateFilename(std::string filename)
 }
 void SimulationHandler::SaveGeometry()
 {
-    geometry_.Save(proxy_->GetExePath() + "/" + InstantiateFilename("geometry.dat"));
+    std::cout<<(proxy_->GetExePath() + "/" + InstantiateFilename("geometry.dat"))<<std::endl;
+    geometry_.Save((std::string)(proxy_->GetExePath() + "\\" + InstantiateFilename("geometry.dat")));
 }
 
 void SimulationHandler::DeleteGeometry()

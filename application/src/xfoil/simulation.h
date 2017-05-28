@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <cstdio>
+//#include <cstdio>
 
 #include "xfoil/simulation_results.h"
 //#include "optimizer/geometry.h"

@@ -29,7 +29,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES +=  ../../src/xfoil/simulation.cpp ../../src/xfoil/qsimulation.cpp \
-            tst_qsimulationproxy_tests.cpp
+            tst_qsimulationproxy_tests.cpp \
+    ../../src/utility/utility.cpp \
+    ../../src/optimizer/geometry.cpp
 
 INCLUDEPATH += ../../src
 
