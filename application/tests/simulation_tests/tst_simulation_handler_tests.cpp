@@ -17,6 +17,7 @@ private Q_SLOTS:
     void LoadNACAProfileWithHandlerObject();
     void CreateHandlerObjectSavesGeometry();
     void RunSimulationTestResultsFile();
+    void RunSimulationResultsAreLoaded();
     void NotRunningSimulationThrows();
     void DeleteHandlerObectCleansTemporaryFiles();
 };
@@ -47,6 +48,16 @@ void SimulationHandler_tests::RunSimulationTestResultsFile()
     delete handler;
     QVERIFY(!utility::fileExists(resultPath));
 }
+void SimulationHandler_tests::RunSimulationResultsAreLoaded()
+{
+    SimulationHandler *handler = new SimulationHandler(SimulationHandler::GetNACAAirfoil("0012"));
+    QVERIFY(handler->results_ == nullptr);
+    handler->Run();
+    while(handler->PollStatus() == SimulationHandler::Running);
+    QVERIFY(handler->results_->GetPolarPointCount() != 0);
+    delete handler;
+}
+
 void SimulationHandler_tests::NotRunningSimulationThrows()
 {
     SimulationHandler handler(SimulationHandler::GetNACAAirfoil("0012"));

@@ -7,6 +7,47 @@ void SimulationHandler::ReadResults()
     std::ifstream infile(proxy_->GetExePath() + "/" + InstantiateFilename("result.txt"));
     if(infile.good())
     {
+        //Read file contents
+        std:: string line;
+        bool failure = false;
+        for(int i = 0; i < 12; ++i)//Skip intro lines - no real content//
+        {
+            if(!getline(infile, line))
+            {
+                //File was too short wtf//
+                failure = true;
+                break;
+            }
+            else
+            {}
+               // std::cout<<line<<std::endl;
+        }
+        if(!failure)
+        {
+            results_ = new SimResults();
+        }
+        while(getline(infile, line))
+        {
+            //Read 7 double parameters in a single line//
+            std::string::size_type sz;
+            SimResults::ResultEntry resLine;
+            //Can cause exception throws out of range
+            resLine.alfa = std::stod(line,&sz);
+            line = line.substr(sz);
+            resLine.cl = std::stod(line,&sz);
+            line = line.substr(sz);
+            resLine.cd = std::stod(line,&sz);
+            line = line.substr(sz);
+            resLine.cdp = std::stod(line,&sz);
+            line = line.substr(sz);
+            resLine.cm = std::stod(line,&sz);
+            line = line.substr(sz);
+            resLine.xtr_top = std::stod(line,&sz);
+            line = line.substr(sz);
+            resLine.xtr_bottom = std::stod(line,&sz);
+            results_->AddEntry(resLine);
+        }
+
         infile.close();
     }
     else
@@ -72,7 +113,7 @@ void SimulationHandler::Run()
     //Check if proxy really started - state error if it didnt//
     if(proxy_->PollStatus() == SimulationProxy::NotRunning)
         status_ = Error;//TODO add log message
-    std::cout <<"Running";
+    //std::cout <<"Running";
 
 }
 SimulationHandler::Status SimulationHandler::PollStatus()
@@ -86,13 +127,15 @@ SimulationHandler::Status SimulationHandler::PollStatus()
                 status_ = Idle;
             break;
             case SimulationProxy::Running://Verify timeout TODO//
-                std::cout <<"...";
+                //std::cout <<"...";
                 status_ = Running;
             break;
             case SimulationProxy::Error:
+                //std::cout <<"ERR";
                 status_ = Error;
             break;
             case SimulationProxy::Finished:
+                //std::cout <<"FIN";
                 ReadResults();
                 status_ = Finished;
             break;

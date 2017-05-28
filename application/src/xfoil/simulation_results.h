@@ -22,6 +22,15 @@ public:
     double CalcMinCd();
     double CalcMaxGlideRatio();
     double CalcAvgTorque();
+    void AddEntry(ResultEntry &entry)
+    {
+        results.push_back(entry);
+    }
+    std::vector<ResultEntry>::size_type const GetPolarPointCount()
+    {
+        return results.size();
+    }
+
 private:
     std::vector<ResultEntry> results;
 };
