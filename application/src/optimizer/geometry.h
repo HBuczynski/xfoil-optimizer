@@ -20,7 +20,7 @@ public:
     }
     void Load(std::string filename);
     void Save(std::string filename);
-    void Normalze();
+    void Normalize();
     void Transform();
     const std::vector<Point>& GetPoints()
     {

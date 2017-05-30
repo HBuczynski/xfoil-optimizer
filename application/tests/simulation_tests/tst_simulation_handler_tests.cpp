@@ -4,6 +4,7 @@
 #include "xfoil/simulation.h"
 #include "xfoil/simulation_results.h"
 #include "optimizer/geometry.h"
+#include "utility/config.h"
 
 #include <iostream>
 class SimulationHandler_tests : public QObject
@@ -20,6 +21,7 @@ private Q_SLOTS:
     void RunSimulationResultsAreLoaded();
     void NotRunningSimulationThrows();
     void DeleteHandlerObectCleansTemporaryFiles();
+    void CreateSimulationSchedulerSpawnsNewProcess();
 };
 
 SimulationHandler_tests::SimulationHandler_tests()
@@ -71,6 +73,12 @@ void SimulationHandler_tests::DeleteHandlerObectCleansTemporaryFiles()
     delete handler;
     QVERIFY(!utility::fileExists(path));
 
+}
+void SimulationHandler_tests::CreateSimulationSchedulerSpawnsNewProcess()
+{
+    Config::Optimization::SimulationParams params;
+    SimulationScheduler *sched = new SimulationScheduler(params);
+    delete sched;
 }
 
 QTEST_MAIN(SimulationHandler_tests)

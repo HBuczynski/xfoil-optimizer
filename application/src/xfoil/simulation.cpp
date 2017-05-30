@@ -80,7 +80,7 @@ void SimulationHandler::SaveGeometry()
 void SimulationHandler::DeleteGeometry()
 {
    // std::cout<< "DELETE GEOM "<< InstantiateFilename("geometry.dat")<<std::endl;
-    std::remove((proxy_->GetExePath() + "/" + InstantiateFilename("geometry.dat")).c_str());
+   std::remove((proxy_->GetExePath() + "/" + InstantiateFilename("geometry.dat")).c_str());
 }
 void SimulationHandler::DeleteResults()
 {
@@ -146,3 +146,67 @@ SimulationHandler::Status SimulationHandler::PollStatus()
     return status_;
 }
 
+void SimulationScheduler::ConsumeTask()
+{
+    //Initialize pointers for handler objects//
+    SimulationHandler **handlers = new SimulationHandler*[parallelInstances_];
+    for(int i = 0; i < parallelInstances_; ++i)
+        handlers[i] = nullptr;
+    while(workerEnable_)
+    {
+        //Free existing queue places//
+        for(int i = 0; i < parallelInstances_; ++i)
+        {
+            if(handlers[i] != nullptr)
+            {
+                handlerStatus_[i] = handlers[i]->PollStatus();
+                if(handlerStatus_[i] != SimulationHandler::Running)
+                {
+                    delete handlers[i];
+                    handlers[i] = nullptr;
+                    handlerStatus_[i] = SimulationHandler::NotExisting;
+                }
+            }
+        }
+        //Look for new task//
+        if(!taskQueue_.empty())
+        {
+            Task *task = taskQueue_.front();
+            taskQueue_.pop();
+            for(int i = 0; i < parallelInstances_; ++i)
+            {
+                //Search for empty queue place and run if available//
+                if(handlers[i] == nullptr)
+                {
+                    handlers[i] = new SimulationHandler(*task->geometry);
+                    handlers[i]->Run();
+                    break;
+                }
+            }
+
+
+        }
+    }
+    //Finish up all the tasks//
+    bool finished = false;
+    while(!finished)
+    {
+        finished = true;
+        for(int i = 0; i < parallelInstances_; ++i)
+        {
+            if(handlers[i] != nullptr)
+            {
+                int timeout = 100;//Around 1ms for status polling//
+                while(handlers[i]->PollStatus() == SimulationHandler::Running)
+                {
+                    if(--timeout < 0)
+                        break;
+                }
+                delete handlers[i];
+                handlers[i] = nullptr;
+                handlerStatus_[i] = SimulationHandler::NotExisting;
+            }
+        }
+    }
+    delete handlers;
+}

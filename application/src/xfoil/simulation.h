@@ -11,34 +11,12 @@
 #include "xfoil/simulation_proxy.h"
 #include "xfoil/qsimulation.h"
 #include "utility/utility.h"
+#include "utility/config.h"
 #include <thread>
 #include <queue>
 #include <mutex>
 
 
-//!  Class controlling execution of external simulation tools
-/*!
-  Controls multiple instances of xfoil optimizer running in parallel
-  Runs a thread that polls and initiates all xfoil proxy instances
-  Has an internal queue for requests
-*/
-class SimulationScheduler
-{
-public:
-    struct Task
-    {
-
-    };
-
-private:
-	const int _parallelInstances = 4;
-    std::vector<Geometry*> tasks;
-    std::queue<Task*> taskQueue_;
-    std::mutex queueMutex_;
-    std::thread *workerThread_;
-
-
-};
 //!  Class controlling execution single simulation tool using proxy interface
 /*!
   Controls single instance of xfoil optimizer
@@ -52,7 +30,8 @@ public:
         Idle,
         Running,
         Finished,
-        Error
+        Error,
+        NotExisting
     };
 
     SimulationHandler(Geometry &geom):
@@ -115,3 +94,60 @@ private:
 };
 
 
+//!  Class controlling execution of external simulation tools
+/*!
+  Controls multiple instances of xfoil optimizer running in parallel
+  Runs a thread that polls and initiates all xfoil proxy instances
+  Has an internal queue for requests
+*/
+class SimulationScheduler
+{
+public:
+    SimulationScheduler(Config::Optimization::SimulationParams &params):
+        parallelInstances_(params.parallelSimulations)
+    {
+        //Initialize handler state array//
+        handlerStatus_ = new SimulationHandler::Status[parallelInstances_];
+        for(int i =0; i < parallelInstances_; ++i)
+        {
+            handlerStatus_[i] = SimulationHandler::NotExisting;
+        }
+        //Initailize worker thread//
+        workerEnable_ = true;
+        workerThread_ = new std::thread (&SimulationScheduler::ConsumeTask, this);
+
+
+    }
+    ~SimulationScheduler()
+    {
+        //Terminate worker thread//
+        workerEnable_ = false;
+        workerThread_->join();
+        delete workerThread_;
+        delete[] handlerStatus_;
+    }
+
+    struct Task
+    {
+        Task(Geometry * geom):
+            geometry(geom),
+            handlerAssigned(-1)
+        {
+
+        }
+        Geometry * geometry;
+        int handlerAssigned = -1;
+    };
+
+private:
+    void ConsumeTask();
+    const int parallelInstances_;
+    std::vector<Geometry*> tasks;
+    std::queue<Task*> taskQueue_;
+    SimulationHandler::Status *handlerStatus_;
+    std::mutex queueMutex_;
+    std::thread *workerThread_;
+    bool workerEnable_;
+
+
+};
