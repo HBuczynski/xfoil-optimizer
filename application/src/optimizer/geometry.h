@@ -24,18 +24,18 @@ struct AirfoilCoefficients
     double c_l;
     double d_l;
 
-    AirfoilCoefficients() : p_u(0),
-                        q_u(0),
-                        a_u(0),
-                        b_u(0),
-                        c_u(0),
-                        d_u(0),
-                        p_l(0),
-                        q_l(0),
-                        a_l(0),
-                        b_l(0),
-                        c_l(0),
-                        d_l(0)
+    AirfoilCoefficients() : p_u(-100),
+                            q_u(-100),
+                            a_u(-100),
+                            b_u(-100),
+                            c_u(-100),
+                            d_u(-100),
+                            p_l(-100),
+                            q_l(-100),
+                            a_l(-100),
+                            b_l(-100),
+                            c_l(-100),
+                            d_l(-100)
     {
 
     }
@@ -46,23 +46,25 @@ class Geometry
 public:
     Geometry()
     {
-        InitializeCoefficients();
-        InitializeVectorX();
+        CalculateCoefficients();
+        calculateCordinateOfX();
     }
 
     Geometry(std::string filename)
     {
         Load(filename);
-        InitializeCoefficients();
-        InitializeVectorX();
+        CalculateCoefficients();
     }
     void Load(std::string filename);
-    void InitializeCoefficients();
-    void InitializeVectorX();
+    void CalculateCoefficients();
+    void SaveCoefficients(std::string filename);
+    void LoadFromCoefficients(std::string filename);
     void Save(std::string filename);
     void Normalze();
     void Transform();
-    const std::vector<Point> GetPoints();
+    const AirfoilCoefficients& getAifroilCoefficients();
+    std::vector<Point> GetPoints();
+
     const SimResults& GetResults()
     {
         return *simResults_;
@@ -70,15 +72,17 @@ public:
 
     Geometry &operator =(const Geometry &data)
     {
-        upperPoints_ = data.upperPoints_;
+        this->upperPoints_ = data.upperPoints_;
         lowerPoints_ = data.lowerPoints_;
-        vectorX_ = data.vectorX_;
 
         coefficients_ = data.coefficients_;
         simResults_  = data.simResults_;
 
         return *this;
     }
+
+private:
+    void calculateCordinateOfX();
 
 private:
     std::vector<Point> upperPoints_;
@@ -105,6 +109,7 @@ public:
     double x;
     double y;
 };
+
 inline bool operator==(const Point& lhs, const Point& rhs)
 {
     double eps = 0.00000001;
