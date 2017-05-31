@@ -26,6 +26,7 @@ private:
 
     void saveToFile(const char * fileName);
     bool loadFromFile(const char* fileName);
+
     void loadApplicationParameters(TiXmlElement *pointerToElement, TiXmlHandle &hRoot);
     void loadOptimizerParameters(TiXmlElement *pointerToElement, TiXmlHandle &hRoot);
 

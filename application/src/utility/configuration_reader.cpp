@@ -73,6 +73,7 @@ bool ConfigurationReader::initialize()
         saveToFile(fileParametersPath_.c_str());
         if (loadFromFile(fileParametersPath_.c_str()))
         {
+
             logger_->addInformationMessage("ConfigurationReader:: parameters were loaded with success from file.");
             return true;
         }
