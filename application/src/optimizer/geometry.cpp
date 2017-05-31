@@ -158,9 +158,13 @@ void Geometry::calculateCordinateOfX()
     }
 }
 
-bool Geometry::isAirfoilClosed()
+void Geometry::makeAirfoilClosed()
 {
-
+    int lastElement = upperPoints_.size() - 1;
+    if(upperPoints_[lastElement].y != lowerPoints_[lastElement].y)
+    {
+        lowerPoints_[lastElement].y = upperPoints_[lastElement].y;
+    }
 }
 
 bool Geometry::isProfileCrosses()

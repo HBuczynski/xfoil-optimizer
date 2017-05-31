@@ -83,7 +83,7 @@ public:
 
 private:
     void calculateCordinateOfX();
-    bool isAirfoilClosed();
+    void makeAirfoilClosed();
     bool isProfileCrosses();
 
 private:
