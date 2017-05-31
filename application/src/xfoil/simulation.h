@@ -12,10 +12,11 @@
 #include "xfoil/qsimulation.h"
 #include "utility/utility.h"
 #include "utility/config.h"
+
+
 #include <thread>
 #include <queue>
 #include <mutex>
-
 
 //!  Class controlling execution single simulation tool using proxy interface
 /*!
@@ -37,7 +38,6 @@ public:
     SimulationHandler(Geometry &geom):
         geometry_(geom),
         id_(++id_total),
-        results_(nullptr),
         status_(Idle)
     {
         proxy_ = new QSimulationProxy();
@@ -53,9 +53,6 @@ public:
             proxy_->Terminate();
 
         delete proxy_;
-
-        if(results_ != nullptr)
-            delete results_;
     }
     static Geometry GetNACAAirfoil(std::string code)
     {
@@ -87,8 +84,7 @@ private:
     std::string InstantiateFilename(std::string filename);
     const int id_;
     SimulationProxy *proxy_;
-    Geometry geometry_;
-    SimResults *results_;
+    Geometry &geometry_;
     Status status_;
     static unsigned int id_total;
 };
@@ -138,12 +134,19 @@ public:
         Geometry * geometry;
         int handlerAssigned = -1;
     };
+    void AddTask(Task task)
+    {
+        std::lock_guard<std::mutex> lock(queueMutex_);
+        taskQueue_.push(task);
+    }
+    bool IsTasksFinished() const;
 
+    //void FinishTasks();
 private:
     void ConsumeTask();
     const int parallelInstances_;
     std::vector<Geometry*> tasks;
-    std::queue<Task*> taskQueue_;
+    std::queue<Task> taskQueue_;
     SimulationHandler::Status *handlerStatus_;
     std::mutex queueMutex_;
     std::thread *workerThread_;

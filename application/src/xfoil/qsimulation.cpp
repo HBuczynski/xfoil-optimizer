@@ -25,6 +25,7 @@ QSimulationProxy::QSimulationProxy(QObject *parent):
             this,
             SLOT(read()));
 
+
 }
 void QSimulationProxy::Run()
 {
@@ -83,7 +84,7 @@ void QSimulationProxy::finished(int exitCode, QProcess::ExitStatus status)
 
 void QSimulationProxy::stateChanged(QProcess::ProcessState state)
 {
-    //std::cout<<"STATECHANGED\r\n"<<state.t;
+    //std::cout<<"STATECHANGED\r\n"<<state;
     switch(state)
     {
      case QProcess::NotRunning:

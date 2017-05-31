@@ -155,6 +155,6 @@ void QSimulationProxy_tests::GenerateNACAProfile()
     QVERIFY(!QFile::exists(resFile));
 }
 
-QTEST_MAIN(QSimulationProxy_tests)
+QTEST_APPLESS_MAIN(QSimulationProxy_tests)
 
 #include "tst_qsimulationproxy_tests.moc"

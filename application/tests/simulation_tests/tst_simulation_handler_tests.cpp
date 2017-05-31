@@ -7,6 +7,8 @@
 #include "utility/config.h"
 
 #include <iostream>
+#include <sstream>
+#include <iomanip>
 class SimulationHandler_tests : public QObject
 {
     Q_OBJECT
@@ -22,6 +24,8 @@ private Q_SLOTS:
     void NotRunningSimulationThrows();
     void DeleteHandlerObectCleansTemporaryFiles();
     void CreateSimulationSchedulerSpawnsNewProcess();
+    void CalculatingTheSameGeometryObjectTwiceDoesNotDoubleDataPoints();
+    void HandleMultipleParallelSimulations();
 };
 
 SimulationHandler_tests::SimulationHandler_tests()
@@ -52,11 +56,11 @@ void SimulationHandler_tests::RunSimulationTestResultsFile()
 }
 void SimulationHandler_tests::RunSimulationResultsAreLoaded()
 {
-    SimulationHandler *handler = new SimulationHandler(SimulationHandler::GetNACAAirfoil("0012"));
-    QVERIFY(handler->results_ == nullptr);
+    Geometry testGeom = SimulationHandler::GetNACAAirfoil("0012");
+    SimulationHandler *handler = new SimulationHandler(testGeom);
     handler->Run();
     while(handler->PollStatus() == SimulationHandler::Running);
-    QVERIFY(handler->results_->GetPolarPointCount() != 0);
+    QVERIFY(testGeom.GetResults().GetPolarPointCount() != 0);
     delete handler;
 }
 
@@ -78,9 +82,56 @@ void SimulationHandler_tests::CreateSimulationSchedulerSpawnsNewProcess()
 {
     Config::Optimization::SimulationParams params;
     SimulationScheduler *sched = new SimulationScheduler(params);
+    Geometry testGeom = SimulationHandler::GetNACAAirfoil("0012");
+    sched->AddTask(SimulationScheduler::Task(&testGeom));
     delete sched;
+
+}
+void SimulationHandler_tests::CalculatingTheSameGeometryObjectTwiceDoesNotDoubleDataPoints()
+{
+    Config::Optimization::SimulationParams params;
+    SimulationScheduler *sched = new SimulationScheduler(params);
+    Geometry testGeom = SimulationHandler::GetNACAAirfoil("0012");
+    sched->AddTask(SimulationScheduler::Task(&testGeom));
+    while(!testGeom.GetResults().IsCalculated());
+    int points = testGeom.GetResults().GetPolarPointCount();
+    sched->AddTask(SimulationScheduler::Task(&testGeom));
+    delete sched;
+    QVERIFY(points == testGeom.GetResults().GetPolarPointCount());
 }
 
-QTEST_MAIN(SimulationHandler_tests)
+void SimulationHandler_tests::HandleMultipleParallelSimulations()
+{
+    Config::Optimization::SimulationParams params;
+    std::stringstream ss;
+    SimulationScheduler *sched = new SimulationScheduler(params);
+    Geometry testGeom[10];
+    for(int i = 2; i < 12; ++i)
+    {
+        ss<<std::setfill('0') << std::setw(4) << i;
+        testGeom[i-2] = SimulationHandler::GetNACAAirfoil(ss.str());
+        ss.str("");
+        ss.clear();
+
+    }
+    for(int i = 0; i < 10; ++i)
+    {
+        sched->AddTask(SimulationScheduler::Task(&(testGeom[i])));
+    }
+
+    while(!sched->IsTasksFinished())
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
+    delete sched;
+
+    for(int i = 0; i < 10; ++i)
+    {
+        std::cout<<testGeom[i].GetResults().IsCalculated();
+        QVERIFY(testGeom[i].GetResults().IsCalculated());
+    }
+}
+
+QTEST_APPLESS_MAIN(SimulationHandler_tests)
 
 #include "tst_simulation_handler_tests.moc"

@@ -6,7 +6,11 @@
 */
 class SimResults
 {
+    friend class SimulationHandler;
 public:
+    SimResults():
+        calculated_(false)
+    {}
     struct ResultEntry
     {
         float alfa;
@@ -18,19 +22,20 @@ public:
         float xtr_bottom;
     };
 
-    double CalcMaxCl();
-    double CalcMinCd();
-    double CalcMaxGlideRatio();
-    double CalcAvgTorque();
-    void AddEntry(ResultEntry &entry)
-    {
-        results.push_back(entry);
-    }
-    std::vector<ResultEntry>::size_type const GetPolarPointCount()
+    double CalcMaxCl() const;
+    double CalcMinCd() const;
+    double CalcMaxGlideRatio() const;
+    double CalcAvgTorque() const;
+    std::vector<ResultEntry>::size_type  GetPolarPointCount() const
     {
         return results.size();
+    }
+    bool IsCalculated() const
+    {
+        return calculated_;
     }
 
 private:
     std::vector<ResultEntry> results;
+    bool calculated_;
 };

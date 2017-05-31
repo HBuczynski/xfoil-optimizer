@@ -10,6 +10,7 @@
 class Point;
 class Geometry
 {
+    friend class SimulationHandler;//This will write to results file
 public:
     Geometry()
     {
@@ -26,14 +27,15 @@ public:
     {
         return points;
     }
+
     const SimResults& GetResults()
     {
-        return *simResults_;
+        return simResults_;
     }
 
 private:
     std::vector<Point> points;
-    SimResults *simResults_;
+    SimResults simResults_;
 };
 class Point
 {
