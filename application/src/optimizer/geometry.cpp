@@ -58,7 +58,7 @@ void Geometry::CalculateCoefficients()
     coefficients_.c_l = 0.73;
     coefficients_.d_l = 1.6;
 //    this->SaveCoefficients();
-//    this->calculateCordinateOfX();
+    this->calculateCordinateOfX();
 //    this->Transform();
 }
 
@@ -148,8 +148,29 @@ void Geometry::calculateCordinateOfX()
         return;
     else
     {
+        for(double i=0; i< distanceFromEdgeOfAttack; i+=pointsDensity)
+            vectorX_.push_back(i);
 
+        double airfoilDensity = (1-distanceFromEdgeOfAttack)/(pointsCount - distanceFromEdgeOfAttack/pointsDensity);
+
+        for(double i=distanceFromEdgeOfAttack; i <=1; i+=airfoilDensity)
+            vectorX_.push_back(i);
     }
+}
+
+bool Geometry::isAirfoilClosed()
+{
+
+}
+
+bool Geometry::isProfileCrosses()
+{
+    for(int i=0; i<vectorX_.size(); ++i)
+    {
+        if(upperPoints_[i].y < lowerPoints_[i].y)
+            return false;
+    }
+    return true;
 }
 void Geometry::Save(std::string filename)
 {
@@ -178,19 +199,17 @@ void Geometry::Save(std::string filename)
 void Geometry::Transform()
 {
     //Calculate points based on new coefficients
-    //Musimy wcześniej zdefiniować długość wektora x, tutaj tylko modyfikujemy y
+    for(int i=0; i<vectorX_.size(); ++i)
+    {
+        upperPoints_[i].y = coefficients_.p_u*pow(vectorX_[i], coefficients_.a_u)*pow((1-vectorX_[i]), coefficients_.b_u)+
+                            coefficients_.q_u*pow(vectorX_[i], coefficients_.c_u)*pow((1-vectorX_[i]), coefficients_.d_u);
+    }
 
-//    for(int i=0; i<upperPoints_.size(); ++i)
-//    {
-//        upperPoints_[i].y = coefficients_.p_u*pow(vectorX_[i], coefficients_.a_u)*pow((1-vectorX_[i]), coefficients_.b_u)+
-//                            coefficients_.q_u*pow(vectorX_[i], coefficients_.c_u)*pow((1-vectorX_[i]), coefficients_.d_u);
-//    }
-
-//    for(int i=0; i<lowerPoints_.size(); ++i)
-//    {
-//        lowerPoints_[i].y = coefficients_.p_l*pow(vectorX_[i], coefficients_.a_l)*pow((1-vectorX_[i]), coefficients_.b_l)+
-//                            coefficients_.q_l*pow(vectorX_[i], coefficients_.c_l)*pow((1-vectorX_[i]), coefficients_.d_l);
-//    }
+    for(int i=0; i<vectorX_.size(); ++i)
+    {
+        lowerPoints_[i].y = coefficients_.p_l*pow(vectorX_[i], coefficients_.a_l)*pow((1-vectorX_[i]), coefficients_.b_l)+
+                            coefficients_.q_l*pow(vectorX_[i], coefficients_.c_l)*pow((1-vectorX_[i]), coefficients_.d_l);
+    }
 
 }
 

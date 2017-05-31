@@ -83,6 +83,8 @@ public:
 
 private:
     void calculateCordinateOfX();
+    bool isAirfoilClosed();
+    bool isProfileCrosses();
 
 private:
     std::vector<Point> upperPoints_;
@@ -90,7 +92,9 @@ private:
     std::vector<double> vectorX_;
 
     AirfoilCoefficients coefficients_;
-    const int pointsNumber = 150;
+    const int pointsCount = 150;
+    const double distanceFromEdgeOfAttack = 0.15;
+    const double pointsDensity = 0.00115;
 
     SimResults *simResults_;
 };
