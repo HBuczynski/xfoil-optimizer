@@ -14,8 +14,6 @@ public:
     virtual double const GetProgress() = 0;
 };
 
-
-
 class DudOptimizer : public AirfoilOptimizer
 {
 public:

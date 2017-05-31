@@ -2,7 +2,7 @@
 #include <QtTest>
 
 #include "optimizer/airfoil_optimizer.h"
-#include "optimizer/genetic.h"
+#include "optimizer/genetic/genetic.h"
 #include "optimizer/geometry.h"
 class OptimizerTest : public QObject
 {
