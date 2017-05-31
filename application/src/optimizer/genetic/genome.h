@@ -7,9 +7,9 @@
 class Genome
 {
 public:
-	Genome(Geometry &geometry) :
-		_geom(geometry)
-	{}
+    Genome(Geometry &geometry) :
+        _geom(geometry)
+    {}
 private:
-	Geometry _geom;
+    Geometry _geom;
 };

@@ -41,7 +41,6 @@ HEADERS += \
     src/model/model.h \
     src/model/profile_parameters.h \
     src/optimizer/genetic.h \
-    src/optimizer/genetic_datatypes.h \
     src/utility/configuration_reader.h \
     src/utility/log_writer.h \
     src/utility/time_manager.h \
@@ -58,7 +57,10 @@ HEADERS += \
     src/xfoil/qsimulation.h \
     src/xfoil/simulation_proxy.h \
     src/optimizer/geometry_structures.h \
-    src/optimizer/genetic/genetic.h
+    src/optimizer/genetic/genetic.h \
+    src/optimizer/genetic/genome.h \
+    src/optimizer/genetic/fitness_calculator.h \
+    src/optimizer/genetic/genome_scrambler.h
 
 QMAKE_CXXFLAGS_RELEASE -= -O
 QMAKE_CXXFLAGS_RELEASE -= -O1
