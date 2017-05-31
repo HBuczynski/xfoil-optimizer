@@ -22,7 +22,11 @@ SOURCES += \
     src/utility/tiny_xml/tinyxmlerror.cpp \
     src/utility/tiny_xml/tinyxmlparser.cpp \
     src/xfoil/qsimulation.cpp \
-    src/optimizer/geometry.cpp
+    src/optimizer/geometry.cpp \
+    src/optimizer/genetic/genetic.cpp \
+    src/optimizer/genetic/genome.cpp \
+    src/optimizer/genetic/fitness_calculator.cpp \
+    src/optimizer/genetic/genome_scrambler.cpp
 
 RESOURCES += src/gui/qml_files/qml.qrc \
     src/gui/qml_files/qml.qrc

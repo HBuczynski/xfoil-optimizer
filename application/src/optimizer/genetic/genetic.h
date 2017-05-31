@@ -17,16 +17,13 @@ class GeneticOptimizer : public AirfoilOptimizer
 
 public:
     enum GAState;
-    GeneticOptimizer():
-        state_(NotInitialized)
+
+    GeneticOptimizer(): state_(NotInitialized)
     {
 
     }
 
-    void Initialize()
-    {
-
-    }
+    void Initialize();
 
     GAState GetState() const
     {
