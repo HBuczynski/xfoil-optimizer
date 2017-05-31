@@ -7,6 +7,17 @@ using std::ofstream;
 using std::ifstream;
 using std::getline;
 
+Geometry::Geometry()
+{
+    CalculateCoefficients();
+}
+
+Geometry::Geometry(std::string filename)
+{
+    Load(filename);
+    CalculateCoefficients();
+}
+
 void Geometry::Load(std::string filename)
 {
     ifstream file;
@@ -219,6 +230,11 @@ void Geometry::Transform()
         lowerPoints_.push_back(Point(vectorX_[i], (coefficients_.p_l*pow(vectorX_[i], coefficients_.a_l)*pow((1-vectorX_[i]), coefficients_.b_l)+
                             coefficients_.q_l*pow(vectorX_[i], coefficients_.c_l)*pow((1-vectorX_[i]), coefficients_.d_l))));
     }
+}
+
+void Geometry::regressionAlgorithm()
+{
+
 }
 
 const AirfoilCoefficients &Geometry::getAifroilCoefficients()

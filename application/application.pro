@@ -56,7 +56,8 @@ HEADERS += \
     src/utility/tiny_xml/tinystr.h \
     src/utility/tiny_xml/tinyxml.h \
     src/xfoil/qsimulation.h \
-    src/xfoil/simulation_proxy.h
+    src/xfoil/simulation_proxy.h \
+    src/optimizer/geometry_structures.h
 
 QMAKE_CXXFLAGS_RELEASE -= -O
 QMAKE_CXXFLAGS_RELEASE -= -O1
