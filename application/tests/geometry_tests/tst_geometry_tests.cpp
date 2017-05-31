@@ -20,7 +20,8 @@ private Q_SLOTS:
     void SavingGeometryObjectsToFileIsReversible();
     void SavingAGeometryObjectGeneratesAFile();
     void SavingCoefficientsObjectsToFile();
-
+    void CreateVectorX();
+    void CheckIfBasicProfileIsNotCrossed();
 };
 
 Geometry_Tests::Geometry_Tests()
@@ -42,6 +43,12 @@ void Geometry_Tests::cleanupTestCase()
     QVERIFY(QFile::exists(profilePath));
     QFile::remove(profilePath);
     QVERIFY(!QFile::exists(profilePath));
+}
+void Geometry_Tests::CreateVectorX()
+{
+    Geometry geom1(profilePath.toStdString());
+    QVERIFY((*(--geom1.GetPoints().end())).x == 1);
+    QVERIFY(geom1.GetPoints().size() == 2*geom1.getPointsCount());
 }
 void Geometry_Tests::LoadingGeometryFromFileCreatesPoints()
 {
@@ -94,8 +101,11 @@ void Geometry_Tests::SavingCoefficientsObjectsToFile()
     QVERIFY(!QFile::exists(QString::fromStdString("tmpgeom.dat")));
 }
 
-
-
+void Geometry_Tests::CheckIfBasicProfileIsNotCrossed()
+{
+    Geometry geom1(profilePath.toStdString());
+    QVERIFY(geom1.isProfileCrossed() == false);
+}
 
 QTEST_MAIN(Geometry_Tests)
 

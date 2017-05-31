@@ -47,7 +47,6 @@ public:
     Geometry()
     {
         CalculateCoefficients();
-        calculateCordinateOfX();
     }
 
     Geometry(std::string filename)
@@ -64,6 +63,8 @@ public:
     void Transform();
     const AirfoilCoefficients& getAifroilCoefficients();
     std::vector<Point> GetPoints();
+    const int & getPointsCount();
+    bool isProfileCrossed();
 
     const SimResults& GetResults()
     {
@@ -84,7 +85,7 @@ public:
 private:
     void calculateCordinateOfX();
     void makeAirfoilClosed();
-    bool isProfileCrosses();
+
 
 private:
     std::vector<Point> upperPoints_;

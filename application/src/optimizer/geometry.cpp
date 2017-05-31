@@ -1,4 +1,5 @@
 #include "optimizer/geometry.h"
+#include <math.h>
 
 #include <QDebug>
 
@@ -59,7 +60,7 @@ void Geometry::CalculateCoefficients()
     coefficients_.d_l = 1.6;
 //    this->SaveCoefficients();
     this->calculateCordinateOfX();
-//    this->Transform();
+    this->Transform();
 }
 
 void Geometry::SaveCoefficients(std::string filename)
@@ -151,23 +152,25 @@ void Geometry::calculateCordinateOfX()
         for(double i=0; i< distanceFromEdgeOfAttack; i+=pointsDensity)
             vectorX_.push_back(i);
 
-        double airfoilDensity = (1-distanceFromEdgeOfAttack)/(pointsCount - distanceFromEdgeOfAttack/pointsDensity);
+        double airfoilDensity = (1-distanceFromEdgeOfAttack)/(pointsCount -1 - distanceFromEdgeOfAttack/pointsDensity);
 
-        for(double i=distanceFromEdgeOfAttack; i <=1; i+=airfoilDensity)
+        for(double i=distanceFromEdgeOfAttack; i <1; i+=airfoilDensity)
             vectorX_.push_back(i);
+        if(*(--vectorX_.end()) < 1)
+            *(--vectorX_.end()) = 1;
     }
 }
 
 void Geometry::makeAirfoilClosed()
 {
-    int lastElement = upperPoints_.size() - 1;
+    size_t lastElement = upperPoints_.size() - 1;
     if(upperPoints_[lastElement].y != lowerPoints_[lastElement].y)
     {
         lowerPoints_[lastElement].y = upperPoints_[lastElement].y;
     }
 }
 
-bool Geometry::isProfileCrosses()
+bool Geometry::isProfileCrossed()
 {
     for(int i=0; i<vectorX_.size(); ++i)
     {
@@ -202,19 +205,20 @@ void Geometry::Save(std::string filename)
 
 void Geometry::Transform()
 {
+    upperPoints_.clear();
+    lowerPoints_.clear();
     //Calculate points based on new coefficients
     for(int i=0; i<vectorX_.size(); ++i)
     {
-        upperPoints_[i].y = coefficients_.p_u*pow(vectorX_[i], coefficients_.a_u)*pow((1-vectorX_[i]), coefficients_.b_u)+
-                            coefficients_.q_u*pow(vectorX_[i], coefficients_.c_u)*pow((1-vectorX_[i]), coefficients_.d_u);
+        upperPoints_.push_back(Point(vectorX_[i], (coefficients_.p_u*pow(vectorX_[i], coefficients_.a_u)*pow((1-vectorX_[i]), coefficients_.b_u)+
+                           coefficients_.q_u*pow(vectorX_[i], coefficients_.c_u)*pow((1-vectorX_[i]), coefficients_.d_u))));
     }
 
     for(int i=0; i<vectorX_.size(); ++i)
     {
-        lowerPoints_[i].y = coefficients_.p_l*pow(vectorX_[i], coefficients_.a_l)*pow((1-vectorX_[i]), coefficients_.b_l)+
-                            coefficients_.q_l*pow(vectorX_[i], coefficients_.c_l)*pow((1-vectorX_[i]), coefficients_.d_l);
+        lowerPoints_.push_back(Point(vectorX_[i], (coefficients_.p_l*pow(vectorX_[i], coefficients_.a_l)*pow((1-vectorX_[i]), coefficients_.b_l)+
+                            coefficients_.q_l*pow(vectorX_[i], coefficients_.c_l)*pow((1-vectorX_[i]), coefficients_.d_l))));
     }
-
 }
 
 const AirfoilCoefficients &Geometry::getAifroilCoefficients()
@@ -233,5 +237,10 @@ std::vector<Point> Geometry::GetPoints()
         points.push_back(a);
 
     return points;
+}
+
+const int &Geometry::getPointsCount()
+{
+    return pointsCount;
 }
 
