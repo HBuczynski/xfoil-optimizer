@@ -4,3 +4,8 @@ void GeneticOptimizer::Initialize()
 {
 
 }
+
+GeneticOptimizer::GAState GeneticOptimizer::GetState() const
+{
+    return state_;
+}

@@ -3,6 +3,9 @@
 
 class FitnessCalculator
 {
+public:
+    FitnessCalculator();
+    ~FitnessCalculator();
 
 };
 

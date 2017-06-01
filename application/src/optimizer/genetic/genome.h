@@ -19,8 +19,10 @@ public:
                                     binaryChromosom_(new byte[coefficientsCount_])
     { }
 
+    void addCoefficients();
     void setFitness(double value);
     const double &getFitness();
+
     const byte &getChromosom();
 
     ~Genome();
@@ -29,7 +31,8 @@ private:
     Geometry geom_;
 
     byte *binaryChromosom_;
-    static int currentCoefficientCount_;
     const int coefficientsCount_;
     double fitness_;
+
+    static int currentCoefficientCount_;
 };

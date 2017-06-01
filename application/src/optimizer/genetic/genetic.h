@@ -19,16 +19,11 @@ public:
     enum GAState;
 
     GeneticOptimizer(): state_(NotInitialized)
-    {
-
-    }
+    { }
 
     void Initialize();
 
-    GAState GetState() const
-    {
-        return state_;
-    }
+    GAState GetState() const;
 
     enum GAState
     {
