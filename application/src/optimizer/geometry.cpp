@@ -250,7 +250,6 @@ std::vector<Point> Geometry::GetPoints()
 
     for(Point a : lowerPoints_)
         points.push_back(a);
-
     return points;
 }
 

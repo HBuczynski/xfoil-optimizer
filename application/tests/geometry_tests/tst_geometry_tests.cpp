@@ -23,7 +23,7 @@ private Q_SLOTS:
     void SavingCoefficientsObjectsToFile();
     void CreateVectorX();
     void CheckIfBasicProfileIsNotCrossed();
-    void CheckBasicAirfoilSimResultsMethodAccess();
+//    void CheckBasicAirfoilSimResultsMethodAccess();
 };
 
 Geometry_Tests::Geometry_Tests()
@@ -51,7 +51,7 @@ void Geometry_Tests::CreateVectorX()
 {
     Geometry geom1(profilePath.toStdString());
     QVERIFY((*(--geom1.GetPoints().end())).x == 1);
-    QVERIFY(geom1.GetPoints().size() == 2*geom1.getPointsCount());
+    QVERIFY(geom1.GetPoints().size() == 2*geom1.getPointsCount()-1);
 }
 void Geometry_Tests::LoadingGeometryFromFileCreatesPoints()
 {
