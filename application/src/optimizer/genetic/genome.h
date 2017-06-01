@@ -7,6 +7,7 @@
 /*!
   A more elaborate class description. [TODO]
 */
+
 class Genome
 {
 public:
@@ -18,12 +19,17 @@ public:
                                     binaryChromosom_(new byte[coefficientsCount_])
     { }
 
+    void setFitness(double value);
     const double &getFitness();
+    const byte &getChromosom();
 
     ~Genome();
+
 private:
     Geometry geom_;
+
     byte *binaryChromosom_;
+    static int currentCoefficientCount_;
     const int coefficientsCount_;
     double fitness_;
 };
