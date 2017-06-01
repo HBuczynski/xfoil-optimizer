@@ -23,7 +23,7 @@ private Q_SLOTS:
     void SavingCoefficientsObjectsToFile();
     void CreateVectorX();
     void CheckIfBasicProfileIsNotCrossed();
-//    void CheckBasicAirfoilSimResultsMethodAccess();
+    void CheckBasicAirfoilSimResultsMethodAccess();
 };
 
 Geometry_Tests::Geometry_Tests()

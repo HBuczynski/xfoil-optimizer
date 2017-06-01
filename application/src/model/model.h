@@ -36,6 +36,6 @@ private:
     ConfigurationReader configReader_;
 
     std::string projectPath_;
-    ApplicationParameters applicationParameters_;
-    OptimizerParameters optimizerParameres_;
+    Parameters applicationParameters_;
+//    OptimizerParameters optimizerParameres_;
 };
