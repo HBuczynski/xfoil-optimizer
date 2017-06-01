@@ -14,7 +14,12 @@ GeneticOptimizer::GAState GeneticOptimizer::GetState() const
 
 void GeneticOptimizer::generateInitialPopulation()
 {
-
+    for(int i=0; i<populationCount_; ++i)
+    {
+        Genome *genome = new Genome();
+        genome->setCoefficients(generateRandomCoefficients());
+        population_.push_back(*genome);
+    }
 }
 
 void GeneticOptimizer::checkGenomeFitness(Genome &genome)
