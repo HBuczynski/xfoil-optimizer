@@ -49,8 +49,6 @@ public:
 
 private:
     void calculateCordinateOfX();
-    void makeAirfoilClosed();
-
 
 private:
     std::vector<Point> upperPoints_;
