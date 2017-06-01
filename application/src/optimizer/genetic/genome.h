@@ -13,7 +13,10 @@ class Genome
 public:
 
     Genome(Geometry &geometry) :    geom_(geometry),
-                                    coefficientsCount_(12)
+                                    coefficientsCount_(12),
+                                    minCoefficientsRange_(0),
+                                    maxCoefficientsRange_(5),
+                                    maxBitsCount_(255)
 
     { }
 
@@ -34,5 +37,8 @@ private:
     BinaryAirfoilCoefficients binaryCoefficients_;
 
     const int coefficientsCount_;
+    const int minCoefficientsRange_;
+    const int maxCoefficientsRange_;
+    const int maxBitsCount_;
     double fitness_;
 };
