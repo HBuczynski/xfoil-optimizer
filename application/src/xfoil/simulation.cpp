@@ -230,10 +230,6 @@ void SimulationScheduler::ConsumeTask()
 }
 bool SimulationScheduler::IsTasksFinished() const
 {
-    for(int i = 0; i < params_.parallelSimulations; ++i)
-    {
-        std::cout<<"Status "<<i<<" - "<< handlerStatus_[i]<<std::endl;
-    }
     //Check for awaiting tasks
     if(taskQueue_.size() != 0)
         return false;
