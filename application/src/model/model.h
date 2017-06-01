@@ -37,5 +37,5 @@ private:
 
     std::string projectPath_;
     ApplicationParameters applicationParameters_;
-    OptimizationParameters optimizerParameres_;
+    OptimizerParameters optimizerParameres_;
 };

@@ -18,7 +18,7 @@ public:
 
     static std::string getProjectPath();
     ApplicationParameters getApplicationParameters();
-    OptimizationParameters getOptimizerParameters();
+    OptimizerParameters getOptimizerParameters();
 
 private:
     bool initializeDirectories();
@@ -31,7 +31,7 @@ private:
     void loadOptimizerParameters(TiXmlElement *pointerToElement, TiXmlHandle &hRoot);
 
     void addBranchToXML(TiXmlElement *root,std::string parentName, std::string childName, ApplicationParameters map);
-    void addBranchToXML(TiXmlElement *root,std::string parentName, std::string childName, OptimizationParameters map);
+    void addBranchToXML(TiXmlElement *root,std::string parentName, std::string childName, OptimizerParameters map);
 
     void initializeAppParameters();
     void initializeOptParameters();
@@ -40,7 +40,7 @@ private:
     LogWriter *logger_;
 
     ApplicationParameters applicationParameters_;
-    OptimizationParameters optimizationParameters_;
+    OptimizerParameters optimizationParameters_;
 
     static const std::string projectPath_;
     static const std::string folderConfigName_;

@@ -12,6 +12,7 @@
 #include "xfoil/qsimulation.h"
 #include "utility/utility.h"
 #include "utility/config.h"
+#include "utility/configuration_reader.h"
 
 
 #include <thread>

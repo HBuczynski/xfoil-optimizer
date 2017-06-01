@@ -35,7 +35,10 @@ SOURCES +=  ../../src/xfoil/simulation.cpp ../../src/xfoil/qsimulation.cpp \
     ../../src/optimizer/simulation_results.cpp
 
 INCLUDEPATH += ../../src
-
+win32 {
+    INCLUDEPATH += C:/boost_1_55_0
+}
+INCLUDEPATH += C:/boost_1_55_0
 HEADERS += \
     ../../src/xfoil/simulation.h \
     ../../src/xfoil/qsimulation.h \

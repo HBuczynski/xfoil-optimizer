@@ -27,6 +27,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 INCLUDEPATH += ../../src
 
+win32 {
+    INCLUDEPATH += C:/boost_1_55_0
+}
 
 SOURCES += tst_geometry_tests.cpp \
     ../../src/optimizer/geometry.cpp \

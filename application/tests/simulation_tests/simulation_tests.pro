@@ -32,12 +32,21 @@ SOURCES += ../../src/utility/utility.cpp \
     tst_simulation_handler_tests.cpp \
     ../../src/optimizer/geometry.cpp \
     ../../src/xfoil/qsimulation.cpp \
-    ../../src/optimizer/simulation_results.cpp
+    ../../src/optimizer/simulation_results.cpp \
+    ../../src/utility/configuration_reader.cpp \
+    ../../src/utility/tiny_xml/tinystr.cpp \
+    ../../src/utility/tiny_xml/tinyxml.cpp \
+    ../../src/utility/tiny_xml/tinyxmlerror.cpp \
+    ../../src/utility/tiny_xml/tinyxmlparser.cpp \
+    ../../src/utility/log_writer.cpp \
+    ../../src/utility/time_manager.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 INCLUDEPATH += ../../src
-
+win32 {
+    INCLUDEPATH += C:/boost_1_55_0
+}
 HEADERS += \
     ../../src/xfoil/simulation.h \
     ../../src/xfoil/qsimulation.h \
@@ -45,4 +54,9 @@ HEADERS += \
     ../../src/xfoil/simulation_proxy.h \
     ../../src/utility/utility.h \
     ../../src/optimizer/geometry.h \
-    ../../src/utility/config.h
+    ../../src/utility/config.h \
+    ../../src/utility/configuration_reader.h \
+    ../../src/utility/tiny_xml/tinystr.h \
+    ../../src/utility/tiny_xml/tinyxml.h \
+    ../../src/utility/log_writer.h \
+    ../../src/utility/time_manager.h

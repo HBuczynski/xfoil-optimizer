@@ -95,7 +95,7 @@ ApplicationParameters ConfigurationReader::getApplicationParameters()
     return applicationParameters_;
 }
 
-OptimizationParameters ConfigurationReader::getOptimizerParameters()
+OptimizerParameters ConfigurationReader::getOptimizerParameters()
 {
     return optimizationParameters_;
 }
@@ -147,7 +147,8 @@ void ConfigurationReader::initializeAppParameters()
 
 void ConfigurationReader::initializeOptParameters()
 {
-    optimizationParameters_["Cl"] = 0.23;
+    optimizationParameters_["ParallelInstances"] = 4;
+    //optimizationParameters_[""]
 }
 
 bool ConfigurationReader::loadFromFile(const char *fileName)
@@ -200,9 +201,9 @@ void ConfigurationReader::addBranchToXML(TiXmlElement *root, std::string parentN
     }
 }
 
-void ConfigurationReader::addBranchToXML(TiXmlElement *root, std::string parentName, std::string childName, OptimizationParameters container)
+void ConfigurationReader::addBranchToXML(TiXmlElement *root, std::string parentName, std::string childName, OptimizerParameters container)
 {
-    OptimizationParameters::iterator containerIter;
+    OptimizerParameters::iterator containerIter;
 
     TiXmlElement *parent = new TiXmlElement(parentName.c_str());
     root->LinkEndChild(parent);

@@ -35,7 +35,9 @@ SOURCES += tst_optimizertest.cpp \
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 INCLUDEPATH += ../../src
-
+win32 {
+    INCLUDEPATH += C:/boost_1_55_0
+}
 HEADERS += \
     ../../src/xfoil/qsimulation.h \
     ../../src/xfoil/simulation.h \
