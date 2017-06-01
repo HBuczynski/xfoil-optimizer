@@ -4,12 +4,13 @@ int Genome::currentCoefficientCount_ = 0;
 
 Genome::~Genome()
 {
-    delete[] binaryChromosom_;
+
 }
 
-void Genome::addCoefficients()
+void Genome::setCoefficients(AirfoilCoefficients coefficients)
 {
-
+    doubleCoefficients_ = coefficients;
+    convertDoubleCoefficientsToBinary(doubleCoefficients_, binaryCoefficients_);
 }
 
 void Genome::setFitness(double value)
@@ -22,8 +23,14 @@ const double &Genome::getFitness()
     return fitness_;
 }
 
-const Genome::byte &Genome::getChromosom()
+void Genome::convertDoubleCoefficientsToBinary(const AirfoilCoefficients &doubleCoefficients, BinaryAirfoilCoefficients &binaryCoefficients)
 {
-    return *binaryChromosom_;
+
 }
+
+void Genome::convertBinaryCoefficientsToDouble(const BinaryAirfoilCoefficients &binaryCoefficients, AirfoilCoefficients &doubleCoefficients)
+{
+
+}
+
 

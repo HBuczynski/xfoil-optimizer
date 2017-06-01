@@ -12,27 +12,27 @@ class Genome
 {
 public:
 
-    typedef std::uint8_t byte;
-
     Genome(Geometry &geometry) :    geom_(geometry),
-                                    coefficientsCount_(12),
-                                    binaryChromosom_(new byte[coefficientsCount_])
+                                    coefficientsCount_(12)
+
     { }
 
-    void addCoefficients();
+    ~Genome();
+
+    void setCoefficients(AirfoilCoefficients coefficients);
     void setFitness(double value);
     const double &getFitness();
 
-    const byte &getChromosom();
-
-    ~Genome();
+    void convertDoubleCoefficientsToBinary(const AirfoilCoefficients &doubleCoefficients, BinaryAirfoilCoefficients &binaryCoefficients);
+    void convertBinaryCoefficientsToDouble(const BinaryAirfoilCoefficients &binaryCoefficients, AirfoilCoefficients &doubleCoefficients);
+    void setBinaryVectorFromStruct(const BinaryAirfoilCoefficients &airfoilCoefficients);
 
 private:
     Geometry geom_;
 
-    byte *binaryChromosom_;
+    AirfoilCoefficients doubleCoefficients_;
+    BinaryAirfoilCoefficients binaryCoefficients_;
+
     const int coefficientsCount_;
     double fitness_;
-
-    static int currentCoefficientCount_;
 };

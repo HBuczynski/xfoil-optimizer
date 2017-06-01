@@ -1,6 +1,8 @@
 #ifndef GEOMETRY_STRUCTURES_H
 #define GEOMETRY_STRUCTURES_H
 
+typedef std::uint8_t byte;
+
 struct AirfoilCoefficients
 {
     /** Parameters of medial-camber line function */
@@ -45,6 +47,59 @@ struct AirfoilCoefficients
                             d_l(-100)
     {
 
+    }
+
+    AirfoilCoefficients &operator =(const AirfoilCoefficients &data)
+    {
+        p_u = data.p_u;
+        q_u = data.q_u;
+        a_u = data.a_u;
+        b_u = data.b_u;
+        c_u = data.c_u;
+        d_u = data.d_u;
+        p_l = data.p_l;
+        q_l = data.q_l;
+        a_l = data.a_l;
+        b_l = data.b_l;
+        c_l = data.c_l;
+        d_l = data.d_l;
+
+        return *this;
+    }
+};
+
+struct BinaryAirfoilCoefficients
+{
+    byte p_u;
+    byte p_l;
+    byte a_u;
+    byte a_l;
+    byte b_u;
+    byte b_l;
+
+    byte q_u;
+    byte q_l;
+    byte c_u;
+    byte c_l;
+    byte d_u;
+    byte d_l;
+
+    BinaryAirfoilCoefficients &operator =(const BinaryAirfoilCoefficients &data)
+    {
+        p_u = data.p_u;
+        q_u = data.q_u;
+        a_u = data.a_u;
+        b_u = data.b_u;
+        c_u = data.c_u;
+        d_u = data.d_u;
+        p_l = data.p_l;
+        q_l = data.q_l;
+        a_l = data.a_l;
+        b_l = data.b_l;
+        c_l = data.c_l;
+        d_l = data.d_l;
+
+        return *this;
     }
 };
 
