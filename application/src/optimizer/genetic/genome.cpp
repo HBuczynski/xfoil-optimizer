@@ -2,7 +2,8 @@
 
 Genome::~Genome()
 {
-
+    if(binaryCoefficientsArray_ != nullptr)
+        delete [] binaryCoefficientsArray_;
 }
 
 void Genome::setCoefficients(AirfoilCoefficients coefficients)
@@ -14,6 +15,11 @@ void Genome::setCoefficients(AirfoilCoefficients coefficients)
 void Genome::setFitness(double value)
 {
     fitness_ = value;
+}
+
+void Genome::setBinaryArray(char *array)
+{
+    binaryCoefficientsArray_ = array;
 }
 
 const double &Genome::getFitness()
@@ -56,9 +62,17 @@ void Genome::convertBinaryCoefficientsToDouble(const BinaryAirfoilCoefficients &
     doubleCoefficients.q_l = binaryCoefficients.q_l*scale;
     doubleCoefficients.q_u = binaryCoefficients.q_u*scale;
 }
-void Genome::setBinaryVectorFromStruct(const BinaryAirfoilCoefficients &airfoilCoefficients)
+void Genome::setBinaryArrayFromStruct(const BinaryAirfoilCoefficients &airfoilCoefficients)
 {
 
 }
 
+void Genome::setStructFromBinaryArray(const char *array)
+{
 
+}
+
+char *Genome::getCoefficientsArray()
+{
+    return binaryCoefficientsArray_;
+}

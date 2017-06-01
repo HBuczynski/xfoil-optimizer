@@ -7,19 +7,13 @@ class GenomeScrambler //This might need rethinking - maybe move to genome as it 
 {
 public:
     virtual void Mutate(Genome &genome) = 0;
-    virtual Genome Crossover(const Genome &g1, const Genome &g2) = 0;
+    virtual Genome Crossover(const char *g1, const char*g2) = 0;
 };
 class DudScrambler: public GenomeScrambler
 {
 public:
-    virtual void Mutate(Genome &genome) override
-    {
-
-    }
-   virtual Genome Crossover(const Genome &g1, const Genome &g2) override
-   {
-        //return Genome();
-   }
+   virtual void Mutate(Genome &genome) override;
+   virtual Genome Crossover(const char *g1, const char*g2) override;
 };
 
 #endif // GENOME_SCRAMBLER_H

@@ -12,11 +12,12 @@ class Genome
 {
 public:
 
-    Genome(Geometry &geometry) :    geom_(geometry),
-                                    coefficientsCount_(12),
-                                    minCoefficientsRange_(0),
-                                    maxCoefficientsRange_(5),
-                                    maxBitsCount_(255)
+    Genome() :    coefficientsCount_(12),
+                  minCoefficientsRange_(0),
+                  maxCoefficientsRange_(5),
+                  maxBitsCount_(255),
+                  binaryCoefficientsArray_(nullptr)
+
 
     { }
 
@@ -24,17 +25,22 @@ public:
 
     void setCoefficients(AirfoilCoefficients coefficients);
     void setFitness(double value);
+    void setBinaryArray(char *array);
     const double &getFitness();
 
     void convertDoubleCoefficientsToBinary(const AirfoilCoefficients &doubleCoefficients, BinaryAirfoilCoefficients &binaryCoefficients);
     void convertBinaryCoefficientsToDouble(const BinaryAirfoilCoefficients &binaryCoefficients, AirfoilCoefficients &doubleCoefficients);
-    void setBinaryVectorFromStruct(const BinaryAirfoilCoefficients &airfoilCoefficients);
+    void setBinaryArrayFromStruct(const BinaryAirfoilCoefficients &airfoilCoefficients);
+    void setStructFromBinaryArray(const char *array);
+
+    char *getCoefficientsArray();
 
 private:
     Geometry geom_;
 
     AirfoilCoefficients doubleCoefficients_;
     BinaryAirfoilCoefficients binaryCoefficients_;
+    char *binaryCoefficientsArray_;
 
     const int coefficientsCount_;
     const int minCoefficientsRange_;
