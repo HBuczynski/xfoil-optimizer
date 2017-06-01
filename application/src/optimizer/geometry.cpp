@@ -172,20 +172,11 @@ void Geometry::calculateCordinateOfX()
     }
 }
 
-void Geometry::makeAirfoilClosed()
-{
-    size_t lastElement = upperPoints_.size() - 1;
-    if(upperPoints_[lastElement].y != lowerPoints_[lastElement].y)
-    {
-        lowerPoints_[lastElement].y = upperPoints_[lastElement].y;
-    }
-}
-
 bool Geometry::isProfileCrossed()
 {
     for(int i=0; i<vectorX_.size(); ++i)
     {
-        if(upperPoints_[i].y < lowerPoints_[i].y)
+        if(upperPoints_[i].y <= lowerPoints_[i].y)
             return false;
     }
     return true;
@@ -229,6 +220,14 @@ void Geometry::Transform()
     {
         lowerPoints_.push_back(Point(vectorX_[i], (coefficients_.p_l*pow(vectorX_[i], coefficients_.a_l)*pow((1-vectorX_[i]), coefficients_.b_l)-
                             coefficients_.q_l*pow(vectorX_[i], coefficients_.c_l)*pow((1-vectorX_[i]), coefficients_.d_l))));
+    }
+
+    size_t lastElement = upperPoints_.size() - 1;
+
+    if(upperPoints_[lastElement].y == lowerPoints_[lastElement].y)
+    {
+       upperPoints_[lastElement].y = (upperPoints_[lastElement-1].y)/2;
+       lowerPoints_[lastElement].y = (lowerPoints_[lastElement-1].y)/2;
     }
 }
 
