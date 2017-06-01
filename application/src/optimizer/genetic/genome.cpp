@@ -33,4 +33,9 @@ void Genome::convertBinaryCoefficientsToDouble(const BinaryAirfoilCoefficients &
 
 }
 
+void Genome::setBinaryVectorFromStruct(const BinaryAirfoilCoefficients &airfoilCoefficients)
+{
+
+}
+
 
