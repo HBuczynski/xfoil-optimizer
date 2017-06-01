@@ -109,17 +109,17 @@ void Geometry_Tests::CheckIfBasicProfileIsNotCrossed()
     Geometry geom1(profilePath.toStdString());
     QVERIFY(geom1.isProfileCrossed() == false);
 }
-//void Geometry_Tests::CheckBasicAirfoilSimResultsMethodAccess()
-//{
-//    Geometry testGeom = SimulationHandler::GetNACAAirfoil("0008");
-//    SimulationHandler sim(testGeom);
-//    sim.Run();
-//    while(sim.PollStatus() == SimulationHandler::Running);
-//    testGeom.GetResults().CalcMaxCl();
-//    testGeom.GetResults().CalcMaxGlideRatio();
-//    testGeom.GetResults().CalcMinCd();
-//    testGeom.GetResults().CalcAvgTorque();
-//}
+void Geometry_Tests::CheckBasicAirfoilSimResultsMethodAccess()
+{
+    Geometry testGeom = SimulationHandler::GetNACAAirfoil("0008");
+    SimulationHandler sim(testGeom);
+    sim.Run();
+    while(sim.PollStatus() == SimulationHandler::Running);
+    testGeom.GetResults().CalcMaxCl();
+    testGeom.GetResults().CalcMaxGlideRatio();
+    testGeom.GetResults().CalcMinCd();
+    testGeom.GetResults().CalcAvgTorque();
+}
 
 QTEST_MAIN(Geometry_Tests)
 
