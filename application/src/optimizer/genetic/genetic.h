@@ -18,7 +18,12 @@ class GeneticOptimizer : public AirfoilOptimizer
 public:
     enum GAState;
 
-    GeneticOptimizer(): state_(NotInitialized)
+    GeneticOptimizer(): state_(NotInitialized),
+                        totalFintess(0),
+                        maxCoefficientValue_(3),
+                        populationCount_(20),
+                        elitesCount_(3)
+
     { }
 
     void Initialize();
@@ -56,10 +61,23 @@ public:
     }
 
 private:
+    void generateInitialPopulation();
+    void checkGenomeFitness(Genome &genome);
+    Genome &rouletteWheelSelection();
+
+    AirfoilCoefficients generateRandomCoefficients();
+
+
+private:
     //Members//
     GAState state_;
     Geometry baseGeometry_;
 
     std::vector<Genome> population_;
     std::vector<Genome> elites_;
+    double totalFintess;
+
+    const int populationCount_;
+    const int elitesCount_;
+    const int maxCoefficientValue_;
 };

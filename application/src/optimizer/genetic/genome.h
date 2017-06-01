@@ -17,8 +17,6 @@ public:
                   maxCoefficientsRange_(5),
                   maxBitsCount_(255),
                   binaryCoefficientsArray_(nullptr)
-
-
     { }
 
     ~Genome();
@@ -26,14 +24,15 @@ public:
     void setCoefficients(AirfoilCoefficients coefficients);
     void setFitness(double value);
     void setBinaryArray(char *array);
-    const double &getFitness();
+    double &getFitness();
+    char *getCoefficientsArray();
 
+
+private:
     void convertDoubleCoefficientsToBinary(const AirfoilCoefficients &doubleCoefficients, BinaryAirfoilCoefficients &binaryCoefficients);
     void convertBinaryCoefficientsToDouble(const BinaryAirfoilCoefficients &binaryCoefficients, AirfoilCoefficients &doubleCoefficients);
     void setBinaryArrayFromStruct(const BinaryAirfoilCoefficients &airfoilCoefficients);
     void setStructFromBinaryArray(const char *array);
-
-    char *getCoefficientsArray();
 
 private:
     Geometry geom_;

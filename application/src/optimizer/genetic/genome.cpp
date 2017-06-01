@@ -22,7 +22,7 @@ void Genome::setBinaryArray(char *array)
     binaryCoefficientsArray_ = array;
 }
 
-const double &Genome::getFitness()
+double &Genome::getFitness()
 {
     return fitness_;
 }

@@ -84,6 +84,22 @@ struct BinaryAirfoilCoefficients
     byte d_u;
     byte d_l;
 
+    BinaryAirfoilCoefficients() :   p_u(0),
+                                    q_u(0),
+                                    a_u(0),
+                                    b_u(0),
+                                    c_u(0),
+                                    d_u(0),
+                                    p_l(0),
+                                    q_l(0),
+                                    a_l(0),
+                                    b_l(0),
+                                    c_l(0),
+                                    d_l(0)
+    {
+
+    }
+
     BinaryAirfoilCoefficients &operator =(const BinaryAirfoilCoefficients &data)
     {
         p_u = data.p_u;
