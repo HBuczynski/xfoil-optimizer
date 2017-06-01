@@ -4,6 +4,7 @@
 #include "optimizer/airfoil_optimizer.h"
 #include "optimizer/genetic.h"
 #include "optimizer/geometry.h"
+#include "xfoil/simulation.h"
 class OptimizerTest : public QObject
 {
     Q_OBJECT
@@ -34,7 +35,7 @@ void OptimizerTest::cleanupTestCase()
 
 void OptimizerTest::GivenDudOptimizerProgressChanges()
 {
-    Geometry geom;
+    Geometry geom = SimulationHandler::GetNACAAirfoil("0012");
     DudOptimizer optimizer(geom);
     double savedProgress = optimizer.GetProgress();
     optimizer.OptimizeStep();

@@ -31,14 +31,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES +=  ../../src/xfoil/simulation.cpp ../../src/xfoil/qsimulation.cpp \
             tst_qsimulationproxy_tests.cpp \
     ../../src/utility/utility.cpp \
-    ../../src/optimizer/geometry.cpp
+    ../../src/optimizer/geometry.cpp \
+    ../../src/optimizer/simulation_results.cpp
 
 INCLUDEPATH += ../../src
 
 HEADERS += \
     ../../src/xfoil/simulation.h \
     ../../src/xfoil/qsimulation.h \
-    ../../src/xfoil/simulation_results.h\
+    ../../src/optimizer/simulation_results.h \
     ../../src/xfoil/simulation_proxy.h
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"

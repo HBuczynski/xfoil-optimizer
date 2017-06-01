@@ -2,6 +2,7 @@
 #include <QtTest>
 #include "xfoil/qsimulation.h"
 #include "xfoil/simulation_proxy.h"
+#include "xfoil/simulation.h"
 #include "optimizer/geometry.h"
 #include "utility/config.h"
 
@@ -22,6 +23,7 @@ private Q_SLOTS:
     void SavingCoefficientsObjectsToFile();
     void CreateVectorX();
     void CheckIfBasicProfileIsNotCrossed();
+    void CheckBasicAirfoilSimResultsMethodAccess();
 };
 
 Geometry_Tests::Geometry_Tests()
@@ -29,6 +31,7 @@ Geometry_Tests::Geometry_Tests()
 }
 void Geometry_Tests::initTestCase()
 {
+    //This is old direct proxy method of recieving airfoil file bu omits geometry object//
     QSimulationProxy proxy;
     proxy.AddCommand("NACA 0012");
     proxy.AddCommand("SAVE NACA0012.dat");
@@ -105,6 +108,17 @@ void Geometry_Tests::CheckIfBasicProfileIsNotCrossed()
 {
     Geometry geom1(profilePath.toStdString());
     QVERIFY(geom1.isProfileCrossed() == false);
+}
+void Geometry_Tests::CheckBasicAirfoilSimResultsMethodAccess()
+{
+    Geometry testGeom = SimulationHandler::GetNACAAirfoil("0008");
+    SimulationHandler sim(testGeom);
+    sim.Run();
+    while(sim.PollStatus() == SimulationHandler::Running);
+    testGeom.GetResults().CalcMaxCl();
+    testGeom.GetResults().CalcMaxGlideRatio();
+    testGeom.GetResults().CalcMinCd();
+    testGeom.GetResults().CalcAvgTorque();
 }
 
 QTEST_MAIN(Geometry_Tests)

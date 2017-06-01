@@ -2,7 +2,7 @@
 #include <QtTest>
 #include <QThread>
 #include "xfoil/simulation.h"
-#include "xfoil/simulation_results.h"
+#include "optimizer/simulation_results.h"
 #include "optimizer/geometry.h"
 #include "utility/config.h"
 

@@ -31,13 +31,18 @@ INCLUDEPATH += ../../src
 SOURCES += tst_geometry_tests.cpp \
     ../../src/optimizer/geometry.cpp \
     ../../src/xfoil/qsimulation.cpp \
-    ../../src/xfoil/simulation.cpp
+    ../../src/xfoil/simulation.cpp \
+    ../../src/optimizer/simulation_results.cpp \
+    ../../src/utility/utility.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 HEADERS += \
     ../../src/optimizer/geometry.h \
     ../../src/xfoil/qsimulation.h \
-    ../../src/xfoil/simulation_proxy.h
+    ../../src/xfoil/simulation_proxy.h \
+    ../../src/xfoil/simulation.h \
+    ../../src/optimizer/simulation_results.h \
+    ../../src/utility/utility.h
 
 DISTFILES += \
     NACA0008.dat

@@ -27,7 +27,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += tst_optimizertest.cpp \
-    ../../src/optimizer/geometry.cpp
+    ../../src/optimizer/geometry.cpp \
+    ../../src/xfoil/qsimulation.cpp \
+    ../../src/xfoil/simulation.cpp \
+    ../../src/utility/utility.cpp \
+    ../../src/optimizer/simulation_results.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 INCLUDEPATH += ../../src
+
+HEADERS += \
+    ../../src/xfoil/qsimulation.h \
+    ../../src/xfoil/simulation.h \
+    ../../src/xfoil/simulation_proxy.h \
+    ../../src/optimizer/simulation_results.h \
+    ../../src/optimizer/geometry.h \
+    ../../src/optimizer/geometry_structures.h \
+    ../../src/optimizer/airfoil_optimizer.h \
+    ../../src/utility/utility.h

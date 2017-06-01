@@ -22,7 +22,8 @@ SOURCES += \
     src/utility/tiny_xml/tinyxmlerror.cpp \
     src/utility/tiny_xml/tinyxmlparser.cpp \
     src/xfoil/qsimulation.cpp \
-    src/optimizer/geometry.cpp
+    src/optimizer/geometry.cpp \
+    src/optimizer/simulation_results.cpp
 
 RESOURCES += src/gui/qml_files/qml.qrc \
     src/gui/qml_files/qml.qrc
@@ -50,7 +51,7 @@ HEADERS += \
     src/optimizer/airfoil_optimizer.h \
     src/optimizer/geometry.h \
     src/utility/config.h \
-    src/xfoil/simulation_results.h \
+    src/optimizer/simulation_results.h \
     src/gui/settings_dialog.h \
     src/gui/plot_dialog.h \
     src/utility/tiny_xml/tinystr.h \

@@ -5,7 +5,7 @@
 #include <iterator>
 #include <string>
 
-#include "xfoil/simulation_results.h"
+#include "optimizer/simulation_results.h"
 #include "optimizer/geometry_structures.h"
 
 class Geometry

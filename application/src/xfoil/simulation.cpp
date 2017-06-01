@@ -25,7 +25,7 @@ void SimulationHandler::ReadResults()
         if(geometry_.simResults_.calculated_ == true)
         {
             //Clear previous results from the structure
-            geometry_.simResults_.results.clear();
+            geometry_.simResults_.results_.clear();
             geometry_.simResults_.calculated_ = false;
         }
         while(getline(infile, line))
@@ -47,7 +47,7 @@ void SimulationHandler::ReadResults()
             resLine.xtr_top = std::stod(line,&sz);
             line = line.substr(sz);
             resLine.xtr_bottom = std::stod(line,&sz);
-            geometry_.simResults_.results.push_back(resLine);
+            geometry_.simResults_.results_.push_back(resLine);
         }
         geometry_.simResults_.calculated_ = true;
         infile.close();

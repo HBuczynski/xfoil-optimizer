@@ -6,7 +6,7 @@
 #include <fstream>
 //#include <cstdio>
 
-#include "xfoil/simulation_results.h"
+#include "optimizer/simulation_results.h"
 //#include "optimizer/geometry.h"
 #include "xfoil/simulation_proxy.h"
 #include "xfoil/qsimulation.h"

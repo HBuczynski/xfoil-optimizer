@@ -31,7 +31,8 @@ SOURCES += ../../src/utility/utility.cpp \
     ../../src/xfoil/simulation.cpp \
     tst_simulation_handler_tests.cpp \
     ../../src/optimizer/geometry.cpp \
-    ../../src/xfoil/qsimulation.cpp
+    ../../src/xfoil/qsimulation.cpp \
+    ../../src/optimizer/simulation_results.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
@@ -40,7 +41,7 @@ INCLUDEPATH += ../../src
 HEADERS += \
     ../../src/xfoil/simulation.h \
     ../../src/xfoil/qsimulation.h \
-    ../../src/xfoil/simulation_results.h\
+    ../../src/optimizer/simulation_results.h\
     ../../src/xfoil/simulation_proxy.h \
     ../../src/utility/utility.h \
     ../../src/optimizer/geometry.h \

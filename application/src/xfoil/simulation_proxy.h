@@ -1,5 +1,5 @@
 #pragma once
-#include "xfoil/simulation_results.h"
+#include "optimizer/simulation_results.h"
 #include "optimizer/geometry.h"
 #include <string>
 
