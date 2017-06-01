@@ -3,14 +3,13 @@
 #include <iostream>
 SimResults::PolarPoint SimResults::CalcMaxCl() const
 {
-    if(!IsCalculated())
+    if(!IsCalculated() || results_.size() == 0)
         throw std::out_of_range("No result datapoints");
     PolarPoint maxCl;
     maxCl.alfa = results_.front().alfa;
     maxCl.param = results_.front().cl;
     for(ResultEntry entry: results_)
     {
-        std::cout<<"alfa - "<<entry.alfa << " cl - "<< entry.cl<<std::endl;
         if(entry.cl > maxCl.param)
         {
             maxCl.alfa = entry.alfa;
@@ -23,14 +22,13 @@ SimResults::PolarPoint SimResults::CalcMaxCl() const
 
 SimResults::PolarPoint SimResults::CalcMinCd() const
 {
-    if(!IsCalculated())
+    if(!IsCalculated() || results_.size() == 0)
         throw std::out_of_range("No result datapoints");
     PolarPoint minCd;
     minCd.alfa = results_.front().alfa;
     minCd.param = results_.front().cd;
     for(ResultEntry entry: results_)
     {
-        //std::cout<<"alfa - "<<entry.alfa << " cl - "<< entry.cl<<std::endl;
         if(entry.cl < minCd.param)
         {
             minCd.alfa = entry.alfa;
@@ -42,7 +40,7 @@ SimResults::PolarPoint SimResults::CalcMinCd() const
 }
 SimResults::PolarPoint SimResults::CalcMaxGlideRatio() const
 {
-    if(!IsCalculated())
+    if(!IsCalculated() || results_.size() == 0)
         throw std::out_of_range("No result datapoints");
 
     PolarPoint ratio;
@@ -51,7 +49,6 @@ SimResults::PolarPoint SimResults::CalcMaxGlideRatio() const
     for(ResultEntry entry: results_)
     {
         double tmp = entry.cl / entry.cd;
-        std::cout<<"alfa - "<<entry.alfa << " cl - "<< entry.cl<<std::endl;
         if(tmp > ratio.param)
         {
             ratio.alfa = entry.alfa;
@@ -63,7 +60,7 @@ SimResults::PolarPoint SimResults::CalcMaxGlideRatio() const
 }
 double SimResults::CalcAvgTorque() const
 {
-    if(!IsCalculated())
+    if(!IsCalculated() || results_.size() == 0)
         throw std::out_of_range("No result datapoints");
 
 }

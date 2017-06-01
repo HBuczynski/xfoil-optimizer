@@ -31,7 +31,7 @@ Geometry_Tests::Geometry_Tests()
 }
 void Geometry_Tests::initTestCase()
 {
-    //This is old direct proxy method of recieving airfoil file bu omits geometry object//
+    //This is old direct proxy method of recieving airfoil file but omits geometry object//
     QSimulationProxy proxy;
     proxy.AddCommand("NACA 0012");
     proxy.AddCommand("SAVE NACA0012.dat");
@@ -115,10 +115,10 @@ void Geometry_Tests::CheckBasicAirfoilSimResultsMethodAccess()
     SimulationHandler sim(testGeom);
     sim.Run();
     while(sim.PollStatus() == SimulationHandler::Running);
-    testGeom.GetResults().CalcMaxCl();
-    testGeom.GetResults().CalcMaxGlideRatio();
-    testGeom.GetResults().CalcMinCd();
-    testGeom.GetResults().CalcAvgTorque();
+    std::cout << "MaxCl: "<<testGeom.GetResults().CalcMaxCl().param<<std::endl;
+    std::cout << "Max glide ratio: "<<testGeom.GetResults().CalcMaxGlideRatio().param<<std::endl;
+    std::cout << "Min cd : "<<testGeom.GetResults().CalcMinCd().param<<std::endl;
+    std::cout << "avg torque: "<<testGeom.GetResults().CalcAvgTorque()<<std::endl;
 }
 
 QTEST_MAIN(Geometry_Tests)

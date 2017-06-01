@@ -103,7 +103,11 @@ void SimulationHandler::Run()
     proxy_->AddCommand("PACC");
     proxy_->AddCommand("");//do not save tmp
     proxy_->AddCommand("");//do not save polar
-    proxy_->AddCommand("ASEQ -10.0 18.0 0.2");//Sample range with angle step
+    proxy_->AddCommand("ITER");
+    proxy_->AddCommand("20");
+    proxy_->AddCommand("ASEQ -10.0 -2.0 1.0");
+    proxy_->AddCommand("ASEQ -2.0 2.0 0.2");
+    proxy_->AddCommand("ASEQ 2.0 15.0 0.5");
     proxy_->AddCommand("PACC");//Disable polar accumulation
 
     proxy_->AddCommand("PWRT 1");
