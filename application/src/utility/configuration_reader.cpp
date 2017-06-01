@@ -294,7 +294,8 @@ void ConfigurationReader::loadSimulatorParameters(TiXmlElement *pointerToElement
     for (pointerToElement; pointerToElement; pointerToElement = pointerToElement->NextSiblingElement())
     {
         pointerToElement->QueryStringAttribute("Julian", &tempString);
-        optimizationParameters_["Julian"] = tempString;
+        simulaotorParameters_["Julian"] = tempString;
+
     }
 }
 
