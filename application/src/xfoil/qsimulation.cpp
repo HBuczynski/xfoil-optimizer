@@ -4,7 +4,8 @@
 //For debugging
 #include <iostream>
 
-QSimulationProxy::QSimulationProxy(QObject *parent):
+QSimulationProxy::QSimulationProxy(const Config::SimulationParams &params, QObject *parent):
+    params_(params),
     status_(NotRunning)
 {
     process_ = new QProcess(this);
@@ -29,7 +30,7 @@ QSimulationProxy::QSimulationProxy(QObject *parent):
 }
 void QSimulationProxy::Run()
 {
-    QString programPath = QString::fromStdString(exePath_);
+    QString programPath = QString::fromStdString(params_.xfoilExecutablePath);
     QString program = "\"" + programPath + "/xfoil.exe" + "\"";
     QStringList arglist;
 
@@ -38,6 +39,7 @@ void QSimulationProxy::Run()
     if(process_->waitForStarted(TIMEOUT_LONG))
     {
         status_ = Running;
+        startTime_ = Clock::now();
         for(std::string s : commands_)
         {
             std::string command = s + "\r\n";
@@ -48,6 +50,7 @@ void QSimulationProxy::Run()
         process_->write("QUIT\n\r",6);
         process_->waitForBytesWritten(TIMEOUT_SHORT);
         process_->closeWriteChannel();
+
     }
     else
     {

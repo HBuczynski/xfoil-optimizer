@@ -12,7 +12,7 @@
 #include "xfoil/qsimulation.h"
 #include "utility/utility.h"
 #include "utility/config.h"
-#include "utility/configuration_reader.h"
+//#include "utility/configuration_reader.h"
 
 
 #include <thread>
@@ -36,12 +36,13 @@ public:
         NotExisting
     };
 
-    SimulationHandler(Geometry &geom):
+    SimulationHandler(Geometry &geom, const Config::SimulationParams &params):
+        params_(params),
         geometry_(geom),
         id_(++id_total),
         status_(Idle)
     {
-        proxy_ = new QSimulationProxy();
+        proxy_ = new QSimulationProxy(params);
         SaveGeometry();
     }
     ~SimulationHandler()
@@ -63,7 +64,8 @@ public:
             throw std::invalid_argument("Code invalid");
         else if(!std::all_of(code.begin(), code.end(), ::isdigit))
             throw std::invalid_argument("Code invalid");
-        QSimulationProxy tmpproxy;
+        Config::SimulationParams params;
+        QSimulationProxy tmpproxy(params);
         tmpproxy.AddCommand("NACA 0012");
         tmpproxy.AddCommand("SAVE NACA0012.dat");
         tmpproxy.AddCommand("\r\n");
@@ -88,6 +90,7 @@ private:
     Geometry &geometry_;
     Status status_;
     static unsigned int id_total;
+    const Config::SimulationParams params_;
 };
 
 
@@ -100,19 +103,18 @@ private:
 class SimulationScheduler
 {
 public:
-    SimulationScheduler(Config::Optimization::SimulationParams &params):
-        parallelInstances_(params.parallelSimulations)
+    SimulationScheduler(Config::SimulationParams params):
+        params_(params)
     {
         //Initialize handler state array//
-        handlerStatus_ = new SimulationHandler::Status[parallelInstances_];
-        for(int i =0; i < parallelInstances_; ++i)
+        handlerStatus_ = new SimulationHandler::Status[params_.parallelSimulations];
+        for(int i =0; i < params_.parallelSimulations; ++i)
         {
             handlerStatus_[i] = SimulationHandler::NotExisting;
         }
         //Initailize worker thread//
         workerEnable_ = true;
         workerThread_ = new std::thread (&SimulationScheduler::ConsumeTask, this);
-
 
     }
     ~SimulationScheduler()
@@ -145,7 +147,14 @@ public:
     //void FinishTasks();
 private:
     void ConsumeTask();
-    const int parallelInstances_;
+    bool VerifyParams(Parameters &params);
+    const Config::SimulationParams params_;
+
+
+    //int parallelInstances_;
+
+
+
     std::vector<Geometry*> tasks;
     std::queue<Task> taskQueue_;
     SimulationHandler::Status *handlerStatus_;

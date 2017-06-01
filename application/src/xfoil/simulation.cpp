@@ -155,13 +155,13 @@ SimulationHandler::Status SimulationHandler::PollStatus()
 void SimulationScheduler::ConsumeTask()
 {
     //Initialize pointers for handler objects//
-    SimulationHandler **handlers = new SimulationHandler*[parallelInstances_];
-    for(int i = 0; i < parallelInstances_; ++i)
+    SimulationHandler **handlers = new SimulationHandler*[params_.parallelSimulations];
+    for(int i = 0; i < params_.parallelSimulations; ++i)
         handlers[i] = nullptr;
     while(workerEnable_)
     {
         //Free existing queue places//
-        for(int i = 0; i < parallelInstances_; ++i)
+        for(int i = 0; i < params_.parallelSimulations; ++i)
         {
             if(handlers[i] != nullptr)
             {
@@ -178,7 +178,7 @@ void SimulationScheduler::ConsumeTask()
         //Look for new task//
         if(!taskQueue_.empty())
         {
-            for(int i = 0; i < parallelInstances_; ++i)
+            for(int i = 0; i < params_.parallelSimulations; ++i)
             {
                 //Search for empty queue place and run if available//
                 if(handlers[i] == nullptr)
@@ -188,7 +188,7 @@ void SimulationScheduler::ConsumeTask()
                     Task task = taskQueue_.front();
                     taskQueue_.pop();
                     queueMutex_.unlock();
-                    handlers[i] = new SimulationHandler(*task.geometry);
+                    handlers[i] = new SimulationHandler(*task.geometry, params_);
                     handlers[i]->Run();
                     handlerStatus_[i] = handlers[i]->PollStatus();
                     break;
@@ -196,7 +196,7 @@ void SimulationScheduler::ConsumeTask()
             }
         }
         //Poll/ update task states
-        for(int i = 0; i < parallelInstances_; ++i)
+        for(int i = 0; i < params_.parallelSimulations; ++i)
         {
             if(handlers[i] != nullptr)
             {
@@ -209,7 +209,7 @@ void SimulationScheduler::ConsumeTask()
     while(!finished)
     {
         finished = true;
-        for(int i = 0; i < parallelInstances_; ++i)
+        for(int i = 0; i < params_.parallelSimulations; ++i)
         {
             if(handlers[i] != nullptr)
             {
@@ -230,11 +230,15 @@ void SimulationScheduler::ConsumeTask()
 }
 bool SimulationScheduler::IsTasksFinished() const
 {
+    for(int i = 0; i < params_.parallelSimulations; ++i)
+    {
+        std::cout<<"Status "<<i<<" - "<< handlerStatus_[i]<<std::endl;
+    }
     //Check for awaiting tasks
     if(taskQueue_.size() != 0)
         return false;
     //Check also for running tasks//
-    for(int i = 0; i < parallelInstances_; ++i)
+    for(int i = 0; i < params_.parallelSimulations; ++i)
     {
         if(handlerStatus_[i] != SimulationHandler::NotExisting)
             return false;

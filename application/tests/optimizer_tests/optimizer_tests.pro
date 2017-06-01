@@ -31,12 +31,16 @@ SOURCES += tst_optimizertest.cpp \
     ../../src/xfoil/qsimulation.cpp \
     ../../src/xfoil/simulation.cpp \
     ../../src/utility/utility.cpp \
-    ../../src/optimizer/simulation_results.cpp
+    ../../src/optimizer/simulation_results.cpp \
+    ../../src/optimizer/fitness.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 INCLUDEPATH += ../../src
 win32 {
     INCLUDEPATH += C:/boost_1_55_0
+}
+win64 {
+    #INCLUDEPATH += C:/boost_1_55_0
 }
 HEADERS += \
     ../../src/xfoil/qsimulation.h \
@@ -46,4 +50,5 @@ HEADERS += \
     ../../src/optimizer/geometry.h \
     ../../src/optimizer/geometry_structures.h \
     ../../src/optimizer/airfoil_optimizer.h \
-    ../../src/utility/utility.h
+    ../../src/utility/utility.h \
+    ../../src/optimizer/fitness.h

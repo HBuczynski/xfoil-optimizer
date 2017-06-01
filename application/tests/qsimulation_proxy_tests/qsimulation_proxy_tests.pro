@@ -38,6 +38,9 @@ INCLUDEPATH += ../../src
 win32 {
     INCLUDEPATH += C:/boost_1_55_0
 }
+win64 {
+    #INCLUDEPATH += C:/boost_1_55_0
+}
 INCLUDEPATH += C:/boost_1_55_0
 HEADERS += \
     ../../src/xfoil/simulation.h \

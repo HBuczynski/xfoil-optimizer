@@ -8,12 +8,21 @@ typedef std::map<std::string, boost::variant<double, std::string, int> > Paramet
 class Config
 {
 public:
-    struct Gui
+    struct ApplicationParams
     {
 
     };
+    struct SimulationParams
+    {
+        int parallelSimulations = 4;
+        int iterationLimit = 30;
+        std::string xfoilExecutablePath =  "C:\\Users\\Kub\\Documents\\workspace\\xfoil-optimizer\\xfoil\\win32";
+        bool viscousEnable = true;
+        int reynoldsNo = 10000000;
+        int xfoilTimeout = 40;
 
-    struct Optimization
+    };
+    struct OptimizerParams
     {
 
         struct GeneticOptimizerParams
@@ -33,12 +42,7 @@ public:
             CrossoverMethod crossoverMethod = SinglepointCrossover;
             double mutationRate = 0.1;
         };
-        struct SimulationParams
-        {
-            int parallelSimulations = 4;
-            std::string xfoilExecutablePath = "./xfoil.exe";
 
-        };
         enum OptimizerType
         {
             Genetic
@@ -48,7 +52,8 @@ public:
         SimulationParams simulation;
     };
     // Config contains //
-    Gui gui;
-    Optimization optimization;
+    //Gui gui;
+    //Optimization optimization;
 
 };
+

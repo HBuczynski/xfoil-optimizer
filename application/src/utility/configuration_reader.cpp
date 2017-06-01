@@ -91,19 +91,27 @@ std::string ConfigurationReader::getProjectPath()
     return projectPath_;
 }
 
-Parameters ConfigurationReader::getApplicationParameters()
+Config::ApplicationParams ConfigurationReader::getApplicationParameters()
 {
-    return applicationParameters_;
+    Config::ApplicationParams rparams;
+    return rparams;
 }
 
-Parameters ConfigurationReader::getOptimizerParameters()
+Config::OptimizerParams ConfigurationReader::getOptimizerParameters()
 {
-    return optimizationParameters_;
+    Config::OptimizerParams rparams;
+    return rparams;
 }
-
-Parameters ConfigurationReader::getSimulatorParameters()
+Config::SimulationParams ConfigurationReader::getSimulatorParameters()
 {
-    return simulaotorParameters_;
+    Config::SimulationParams rparams;
+    rparams.iterationLimit = boost::get<int>(simulaotorParameters_["maxIterations"]);
+    rparams.parallelSimulations = boost::get<int>(simulaotorParameters_["parallelTasks"]);
+    rparams.reynoldsNo = boost::get<int>(simulaotorParameters_["viscousRe"]);
+    rparams.viscousEnable = boost::get<std::string>(simulaotorParameters_["viscousEnable"]) == "True";
+    rparams.xfoilExecutablePath = boost::get<std::string>(simulaotorParameters_["xfoilPath"]);
+    rparams.xfoilTimeout = boost::get<int>(simulaotorParameters_["xfoilTimeout"]);
+    return rparams;
 }
 
 
@@ -118,7 +126,6 @@ bool ConfigurationReader::initializeLogger()
     bool isSuccess = utility::createDirectoryRecursively(directoryLogger);
 
     logger_ = &LogWriter::getInstance();
-
     return isSuccess && logger_->initialize(directoryLogger);
 }
 
@@ -152,18 +159,23 @@ void ConfigurationReader::saveToFile(const char *fileName)
 void ConfigurationReader::initializeAppParameters()
 {
     applicationParameters_["Config"] = "lolo";
-    applicationParameters_["IntTest"] = 4;
-    applicationParameters_["DoubleTest"] = 2.02344;
 }
 
 void ConfigurationReader::initializeOptParameters()
 {
+    Config::OptimizerParams dparams;
     optimizationParameters_["ParallelInstances"] = 4;
 }
 
 void ConfigurationReader::initializeSimParameters()
 {
-    simulaotorParameters_["Julian"] = "tulipan";
+    Config::SimulationParams dparams;
+    simulaotorParameters_["parallelTasks"] = dparams.parallelSimulations;
+    simulaotorParameters_["xfoilPath"] = dparams.xfoilExecutablePath;
+    simulaotorParameters_["maxIterations"] = dparams.iterationLimit;
+    simulaotorParameters_["viscousRe"] = dparams.reynoldsNo;
+    simulaotorParameters_["viscousEnable"] = dparams.viscousEnable==true ? "True" : "False";
+    simulaotorParameters_["xfoilTimeout"] = dparams.xfoilTimeout;
 }
 
 bool ConfigurationReader::loadFromFile(const char *fileName)

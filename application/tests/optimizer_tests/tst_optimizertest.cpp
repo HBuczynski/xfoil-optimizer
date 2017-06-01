@@ -18,6 +18,7 @@ private Q_SLOTS:
     void GivenDudOptimizerProgressChanges();
     void OptimizerIsNotInitializedAtConstruction();
     void OptimizerIsInitializedAfterInitialize();
+    void FitnessFunctionObjectCreation();
 };
 
 OptimizerTest::OptimizerTest()
@@ -51,6 +52,10 @@ void OptimizerTest::OptimizerIsInitializedAfterInitialize()
      GeneticOptimizer optimizer;
      optimizer.Initialize();
      QVERIFY(optimizer.GetState() == GeneticOptimizer::GenerationComplete);
+}
+void OptimizerTest::FitnessFunctionObjectCreation()
+{
+
 }
 
 QTEST_APPLESS_MAIN(OptimizerTest)
