@@ -24,7 +24,26 @@ public:
     };
     struct OptimizerParams
     {
+        struct Fitness
+        {
+            bool optimizeStall = false;
+            bool optimizeCl = true;
+            bool optimizeCd = true;
+            bool optimizeGlide = false;
+            bool optimizeMoment = false;
 
+            double targetCl = 1.3;
+            double targetCd = 0.01;
+            double targetGlide = 120.0;
+            double targetStallAlfa = 12.0;
+            double targetMoment = 0.115;
+
+            double weightCl =1.0;
+            double weightCd = 1.0;
+            double weightGlide = 1.0;
+            double weightStall = 0.5;
+            double weightMoment = 0.5;
+        };
         struct GeneticOptimizerParams
         {
             enum CrossoverMethod
@@ -43,10 +62,12 @@ public:
             double mutationRate = 0.1;
         };
 
+
         enum OptimizerType
         {
             Genetic
         };
+        Fitness fitness;
         OptimizerType optimizerType = Genetic;
         GeneticOptimizerParams geneticOptimizer;
         SimulationParams simulation;

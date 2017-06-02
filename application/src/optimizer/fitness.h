@@ -1,13 +1,14 @@
 #pragma once
 #include "optimizer/simulation_results.h"
-#include "utility/configuration_reader.h"
+#include "utility/config.h"
 class FitnessModel
 {
 public:
-    FitnessModel()
+    FitnessModel(Config::OptimizerParams::Fitness params):
+        params_(params)
     {}
     double Calculate(const SimResults &results);
 private:
-
+    const Config::OptimizerParams::Fitness params_;
 };
 

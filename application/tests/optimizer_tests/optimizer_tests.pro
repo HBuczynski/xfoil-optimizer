@@ -51,4 +51,5 @@ HEADERS += \
     ../../src/optimizer/geometry_structures.h \
     ../../src/optimizer/airfoil_optimizer.h \
     ../../src/utility/utility.h \
-    ../../src/optimizer/fitness.h
+    ../../src/optimizer/fitness.h \
+    ../../src/utility/config.h

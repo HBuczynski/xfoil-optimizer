@@ -8,33 +8,28 @@ double FitnessModel::Calculate(const SimResults &results)
     maxGlide = results.CalcMaxGlideRatio();
     minCd =results.CalcMinCd();
     avgTorq = results.CalcAvgTorque();
-
-    //TMP values//
-    bool oStall, oCl, oGlide, oCd, oTorq;
-    double tStall, tCl, tGlide, tCd, tTorq;
-    double wStall, wCl, wGlide, wCd, wTorq;
     //Fitness calcilation//
     double fitness = 0.0;
 
-    if(oStall)
+    if(params_.optimizeStall)
     {
-        fitness += wStall * (15 - abs(tStall - maxCl.alfa));//Minimizing, dont allow for overshoot 15 seems good bias
+        fitness += params_.weightMoment * (15 - abs(params_.targetStallAlfa - maxCl.alfa));//Minimizing, dont allow for overshoot 15 seems good bias
     }
-    if(oCl)
+    if(params_.optimizeCl)
     {
-        fitness += wCl * (3.0 - abs(tCl - maxCl.param));
+        fitness += params_.weightCl * (3.0 - abs(params_.targetCl - maxCl.param));
     }
-    if(oGlide)
+    if(params_.optimizeGlide)
     {
-        fitness += wGlide * (300 - abs(tGlide - maxGlide.param));
+        fitness += params_.weightGlide * (300 - abs(params_.targetGlide - maxGlide.param));
     }
-    if(oCd)
+    if(params_.optimizeGlide)
     {
-        fitness += wCd * (tCd - minCd.param);//Minimize draag coefficient, allow overshoot
+        fitness += params_.weightCd * (params_.targetCd - minCd.param);//Minimize draag coefficient, allow overshoot
     }
-    if(oTorq)
+    if(params_.optimizeMoment)
     {
-        fitness += wTorq * (0.5 - abs(tTorq - avgTorq)); // Aim for target torque
+        fitness += params_.optimizeMoment * (0.5 - abs(params_.targetMoment - avgTorq)); // Aim for target torque
     }
     return fitness;
 }
