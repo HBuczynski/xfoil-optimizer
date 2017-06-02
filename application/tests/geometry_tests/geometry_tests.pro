@@ -31,6 +31,7 @@ INCLUDEPATH += ../../src
 SOURCES += tst_geometry_tests.cpp \
     ../../src/optimizer/geometry.cpp \
     ../../src/optimizer/genetic/genome.cpp \
+    ../../src/optimizer/genetic/fitness_calculator.cpp \
     ../../src/optimizer/genetic/genetic.cpp \
     ../../src/xfoil/qsimulation.cpp \
     ../../src/xfoil/simulation.cpp

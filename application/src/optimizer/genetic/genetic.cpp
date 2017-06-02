@@ -18,7 +18,35 @@ void GeneticOptimizer::generateInitialPopulation()
     {
         Genome *genome = new Genome();
         genome->setCoefficients(generateRandomCoefficients());
-        population_.push_back(*genome);
+        population_.push_back(genome);
+    }
+}
+
+void GeneticOptimizer::addGenomeToElite(Genome *genome)
+{
+    for(auto iter = elites_.begin(); iter != elites_.end(); ++iter )
+    {
+        if(genome->getFitness() > (*iter)->getFitness())
+        {
+           Genome *gen = *iter;
+           delete gen;
+           elites_.erase(iter);
+           elites_.push_back(genome);
+        }
+    }
+}
+
+void GeneticOptimizer::addGenomeToPopulation(Genome *genome)
+{
+    for(auto iter = population_.begin(); iter != population_.end(); ++iter )
+    {
+        if(genome->getFitness() > (*iter)->getFitness())
+        {
+           Genome *gen = *iter;
+           delete gen;
+           population_.erase(iter);
+           population_.push_back(genome);
+        }
     }
 }
 
@@ -37,10 +65,10 @@ Genome &GeneticOptimizer::rouletteWheelSelection()
 
     for (int i=0; i<populationCount_; i++)
     {
-        fitnessSoFar += population_[i].getFitness();
+        fitnessSoFar += population_[i]->getFitness();
         //if the fitness so far > random number return the chromo at this point
         if (fitnessSoFar >= slice)
-            return population_[i];
+            return *population_[i];
     }
 }
 

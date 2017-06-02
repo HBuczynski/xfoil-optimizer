@@ -29,7 +29,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += tst_optimizertest.cpp \
     ../../src/optimizer/geometry.cpp \
     ../../src/optimizer/genetic/genome.cpp \
-    ../../src/optimizer/genetic/genetic.cpp
+    ../../src/optimizer/genetic/genetic.cpp \
+    ../../src/optimizer/genetic/fitness_calculator.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 INCLUDEPATH += ../../src

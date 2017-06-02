@@ -1,6 +1,7 @@
 #pragma once
 
 #include "optimizer/geometry.h"
+#include "optimizer/genetic/fitness_calculator.h"
 
 
 //!  Class providing basic 2D airfoil geometry representation
@@ -29,6 +30,7 @@ public:
 
 
 private:
+    void calculateFitness();
     void convertDoubleCoefficientsToBinary(const AirfoilCoefficients &doubleCoefficients, BinaryAirfoilCoefficients &binaryCoefficients);
     void convertBinaryCoefficientsToDouble(const BinaryAirfoilCoefficients &binaryCoefficients, AirfoilCoefficients &doubleCoefficients);
     void setBinaryArrayFromStruct(const BinaryAirfoilCoefficients &airfoilCoefficients);
@@ -39,6 +41,7 @@ private:
 
     AirfoilCoefficients doubleCoefficients_;
     BinaryAirfoilCoefficients binaryCoefficients_;
+    FitnessCalculator fitnessCalculator_;
     char *binaryCoefficientsArray_;
 
     const int coefficientsCount_;

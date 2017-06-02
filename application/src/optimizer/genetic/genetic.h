@@ -62,6 +62,8 @@ public:
 
 private:
     void generateInitialPopulation();
+    void addGenomeToElite(Genome *genome);
+    void addGenomeToPopulation(Genome *genome);
     void checkGenomeFitness(Genome &genome);
     Genome &rouletteWheelSelection();
 
@@ -73,8 +75,8 @@ private:
     GAState state_;
     Geometry baseGeometry_;
 
-    std::vector<Genome> population_;
-    std::vector<Genome> elites_;
+    std::vector<Genome*> population_;
+    std::vector<Genome*> elites_;
     double totalFintess;
 
     const int populationCount_;
