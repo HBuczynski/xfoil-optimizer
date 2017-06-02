@@ -50,7 +50,6 @@ void OptimizerTest::OptimizerIsNotInitializedAtConstruction()
 void OptimizerTest::OptimizerIsInitializedAfterInitialize()
 {
      GeneticOptimizer optimizer;
-     optimizer.Initialize();
      QVERIFY(optimizer.GetState() == GeneticOptimizer::GenerationComplete);
 }
 void OptimizerTest::FitnessFunctionObjectCreation()

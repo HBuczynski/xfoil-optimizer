@@ -12,6 +12,13 @@ Geometry::Geometry()
     CalculateCoefficients();
 }
 
+Geometry::Geometry(AirfoilCoefficients coeff)
+{
+    coefficients_ = coeff;
+    this->calculateCordinateOfX();
+    this->Transform();
+}
+
 Geometry::Geometry(std::string filename)
 {
     Load(filename);

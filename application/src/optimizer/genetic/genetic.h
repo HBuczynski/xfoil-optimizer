@@ -5,6 +5,7 @@
 #include "xfoil/simulation.h"
 #include "optimizer/genetic/genome.h"
 #include "optimizer/genetic/genome_scrambler.h"
+#include "utility/config.h"
 
 
 
@@ -19,16 +20,22 @@ class GeneticOptimizer : public AirfoilOptimizer
 public:
     enum GAState;
 
-    GeneticOptimizer(): state_(NotInitialized),
-                        totalFintess(0),
-                        maxCoefficientValue_(3),
-                        populationCount_(20),
-                        elitesCount_(3),
-                        continueOptimization_(true),
-                        iterationNumber_(20)
-    { }
+    GeneticOptimizer():
+                                                        state_(NotInitialized),
+                                                        totalFintess(0),
+                                                        maxCoefficientValue_(3),
+                                                        populationCount_(20),
+                                                        elitesCount_(3),
+                                                        continueOptimization_(true),
+                                                        iterationNumber_(20),
+                                                        simulationScheduler_(nullptr)
+    {
 
-    void Initialize();
+    }
+
+    ~GeneticOptimizer();
+
+    void initialize(Config::SimulationParams &params);
     void runGeneticAlgorithm();
     GAState GetState() const;
 
@@ -66,6 +73,7 @@ private:
     void generateInitialPopulation();
     void addGenomeToElite(Genome *genome);
     void addGenomeToPopulation(Genome *genome);
+    void createPopulationAfterReproduction();
     bool checkGenomeFitness(Genome *genome);
 
     Genome *rouletteWheelSelection();
@@ -76,11 +84,15 @@ private:
     //Members//
     GAState state_;
     DudScrambler scrambler_;
+    SimulationScheduler *simulationScheduler_;
     Geometry baseGeometry_;
+    Config::SimulationParams simulationParams_;
+
 
     bool continueOptimization_;
     std::vector<Genome*> population_;
     std::vector<Genome*> elites_;
+    std::vector<Genome*> tempPopulation;
     double totalFintess;
 
     const int populationCount_;

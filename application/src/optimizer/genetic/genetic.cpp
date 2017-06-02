@@ -1,10 +1,18 @@
 #include "optimizer/genetic/genetic.h"
 
 #include <cstdlib>
+#include <map>
 
-void GeneticOptimizer::Initialize()
+GeneticOptimizer::~GeneticOptimizer()
 {
+    if(simulationScheduler_ != nullptr)
+        delete simulationScheduler_;
+}
 
+void GeneticOptimizer::initialize(Config::SimulationParams &params)
+{
+    simulationParams_ = params;
+    simulationScheduler_ = new SimulationScheduler(simulationParams_);
 }
 
 void GeneticOptimizer::runGeneticAlgorithm()
@@ -15,12 +23,15 @@ void GeneticOptimizer::runGeneticAlgorithm()
 
     int currentIterationNumber = 0;
     int newGenomeNumber = 0;
-    //some temporary storage for the new population we are about to create in while loop
-    std::vector<Genome*> tempPopulation;
 
-    while(continueOptimization_ || currentIterationNumber < iterationNumber_)
+    while(continueOptimization_ && currentIterationNumber < iterationNumber_)
     {
         totalFintess = 0;
+
+        //direct population to simulator
+        // calculate fitness
+
+        // change main population
 
         for(auto genome : population_)
         {
@@ -41,12 +52,10 @@ void GeneticOptimizer::runGeneticAlgorithm()
             //calculate genome fitness
             tempPopulation.push_back(newGenome);
 
-            //copy temp population to main population
-
-            //save some genome to elite
-
            ++newGenomeNumber;
         }
+
+        //createPopulationAfterReproduction();
 
          ++currentIterationNumber;
     }
@@ -61,8 +70,7 @@ void GeneticOptimizer::generateInitialPopulation()
 {
     for(int i=0; i<populationCount_; ++i)
     {
-        Genome *genome = new Genome();
-        genome->setCoefficients(generateRandomCoefficients());
+        Genome *genome = new Genome(generateRandomCoefficients());
         //calculateFitness();
         population_.push_back(genome);
     }
@@ -94,6 +102,37 @@ void GeneticOptimizer::addGenomeToPopulation(Genome *genome)
            population_.push_back(genome);
         }
     }
+}
+
+void GeneticOptimizer::createPopulationAfterReproduction()
+{
+    std::multimap<double, Genome*> aggregatePopulation;
+
+    for(auto iter = population_.begin(); iter != population_.end(); ++iter )
+    {
+        Genome *gen = *iter;
+        aggregatePopulation.insert(std::make_pair(gen->getFitness(), gen));
+    }
+
+    for(auto iter = tempPopulation.begin(); iter != tempPopulation.end(); ++iter )
+    {
+        Genome *gen = *iter;
+        aggregatePopulation.insert(std::make_pair(gen->getFitness(), gen));
+    }
+
+    population_.clear();
+    tempPopulation.clear();
+
+    int i=0;
+    for(auto iter = aggregatePopulation.rbegin(); (iter != aggregatePopulation.rend()); ++iter)
+    {
+        if(i<populationCount_)
+            population_.push_back(iter->second);
+        else
+            delete iter->second;
+        ++i;
+    }
+
 }
 
 bool GeneticOptimizer::checkGenomeFitness(Genome *genome)

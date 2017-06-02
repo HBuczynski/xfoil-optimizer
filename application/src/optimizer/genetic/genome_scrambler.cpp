@@ -51,8 +51,7 @@ Genome* DudScrambler::Crossover(const unsigned char *g1, const unsigned char*g2)
     }
 
     //Create new genome
-    Genome *child = new Genome();
-    child->setBinaryArray(newArray);
+    Genome *genome = new Genome(newArray);
 
-    return child;
+    return genome;
 }

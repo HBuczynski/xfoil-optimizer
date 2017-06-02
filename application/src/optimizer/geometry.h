@@ -14,6 +14,7 @@ class Geometry
 public:
 
     Geometry();
+    Geometry(AirfoilCoefficients coeff);
     Geometry(std::string filename);
 
     void Load(std::string filename);

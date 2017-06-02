@@ -7,6 +7,7 @@
 #include "utility/configuration_reader.h"
 #include "utility/config.h"
 #include "model/profile_parameters.h"
+#include "optimizer/genetic/genetic.h"
 
 class Model : public QObject
 {
@@ -29,13 +30,16 @@ public slots:
 private:
 	void initializeLogger();
     void initializeConfigurationReader();
+    void initializeGeneticAlgorithm();
 
     AviationProfileParameters baseProfileData_;
     AviationProfileParameters targetProfileData_;
     LogWriter *logger_;
     ConfigurationReader configReader_;
+    GeneticOptimizer geneticOptimizer_;
 
     std::string projectPath_;
     Config::ApplicationParams applicationParameters_;
+    Config::SimulationParams simulationParameters_;
 //    OptimizerParameters optimizerParameres_;
 };

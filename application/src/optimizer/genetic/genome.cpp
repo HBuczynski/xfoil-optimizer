@@ -1,9 +1,37 @@
 #include "optimizer/genetic/genome.h"
 
+Genome::Genome(AirfoilCoefficients coeff) :         doubleCoefficients_(coeff),
+                                                    coefficientsCount_(12),
+                                                    minCoefficientsRange_(0),
+                                                    maxCoefficientsRange_(5),
+                                                    maxBitsCount_(255),
+                                                    binaryCoefficientsArray_(nullptr),
+                                                    geom_(nullptr)
+{
+    convertDoubleCoefficientsToBinary(doubleCoefficients_, binaryCoefficients_);
+    setBinaryArrayFromStruct(binaryCoefficients_);
+    geom_ = new Geometry(doubleCoefficients_);
+
+}
+
+Genome::Genome(unsigned char *array) :              coefficientsCount_(12),
+                                                    minCoefficientsRange_(0),
+                                                    maxCoefficientsRange_(5),
+                                                    maxBitsCount_(255),
+                                                    geom_(nullptr)
+{
+    binaryCoefficientsArray_ = array;
+    setStructFromBinaryArray(binaryCoefficientsArray_);
+    convertBinaryCoefficientsToDouble(binaryCoefficients_, doubleCoefficients_);
+    geom_ = new Geometry(doubleCoefficients_);
+}
+
 Genome::~Genome()
 {
     if(binaryCoefficientsArray_ != nullptr)
         delete [] binaryCoefficientsArray_;
+    if(geom_ != nullptr)
+        delete geom_;
 }
 
 void Genome::setCoefficients(AirfoilCoefficients coefficients)
@@ -23,6 +51,11 @@ void Genome::setBinaryArray(unsigned char *array)
 void Genome::setFitness(double value)
 {
     fitness_ = value;
+}
+
+Geometry *Genome::getGeometry()
+{
+    return geom_;
 }
 
 double &Genome::getFitness()

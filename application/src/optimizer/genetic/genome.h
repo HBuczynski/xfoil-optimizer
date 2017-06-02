@@ -13,19 +13,15 @@ class Genome
 {
 public:
 
-    Genome() :    //geom_(geometry),
-                          coefficientsCount_(12),
-                          minCoefficientsRange_(0),
-                          maxCoefficientsRange_(5),
-                          maxBitsCount_(255),
-                          binaryCoefficientsArray_(nullptr)
-    { }
+    Genome(AirfoilCoefficients coeff);
+    Genome(unsigned char *array);
 
     ~Genome();
 
     void setCoefficients(AirfoilCoefficients coefficients);
     void setBinaryArray(unsigned char *array);
     void setFitness(double value);
+    Geometry* getGeometry();
     double &getFitness();
     unsigned char *getCoefficientsArray();
 
@@ -36,7 +32,7 @@ private:
     void setStructFromBinaryArray(unsigned char *array);
 
 private:
-    Geometry geom_;
+    Geometry *geom_;
 
     AirfoilCoefficients doubleCoefficients_;
     BinaryAirfoilCoefficients binaryCoefficients_;
