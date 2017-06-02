@@ -1,4 +1,4 @@
-#include "optimizer/fitness.h"
+#include "optimizer/genetic/fitness.h"
 
 double FitnessModel::Calculate(const SimResults &results)
 {

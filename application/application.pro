@@ -24,6 +24,7 @@ SOURCES += \
     src/xfoil/qsimulation.cpp \
     src/optimizer/geometry.cpp \
     src/optimizer/genetic/genetic.cpp \
+    src/optimizer/genetic/fitness.cpp \
     src/optimizer/genetic/genome.cpp \
     src/optimizer/genetic/fitness_calculator.cpp \
     src/optimizer/genetic/genome_scrambler.cpp \
@@ -64,6 +65,7 @@ HEADERS += \
     src/xfoil/simulation_proxy.h \
     src/optimizer/geometry_structures.h \
     src/optimizer/genetic/genetic.h \
+    src/optimizer/genetic/fitness.h \
     src/optimizer/genetic/genome.h \
     src/optimizer/genetic/fitness_calculator.h \
     src/optimizer/genetic/genome_scrambler.h

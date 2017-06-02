@@ -36,7 +36,7 @@ SOURCES += tst_optimizertest.cpp \
     ../../src/xfoil/simulation.cpp \
     ../../src/utility/utility.cpp \
     ../../src/optimizer/simulation_results.cpp \
-    ../../src/optimizer/fitness.cpp
+    ../../src/optimizer/genetic/fitness.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
