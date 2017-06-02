@@ -26,7 +26,6 @@ SOURCES += \
     src/optimizer/genetic/genetic.cpp \
     src/optimizer/genetic/fitness.cpp \
     src/optimizer/genetic/genome.cpp \
-    src/optimizer/genetic/fitness_calculator.cpp \
     src/optimizer/genetic/genome_scrambler.cpp \
     src/optimizer/simulation_results.cpp
 
@@ -67,7 +66,6 @@ HEADERS += \
     src/optimizer/genetic/genetic.h \
     src/optimizer/genetic/fitness.h \
     src/optimizer/genetic/genome.h \
-    src/optimizer/genetic/fitness_calculator.h \
     src/optimizer/genetic/genome_scrambler.h
 
 QMAKE_CXXFLAGS_RELEASE -= -O
