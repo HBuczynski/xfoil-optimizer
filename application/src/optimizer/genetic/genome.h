@@ -1,7 +1,7 @@
 #pragma once
 
 #include "optimizer/geometry.h"
-#include "optimizer/genetic/fitness_calculator.h"
+#include "optimizer/genetic/fitness.h"
 
 
 //!  Class providing basic 2D airfoil geometry representation
@@ -39,7 +39,7 @@ private:
 
     AirfoilCoefficients doubleCoefficients_;
     BinaryAirfoilCoefficients binaryCoefficients_;
-    FitnessCalculator fitnessCalculator_;
+
     unsigned char *binaryCoefficientsArray_;
 
     const int coefficientsCount_;

@@ -31,7 +31,6 @@ SOURCES += tst_optimizertest.cpp \
     ../../src/optimizer/genetic/genome.cpp \
     ../../src/optimizer/genetic/genetic.cpp \
     ../../src/optimizer/genetic/genome_scrambler.cpp \
-    ../../src/optimizer/genetic/fitness_calculator.cpp \
     ../../src/xfoil/qsimulation.cpp \
     ../../src/xfoil/simulation.cpp \
     ../../src/utility/utility.cpp \
