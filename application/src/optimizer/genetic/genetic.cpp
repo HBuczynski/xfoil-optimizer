@@ -17,8 +17,6 @@ void GeneticOptimizer::initialize(Config::SimulationParams &params)
 
 void GeneticOptimizer::runGeneticAlgorithm()
 {
-    //generate basic population for first interation
-    //function calculate fitness simultaneously
     generateInitialPopulation();
 
     int currentIterationNumber = 0;
@@ -28,15 +26,18 @@ void GeneticOptimizer::runGeneticAlgorithm()
     {
         totalFintess = 0;
 
-        //direct population to simulator
-        // calculate fitness
+        //start simulation of each genome
+        //czy w addTask, geometria nie powinna być przyjmowana jako referencja ??
+        for(auto genome: population_)
+            simulationScheduler_->AddTask(SimulationScheduler::Task(genome->getGeometry()));
 
-        // change main population
+        // !!!!!!!!!!!!!1 calculate fitness
 
+
+        //check to see if algoirthm find any solution
         for(auto genome : population_)
         {
             totalFintess += genome->getFitness();
-            //check to see if algoirthm find any solution
             if(checkGenomeFitness(genome))
             {
                 continueOptimization_ = false;
@@ -48,15 +49,12 @@ void GeneticOptimizer::runGeneticAlgorithm()
         {
             Genome *newGenome = scrambler_.Crossover(rouletteWheelSelection()->getCoefficientsArray(), rouletteWheelSelection()->getCoefficientsArray());
             scrambler_.Mutate(newGenome);
-
-            //calculate genome fitness
             tempPopulation.push_back(newGenome);
 
            ++newGenomeNumber;
         }
 
-        //createPopulationAfterReproduction();
-
+        createPopulationAfterReproduction();
          ++currentIterationNumber;
     }
 }

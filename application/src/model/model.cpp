@@ -37,12 +37,12 @@ void Model::initializeConfigurationReader()
     //to do - do smt if initialize return false
 
     applicationParameters_ = configReader_.getApplicationParameters();
-    simulationParameters_ = configReader_.getSimulatorParameters();
+    //simulationParameters_ = configReader_.getSimulatorParameters();
 //    optimizerParameres_ = configReader_.getOptimizerParameters();
     projectPath_ = configReader_.getProjectPath();
 }
 
 void Model::initializeGeneticAlgorithm()
 {
-    geneticOptimizer_.initialize(simulationParameters_);
+   // geneticOptimizer_.initialize(simulationParameters_);
 }
