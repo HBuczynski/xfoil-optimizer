@@ -23,14 +23,12 @@ public:
     ~Genome();
 
     void setCoefficients(AirfoilCoefficients coefficients);
-    void setFitness(double value);
     void setBinaryArray(char *array);
     double &getFitness();
     char *getCoefficientsArray();
-
+    void calculateFitness();
 
 private:
-    void calculateFitness();
     void convertDoubleCoefficientsToBinary(const AirfoilCoefficients &doubleCoefficients, BinaryAirfoilCoefficients &binaryCoefficients);
     void convertBinaryCoefficientsToDouble(const BinaryAirfoilCoefficients &binaryCoefficients, AirfoilCoefficients &doubleCoefficients);
     void setBinaryArrayFromStruct(const BinaryAirfoilCoefficients &airfoilCoefficients);

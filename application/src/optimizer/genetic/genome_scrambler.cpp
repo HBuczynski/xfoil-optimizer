@@ -2,9 +2,9 @@
 
 #include <cstdlib>
 
-void DudScrambler::Mutate(Genome &genome)
+void DudScrambler::Mutate(Genome *genome)
 {
-    char *bytesArray = genome.getCoefficientsArray();
+    char *bytesArray = genome->getCoefficientsArray();
 
     if(bytesArray != nullptr)
     {
@@ -26,7 +26,7 @@ void DudScrambler::Mutate(Genome &genome)
     }
 }
 
-Genome DudScrambler::Crossover(const char *g1, const char*g2)
+Genome* DudScrambler::Crossover(const char *g1, const char*g2)
 {
     char *newArray;
 
@@ -51,8 +51,8 @@ Genome DudScrambler::Crossover(const char *g1, const char*g2)
     }
 
     //Create new genome
-    Genome child;
-    child.setBinaryArray(newArray);
+    Genome *child = new Genome();
+    child->setBinaryArray(newArray);
 
     return child;
 }

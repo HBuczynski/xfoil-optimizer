@@ -14,11 +14,6 @@ void Genome::setCoefficients(AirfoilCoefficients coefficients)
     calculateFitness();
 }
 
-void Genome::setFitness(double value)
-{
-    fitness_ = value;
-}
-
 void Genome::setBinaryArray(char *array)
 {
     binaryCoefficientsArray_ = array;

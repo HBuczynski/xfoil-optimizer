@@ -30,6 +30,7 @@ SOURCES += tst_optimizertest.cpp \
     ../../src/optimizer/geometry.cpp \
     ../../src/optimizer/genetic/genome.cpp \
     ../../src/optimizer/genetic/genetic.cpp \
+    ../../src/optimizer/genetic/genome_scrambler.cpp \
     ../../src/optimizer/genetic/fitness_calculator.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
