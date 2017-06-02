@@ -48,6 +48,10 @@ DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 HEADERS += \
     ../../src/optimizer/geometry.h \
+    ../../src/optimizer/genetic/genome.h \
+    ../../src/optimizer/genetic/fitness.h \
+    ../../src/optimizer/genetic/genetic.h \
+    ../../src/optimizer/genetic/genome_scrambler.h \
     ../../src/xfoil/qsimulation.h \
     ../../src/xfoil/simulation_proxy.h \
     ../../src/xfoil/simulation.h \
