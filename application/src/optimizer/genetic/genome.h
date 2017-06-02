@@ -13,20 +13,21 @@ class Genome
 {
 public:
 
-    Genome() :    coefficientsCount_(12),
-                  minCoefficientsRange_(0),
-                  maxCoefficientsRange_(5),
-                  maxBitsCount_(255),
-                  binaryCoefficientsArray_(nullptr)
+    Genome() :    //geom_(geometry),
+                          coefficientsCount_(12),
+                          minCoefficientsRange_(0),
+                          maxCoefficientsRange_(5),
+                          maxBitsCount_(255),
+                          binaryCoefficientsArray_(nullptr)
     { }
 
     ~Genome();
 
     void setCoefficients(AirfoilCoefficients coefficients);
     void setBinaryArray(unsigned char *array);
+    void setFitness(double value);
     double &getFitness();
     unsigned char *getCoefficientsArray();
-    void calculateFitness();
 
 private:
     void convertDoubleCoefficientsToBinary(const AirfoilCoefficients &doubleCoefficients, BinaryAirfoilCoefficients &binaryCoefficients);

@@ -74,6 +74,12 @@ void Geometry::CalculateCoefficients()
     this->Transform();
 }
 
+void Geometry::createNewGeometry(AirfoilCoefficients coeff)
+{
+    coefficients_ = coeff;
+    //To do: calculateX and transform y
+}
+
 void Geometry::SaveCoefficients(std::string filename)
 {
     ofstream file;

@@ -22,6 +22,7 @@ public:
     void SaveCoefficients(std::string filename);
     void LoadFromCoefficients(std::string filename);
     void CalculateCoefficients();
+    void createNewGeometry(AirfoilCoefficients coeff);
 
     void Normalze();
     void Transform();

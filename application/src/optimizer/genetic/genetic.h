@@ -67,12 +67,12 @@ private:
     void addGenomeToElite(Genome *genome);
     void addGenomeToPopulation(Genome *genome);
     bool checkGenomeFitness(Genome *genome);
-    Genome *rouletteWheelSelection();
 
+    Genome *rouletteWheelSelection();
     AirfoilCoefficients generateRandomCoefficients();
 
-
 private:
+
     //Members//
     GAState state_;
     DudScrambler scrambler_;

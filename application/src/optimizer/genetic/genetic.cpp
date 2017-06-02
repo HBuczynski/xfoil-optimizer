@@ -38,7 +38,7 @@ void GeneticOptimizer::runGeneticAlgorithm()
             Genome *newGenome = scrambler_.Crossover(rouletteWheelSelection()->getCoefficientsArray(), rouletteWheelSelection()->getCoefficientsArray());
             scrambler_.Mutate(newGenome);
 
-            newGenome->calculateFitness();
+            //calculate genome fitness
             tempPopulation.push_back(newGenome);
 
             //copy temp population to main population
@@ -63,7 +63,7 @@ void GeneticOptimizer::generateInitialPopulation()
     {
         Genome *genome = new Genome();
         genome->setCoefficients(generateRandomCoefficients());
-        genome->calculateFitness();
+        //calculateFitness();
         population_.push_back(genome);
     }
 }
