@@ -93,18 +93,30 @@ void SimulationHandler::Run()
 {
     if(status_ != Idle)
         throw std::exception("Invaid state - simulation running?");
-    //TODO various paths for different setup options//
+    std::stringstream ss;
     proxy_->AddCommand("PLOP");
     proxy_->AddCommand("G F");
     proxy_->AddCommand("\r\n");
     proxy_->AddCommand("LOAD " + InstantiateFilename("geometry.dat"));
     proxy_->AddCommand("OPER");
-    proxy_->AddCommand("VISC 1e6");//Set viscous flow reynolds number
+    //Viscous settings//
+    if(params_.viscousEnable)
+    {
+        ss << "VISC "<<params_.reynoldsNo;
+        proxy_->AddCommand(ss.str());//Set viscous flow reynolds number
+        ss.str("");
+        ss.clear();
+    }
     proxy_->AddCommand("PACC");
     proxy_->AddCommand("");//do not save tmp
     proxy_->AddCommand("");//do not save polar
     proxy_->AddCommand("ITER");
-    proxy_->AddCommand("20");
+    //Iteration settings//
+    ss << params_.iterationLimit;
+    proxy_->AddCommand(ss.str());
+    ss.str("");
+    ss.clear();
+    //TODO precision settings//
     proxy_->AddCommand("ASEQ -10.0 -2.0 1.0");
     proxy_->AddCommand("ASEQ -2.0 2.0 0.2");
     proxy_->AddCommand("ASEQ 2.0 15.0 0.5");
