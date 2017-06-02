@@ -8,7 +8,7 @@ QSimulationProxy::QSimulationProxy(const Config::SimulationParams &params, QObje
     params_(params),
     status_(NotRunning)
 {
-    process_ = new QProcess(this);
+    process_ = new QProcess();
     connect(process_,
             SIGNAL(error(QProcess::ProcessError)),
             this,

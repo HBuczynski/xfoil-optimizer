@@ -188,7 +188,7 @@ void Geometry::Save(std::string filename)
     if (file.is_open())
     {
         file << filename << std::endl;
-        for(int i = (upperPoints_.size()-1); i>0; --i)
+        for(size_t i = (upperPoints_.size()-1); i>0; --i)
         {
             file << "     "<< (upperPoints_[i]).x << "    " << (upperPoints_[i]).y << std::endl;
         }
@@ -245,7 +245,7 @@ std::vector<Point> Geometry::GetPoints()
 {
     std::vector<Point> points;
 
-    for(int i = (upperPoints_.size()-1); i>0; --i)
+    for(size_t i = (upperPoints_.size()-1); i>0; --i)
         points.push_back((upperPoints_[i]));
 
     for(Point a : lowerPoints_)

@@ -17,6 +17,7 @@ public:
 	bool initialize();
 
     static std::string getProjectPath();
+    static std::string getParameterFilePath();
 
     Config::ApplicationParams getApplicationParameters();
     Config::OptimizerParams getOptimizerParameters();
@@ -38,6 +39,7 @@ private:
     void initializeAppParameters();
     void initializeOptParameters();
     void initializeSimParameters();
+
 
 private:
     LogWriter *logger_;

@@ -50,6 +50,4 @@ HEADERS += \
     ../../src/optimizer/simulation_results.h \
     ../../src/utility/utility.h
 
-DISTFILES += \
-    NACA0008.dat
 

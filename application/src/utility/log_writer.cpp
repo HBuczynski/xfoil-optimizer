@@ -32,9 +32,9 @@ LogWriter::~LogWriter()
 bool LogWriter::initialize(std::string directoryName)
 {
     std::string filenameLog = directoryName + "/log_" + TimeManager::getStringDateTime() + ".txt";
-
+    std::cout<<filenameLog;
     fileLog_.open(filenameLog.c_str());
-    if (fileLog_.fail())
+    if (fileLog_.good())
     {
         std::cout << "Error: LogWriter::initialize failed create log file. Exiting." << std::endl;
         return false;
