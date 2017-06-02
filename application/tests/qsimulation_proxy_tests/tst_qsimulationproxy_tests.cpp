@@ -4,7 +4,7 @@
 #include "xfoil/simulation.h"
 #include "xfoil/simulation_proxy.h"
 #include "xfoil/qsimulation.h"
-#include "xfoil/simulation_results.h"
+#include "optimizer/simulation_results.h"
 
 #include <iostream>
 class QSimulationProxy_tests : public QObject

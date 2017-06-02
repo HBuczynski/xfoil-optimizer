@@ -35,6 +35,6 @@ void Model::initializeConfigurationReader()
     //to do - do smt if initialize return false
 
     applicationParameters_ = configReader_.getApplicationParameters();
-    optimizerParameres_ = configReader_.getOptimizerParameters();
+//    optimizerParameres_ = configReader_.getOptimizerParameters();
     projectPath_ = configReader_.getProjectPath();
 }

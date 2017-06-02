@@ -26,7 +26,9 @@ SOURCES += \
     src/optimizer/genetic/genetic.cpp \
     src/optimizer/genetic/genome.cpp \
     src/optimizer/genetic/fitness_calculator.cpp \
-    src/optimizer/genetic/genome_scrambler.cpp
+    src/optimizer/genetic/genome_scrambler.cpp \
+    src/optimizer/simulation_results.cpp
+
 
 RESOURCES += src/gui/qml_files/qml.qrc \
     src/gui/qml_files/qml.qrc
@@ -53,7 +55,7 @@ HEADERS += \
     src/optimizer/airfoil_optimizer.h \
     src/optimizer/geometry.h \
     src/utility/config.h \
-    src/xfoil/simulation_results.h \
+    src/optimizer/simulation_results.h \
     src/gui/settings_dialog.h \
     src/gui/plot_dialog.h \
     src/utility/tiny_xml/tinystr.h \
@@ -70,11 +72,12 @@ QMAKE_CXXFLAGS_RELEASE -= -O
 QMAKE_CXXFLAGS_RELEASE -= -O1
 QMAKE_CXXFLAGS_RELEASE -= -O2
 
-win64 { # For Windows
+win32 { # For Windows
   QMAKE_CXXFLAGS += -openmp
   QMAKE_CXXFLAGS += -arch:AVX
   QMAKE_CXXFLAGS += -D "_CRT_SECURE_NO_WARNINGS"
   QMAKE_CXXFLAGS_RELEASE *= -O2
+  INCLUDEPATH += C:/boost_1_55_0
 }
 
 linux { # For Linux

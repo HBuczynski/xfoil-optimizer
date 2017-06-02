@@ -3,6 +3,7 @@
 #include "config.h"
 
 #include <QDebug>
+#include <typeinfo>
 
 #if defined(WIN64) || defined(_WIN64) || defined(__WIN64) && !defined(__CYGWIN__)
 
@@ -90,15 +91,21 @@ std::string ConfigurationReader::getProjectPath()
     return projectPath_;
 }
 
-ApplicationParameters ConfigurationReader::getApplicationParameters()
+Parameters ConfigurationReader::getApplicationParameters()
 {
     return applicationParameters_;
 }
 
-OptimizationParameters ConfigurationReader::getOptimizerParameters()
+Parameters ConfigurationReader::getOptimizerParameters()
 {
     return optimizationParameters_;
 }
+
+Parameters ConfigurationReader::getSimulatorParameters()
+{
+    return simulaotorParameters_;
+}
+
 
 bool ConfigurationReader::initializeDirectories()
 {
@@ -119,6 +126,7 @@ void ConfigurationReader::saveToFile(const char *fileName)
 {
     initializeOptParameters();
     initializeAppParameters();
+    initializeSimParameters();
 
     TiXmlDocument document;
     TiXmlDeclaration *fileDeclaration = new TiXmlDeclaration("1.0", "", "");
@@ -136,6 +144,7 @@ void ConfigurationReader::saveToFile(const char *fileName)
 
     addBranchToXML(root, "ApplicationParameters", "Param", applicationParameters_);
     addBranchToXML(root, "OptimizerParameters", "Param", optimizationParameters_);
+    addBranchToXML(root, "SimulatorParameters", "Param", simulaotorParameters_);
 
     document.SaveFile(fileName);
 }
@@ -143,11 +152,18 @@ void ConfigurationReader::saveToFile(const char *fileName)
 void ConfigurationReader::initializeAppParameters()
 {
     applicationParameters_["Config"] = "lolo";
+    applicationParameters_["IntTest"] = 4;
+    applicationParameters_["DoubleTest"] = 2.02344;
 }
 
 void ConfigurationReader::initializeOptParameters()
 {
-    optimizationParameters_["Cl"] = 0.23;
+    optimizationParameters_["ParallelInstances"] = 4;
+}
+
+void ConfigurationReader::initializeSimParameters()
+{
+    simulaotorParameters_["Julian"] = "tulipan";
 }
 
 bool ConfigurationReader::loadFromFile(const char *fileName)
@@ -176,13 +192,14 @@ bool ConfigurationReader::loadFromFile(const char *fileName)
 
     loadApplicationParameters(pointerToElement, hRoot);
     loadOptimizerParameters(pointerToElement, hRoot);
+    loadSimulatorParameters(pointerToElement, hRoot);
 
     return true;
 }
 
-void ConfigurationReader::addBranchToXML(TiXmlElement *root, std::string parentName, std::string childName, ApplicationParameters container)
+void ConfigurationReader::addBranchToXML(TiXmlElement *root, std::string parentName, std::string childName, Parameters container)
 {
-    ApplicationParameters::iterator containerIter;
+    Parameters::iterator containerIter;
 
     TiXmlElement *parent = new TiXmlElement(parentName.c_str());
     root->LinkEndChild(parent);
@@ -192,31 +209,31 @@ void ConfigurationReader::addBranchToXML(TiXmlElement *root, std::string parentN
     for (containerIter = container.begin(); containerIter != container.end(); containerIter++)
     {
         const std::string &key = (*containerIter).first;
-        const std::string &value = (*containerIter).second;
 
-        child = new TiXmlElement(childName.c_str());
-        parent->LinkEndChild(child);
-        child->SetAttribute(key.c_str(), value.c_str());
-    }
-}
+        if(((*containerIter).second).type() == typeid(std::string))
+        {
+            const std::string &value =  boost::get<std::string>((*containerIter).second);
 
-void ConfigurationReader::addBranchToXML(TiXmlElement *root, std::string parentName, std::string childName, OptimizationParameters container)
-{
-    OptimizationParameters::iterator containerIter;
+            child = new TiXmlElement(childName.c_str());
+            parent->LinkEndChild(child);
+            child->SetAttribute(key.c_str(), value.c_str());
+        }
+        else if (((*containerIter).second).type() == typeid(double))
+        {
+            const double &value =  boost::get<double>((*containerIter).second);
 
-    TiXmlElement *parent = new TiXmlElement(parentName.c_str());
-    root->LinkEndChild(parent);
+            child = new TiXmlElement(childName.c_str());
+            parent->LinkEndChild(child);
+            child->SetDoubleAttribute(key.c_str(), value);
+        }
+        else if (((*containerIter).second).type() == typeid(int))
+        {
+            const int &value =  boost::get<int>((*containerIter).second);
 
-    TiXmlElement *child;
-
-    for (containerIter = container.begin(); containerIter != container.end(); containerIter++)
-    {
-        const std::string &key = (*containerIter).first;
-        const double &value = (*containerIter).second;
-
-        child = new TiXmlElement(childName.c_str());
-        parent->LinkEndChild(child);
-        child->SetDoubleAttribute(key.c_str(), value);
+            child = new TiXmlElement(childName.c_str());
+            parent->LinkEndChild(child);
+            child->SetAttribute(key.c_str(), value);
+        }
     }
 }
 
@@ -224,9 +241,18 @@ void ConfigurationReader::loadApplicationParameters(TiXmlElement *pointerToEleme
 {
     pointerToElement = hRoot.FirstChild("ApplicationParameters").FirstChild().Element();
 
+    std::string tempString;
+    int tempInt;
+    double tempDouble;
+
     for (pointerToElement; pointerToElement; pointerToElement = pointerToElement->NextSiblingElement())
     {
-        pointerToElement->QueryStringAttribute("Config", &applicationParameters_["Config"]);
+        pointerToElement->QueryStringAttribute("Config", &tempString);
+            applicationParameters_["Config"] = tempString;
+        pointerToElement->QueryIntAttribute("IntTest", &tempInt);
+            applicationParameters_["IntTest"] = tempInt;
+        pointerToElement->QueryDoubleAttribute("DoubleTest", &tempDouble);
+            applicationParameters_["DoubleTest"] = tempDouble;
     }
 }
 
@@ -234,9 +260,30 @@ void ConfigurationReader::loadOptimizerParameters(TiXmlElement *pointerToElement
 {
     pointerToElement = hRoot.FirstChild("OptimizerParameters").FirstChild().Element();
 
+    std::string tempString;
+    int tempInt;
+    double tempDouble;
+
     for (pointerToElement; pointerToElement; pointerToElement = pointerToElement->NextSiblingElement())
     {
-        pointerToElement->QueryDoubleAttribute("Cl", &optimizationParameters_["Cl"]);
+        pointerToElement->QueryIntAttribute("ParallelInstances", &tempInt);
+        optimizationParameters_["ParallelInstances"] = tempInt;
+    }
+}
+
+void ConfigurationReader::loadSimulatorParameters(TiXmlElement *pointerToElement, TiXmlHandle &hRoot)
+{
+    pointerToElement = hRoot.FirstChild("SimulatorParameters").FirstChild().Element();
+
+    std::string tempString;
+    int tempInt;
+    double tempDouble;
+
+    for (pointerToElement; pointerToElement; pointerToElement = pointerToElement->NextSiblingElement())
+    {
+        pointerToElement->QueryStringAttribute("Julian", &tempString);
+        simulaotorParameters_["Julian"] = tempString;
+
     }
 }
 

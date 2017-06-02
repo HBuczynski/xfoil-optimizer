@@ -1,8 +1,9 @@
 #pragma once
 #include <map>
+#include <boost/variant.hpp>
 
-typedef std::map<std::string, std::string> ApplicationParameters;
-typedef std::map<std::string, double> OptimizationParameters;
+typedef std::map<std::string, boost::variant<double, std::string, int> > Parameters;
+
 
 class Config
 {

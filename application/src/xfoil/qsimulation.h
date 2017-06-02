@@ -56,7 +56,8 @@ private:
     Status status_;
     QProcess * process_;
     //TMP configuration variables, TODO - move to config file as they are common to sims
-    std::string exePath_ = "C:\\Users\\Hubert\\Documents\\STUDIA_INFA\\semestr_IV\\ZPR_Zaawansowany_C++\\Projekt\\xfoil-optimizer\\xfoil\\win32";
+    std::string exePath_ = "C:\\Users\\Kub\\Documents\\workspace\\xfoil-optimizer\\xfoil\\win32";
+    //std::string exePath_ = "C:\\Users\\Hubert\\Documents\\STUDIA_INFA\\semestr_IV\\ZPR_Zaawansowany_C++\\Projekt\\xfoil-optimizer\\xfoil\\win32";
     std::string programOutput_;
     std::vector<std::string> commands_;
     const int TIMEOUT_SHORT = 10;

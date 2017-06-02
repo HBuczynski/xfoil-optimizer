@@ -6,12 +6,13 @@
 #include <fstream>
 //#include <cstdio>
 
-#include "xfoil/simulation_results.h"
+#include "optimizer/simulation_results.h"
 //#include "optimizer/geometry.h"
 #include "xfoil/simulation_proxy.h"
 #include "xfoil/qsimulation.h"
 #include "utility/utility.h"
 #include "utility/config.h"
+#include "utility/configuration_reader.h"
 
 
 #include <thread>

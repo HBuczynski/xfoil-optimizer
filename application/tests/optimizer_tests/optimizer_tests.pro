@@ -31,7 +31,24 @@ SOURCES += tst_optimizertest.cpp \
     ../../src/optimizer/genetic/genome.cpp \
     ../../src/optimizer/genetic/genetic.cpp \
     ../../src/optimizer/genetic/genome_scrambler.cpp \
-    ../../src/optimizer/genetic/fitness_calculator.cpp
+    ../../src/optimizer/genetic/fitness_calculator.cpp \
+    ../../src/xfoil/qsimulation.cpp \
+    ../../src/xfoil/simulation.cpp \
+    ../../src/utility/utility.cpp \
+    ../../src/optimizer/simulation_results.cpp
+
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 INCLUDEPATH += ../../src
+win32 {
+    INCLUDEPATH += C:/boost_1_55_0
+}
+HEADERS += \
+    ../../src/xfoil/qsimulation.h \
+    ../../src/xfoil/simulation.h \
+    ../../src/xfoil/simulation_proxy.h \
+    ../../src/optimizer/simulation_results.h \
+    ../../src/optimizer/geometry.h \
+    ../../src/optimizer/geometry_structures.h \
+    ../../src/optimizer/airfoil_optimizer.h \
+    ../../src/utility/utility.h

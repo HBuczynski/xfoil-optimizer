@@ -27,6 +27,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 INCLUDEPATH += ../../src
 
+win32 {
+    INCLUDEPATH += C:/boost_1_55_0
+}
 
 SOURCES += tst_geometry_tests.cpp \
     ../../src/optimizer/geometry.cpp \
@@ -35,13 +38,18 @@ SOURCES += tst_geometry_tests.cpp \
     ../../src/optimizer/genetic/genetic.cpp \
     ../../src/optimizer/genetic/genome_scrambler.cpp \
     ../../src/xfoil/qsimulation.cpp \
-    ../../src/xfoil/simulation.cpp
+    ../../src/xfoil/simulation.cpp \
+    ../../src/optimizer/simulation_results.cpp \
+    ../../src/utility/utility.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 HEADERS += \
     ../../src/optimizer/geometry.h \
     ../../src/xfoil/qsimulation.h \
-    ../../src/xfoil/simulation_proxy.h
+    ../../src/xfoil/simulation_proxy.h \
+    ../../src/xfoil/simulation.h \
+    ../../src/optimizer/simulation_results.h \
+    ../../src/utility/utility.h
 
 DISTFILES += \
     NACA0008.dat

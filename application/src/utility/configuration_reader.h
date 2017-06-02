@@ -17,8 +17,9 @@ public:
 	bool initialize();
 
     static std::string getProjectPath();
-    ApplicationParameters getApplicationParameters();
-    OptimizationParameters getOptimizerParameters();
+    Parameters getApplicationParameters();
+    Parameters getOptimizerParameters();
+    Parameters getSimulatorParameters();
 
 private:
     bool initializeDirectories();
@@ -29,21 +30,24 @@ private:
 
     void loadApplicationParameters(TiXmlElement *pointerToElement, TiXmlHandle &hRoot);
     void loadOptimizerParameters(TiXmlElement *pointerToElement, TiXmlHandle &hRoot);
+    void loadSimulatorParameters(TiXmlElement *pointerToElement, TiXmlHandle &hRoot);
 
-    void addBranchToXML(TiXmlElement *root,std::string parentName, std::string childName, ApplicationParameters map);
-    void addBranchToXML(TiXmlElement *root,std::string parentName, std::string childName, OptimizationParameters map);
+    void addBranchToXML(TiXmlElement *root,std::string parentName, std::string childName, Parameters map);
 
     void initializeAppParameters();
     void initializeOptParameters();
+    void initializeSimParameters();
 
 private:
     LogWriter *logger_;
 
-    ApplicationParameters applicationParameters_;
-    OptimizationParameters optimizationParameters_;
+    Parameters optimizationParameters_;
+    Parameters applicationParameters_;
+    Parameters simulaotorParameters_;
 
     static const std::string projectPath_;
     static const std::string folderConfigName_;
     static const std::string fileConfigName_;
+
     std::string fileParametersPath_;
 };

@@ -172,20 +172,11 @@ void Geometry::calculateCordinateOfX()
     }
 }
 
-void Geometry::makeAirfoilClosed()
-{
-    size_t lastElement = upperPoints_.size() - 1;
-    if(upperPoints_[lastElement].y != lowerPoints_[lastElement].y)
-    {
-        lowerPoints_[lastElement].y = upperPoints_[lastElement].y;
-    }
-}
-
 bool Geometry::isProfileCrossed()
 {
     for(int i=0; i<vectorX_.size(); ++i)
     {
-        if(upperPoints_[i].y < lowerPoints_[i].y)
+        if(upperPoints_[i].y <= lowerPoints_[i].y)
             return false;
     }
     return true;
@@ -197,9 +188,9 @@ void Geometry::Save(std::string filename)
     if (file.is_open())
     {
         file << filename << std::endl;
-        for(Point a : upperPoints_)
+        for(int i = (upperPoints_.size()-1); i>0; --i)
         {
-            file << "     "<< a.x << "    " << a.y << std::endl;
+            file << "     "<< (upperPoints_[i]).x << "    " << (upperPoints_[i]).y << std::endl;
         }
 
         for(Point a : lowerPoints_)
@@ -227,8 +218,16 @@ void Geometry::Transform()
 
     for(int i=0; i<vectorX_.size(); ++i)
     {
-        lowerPoints_.push_back(Point(vectorX_[i], (coefficients_.p_l*pow(vectorX_[i], coefficients_.a_l)*pow((1-vectorX_[i]), coefficients_.b_l)+
+        lowerPoints_.push_back(Point(vectorX_[i], (coefficients_.p_l*pow(vectorX_[i], coefficients_.a_l)*pow((1-vectorX_[i]), coefficients_.b_l)-
                             coefficients_.q_l*pow(vectorX_[i], coefficients_.c_l)*pow((1-vectorX_[i]), coefficients_.d_l))));
+    }
+
+    size_t lastElement = upperPoints_.size() - 1;
+
+    if(upperPoints_[lastElement].y == lowerPoints_[lastElement].y)
+    {
+       upperPoints_[lastElement].y = (upperPoints_[lastElement-1].y)/2;
+       lowerPoints_[lastElement].y = (lowerPoints_[lastElement-1].y)/2;
     }
 }
 
@@ -246,12 +245,11 @@ std::vector<Point> Geometry::GetPoints()
 {
     std::vector<Point> points;
 
-    for(Point a : upperPoints_)
-        points.push_back(a);
+    for(int i = (upperPoints_.size()-1); i>0; --i)
+        points.push_back((upperPoints_[i]));
 
     for(Point a : lowerPoints_)
         points.push_back(a);
-
     return points;
 }
 

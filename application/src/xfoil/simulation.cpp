@@ -25,7 +25,7 @@ void SimulationHandler::ReadResults()
         if(geometry_.simResults_.calculated_ == true)
         {
             //Clear previous results from the structure
-            geometry_.simResults_.results.clear();
+            geometry_.simResults_.results_.clear();
             geometry_.simResults_.calculated_ = false;
         }
         while(getline(infile, line))
@@ -47,7 +47,7 @@ void SimulationHandler::ReadResults()
             resLine.xtr_top = std::stod(line,&sz);
             line = line.substr(sz);
             resLine.xtr_bottom = std::stod(line,&sz);
-            geometry_.simResults_.results.push_back(resLine);
+            geometry_.simResults_.results_.push_back(resLine);
         }
         geometry_.simResults_.calculated_ = true;
         infile.close();
@@ -103,7 +103,11 @@ void SimulationHandler::Run()
     proxy_->AddCommand("PACC");
     proxy_->AddCommand("");//do not save tmp
     proxy_->AddCommand("");//do not save polar
-    proxy_->AddCommand("ASEQ -10.0 18.0 0.2");//Sample range with angle step
+    proxy_->AddCommand("ITER");
+    proxy_->AddCommand("20");
+    proxy_->AddCommand("ASEQ -10.0 -2.0 1.0");
+    proxy_->AddCommand("ASEQ -2.0 2.0 0.2");
+    proxy_->AddCommand("ASEQ 2.0 15.0 0.5");
     proxy_->AddCommand("PACC");//Disable polar accumulation
 
     proxy_->AddCommand("PWRT 1");
