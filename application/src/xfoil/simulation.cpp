@@ -93,18 +93,30 @@ void SimulationHandler::Run()
 {
     if(status_ != Idle)
         throw std::exception("Invaid state - simulation running?");
-    //TODO various paths for different setup options//
+    std::stringstream ss;
     proxy_->AddCommand("PLOP");
     proxy_->AddCommand("G F");
     proxy_->AddCommand("\r\n");
     proxy_->AddCommand("LOAD " + InstantiateFilename("geometry.dat"));
     proxy_->AddCommand("OPER");
-    proxy_->AddCommand("VISC 1e6");//Set viscous flow reynolds number
+    //Viscous settings//
+    if(params_.viscousEnable)
+    {
+        ss << "VISC "<<params_.reynoldsNo;
+        proxy_->AddCommand(ss.str());//Set viscous flow reynolds number
+        ss.str("");
+        ss.clear();
+    }
     proxy_->AddCommand("PACC");
     proxy_->AddCommand("");//do not save tmp
     proxy_->AddCommand("");//do not save polar
     proxy_->AddCommand("ITER");
-    proxy_->AddCommand("20");
+    //Iteration settings//
+    ss << params_.iterationLimit;
+    proxy_->AddCommand(ss.str());
+    ss.str("");
+    ss.clear();
+    //TODO precision settings//
     proxy_->AddCommand("ASEQ -10.0 -2.0 1.0");
     proxy_->AddCommand("ASEQ -2.0 2.0 0.2");
     proxy_->AddCommand("ASEQ 2.0 15.0 0.5");
@@ -155,13 +167,13 @@ SimulationHandler::Status SimulationHandler::PollStatus()
 void SimulationScheduler::ConsumeTask()
 {
     //Initialize pointers for handler objects//
-    SimulationHandler **handlers = new SimulationHandler*[parallelInstances_];
-    for(int i = 0; i < parallelInstances_; ++i)
+    SimulationHandler **handlers = new SimulationHandler*[params_.parallelSimulations];
+    for(int i = 0; i < params_.parallelSimulations; ++i)
         handlers[i] = nullptr;
     while(workerEnable_)
     {
         //Free existing queue places//
-        for(int i = 0; i < parallelInstances_; ++i)
+        for(int i = 0; i < params_.parallelSimulations; ++i)
         {
             if(handlers[i] != nullptr)
             {
@@ -178,7 +190,7 @@ void SimulationScheduler::ConsumeTask()
         //Look for new task//
         if(!taskQueue_.empty())
         {
-            for(int i = 0; i < parallelInstances_; ++i)
+            for(int i = 0; i < params_.parallelSimulations; ++i)
             {
                 //Search for empty queue place and run if available//
                 if(handlers[i] == nullptr)
@@ -188,7 +200,7 @@ void SimulationScheduler::ConsumeTask()
                     Task task = taskQueue_.front();
                     taskQueue_.pop();
                     queueMutex_.unlock();
-                    handlers[i] = new SimulationHandler(*task.geometry);
+                    handlers[i] = new SimulationHandler(*task.geometry, params_);
                     handlers[i]->Run();
                     handlerStatus_[i] = handlers[i]->PollStatus();
                     break;
@@ -196,7 +208,7 @@ void SimulationScheduler::ConsumeTask()
             }
         }
         //Poll/ update task states
-        for(int i = 0; i < parallelInstances_; ++i)
+        for(int i = 0; i < params_.parallelSimulations; ++i)
         {
             if(handlers[i] != nullptr)
             {
@@ -209,7 +221,7 @@ void SimulationScheduler::ConsumeTask()
     while(!finished)
     {
         finished = true;
-        for(int i = 0; i < parallelInstances_; ++i)
+        for(int i = 0; i < params_.parallelSimulations; ++i)
         {
             if(handlers[i] != nullptr)
             {
@@ -234,7 +246,7 @@ bool SimulationScheduler::IsTasksFinished() const
     if(taskQueue_.size() != 0)
         return false;
     //Check also for running tasks//
-    for(int i = 0; i < parallelInstances_; ++i)
+    for(int i = 0; i < params_.parallelSimulations; ++i)
     {
         if(handlerStatus_[i] != SimulationHandler::NotExisting)
             return false;

@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2017-05-23T21:34:09
+# Project created by QtCreator 2017-06-02T14:06:24
 #
 #-------------------------------------------------
 
@@ -8,11 +8,9 @@ QT       += testlib
 
 QT       -= gui
 
-TARGET = tst_qsimulation_proxy_tests
+TARGET = tst_configreadertest
 CONFIG   += console
 CONFIG   -= app_bundle
-
-CONFIG += c++11
 
 TEMPLATE = app
 
@@ -28,24 +26,5 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
-SOURCES +=  ../../src/xfoil/simulation.cpp ../../src/xfoil/qsimulation.cpp \
-            tst_qsimulationproxy_tests.cpp \
-    ../../src/utility/utility.cpp \
-    ../../src/optimizer/geometry.cpp \
-    ../../src/optimizer/simulation_results.cpp
-
-INCLUDEPATH += ../../src
-win32 {
-    INCLUDEPATH += C:/boost_1_55_0
-}
-win64 {
-    #INCLUDEPATH += C:/boost_1_55_0
-}
-INCLUDEPATH += C:/boost_1_55_0
-HEADERS += \
-    ../../src/xfoil/simulation.h \
-    ../../src/xfoil/qsimulation.h \
-    ../../src/optimizer/simulation_results.h \
-    ../../src/xfoil/simulation_proxy.h
-
+SOURCES += tst_configreadertest.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"

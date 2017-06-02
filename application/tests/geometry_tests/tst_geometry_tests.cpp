@@ -32,7 +32,8 @@ Geometry_Tests::Geometry_Tests()
 void Geometry_Tests::initTestCase()
 {
     //This is old direct proxy method of recieving airfoil file but omits geometry object//
-    QSimulationProxy proxy;
+    Config::SimulationParams params;
+    QSimulationProxy proxy(params);
     proxy.AddCommand("NACA 0012");
     proxy.AddCommand("SAVE NACA0012.dat");
     proxy.AddCommand("\r\n");
@@ -111,8 +112,9 @@ void Geometry_Tests::CheckIfBasicProfileIsNotCrossed()
 }
 void Geometry_Tests::CheckBasicAirfoilSimResultsMethodAccess()
 {
-    Geometry testGeom = SimulationHandler::GetNACAAirfoil("0008");
-    SimulationHandler sim(testGeom);
+    Config::SimulationParams params;
+    Geometry testGeom(profilePath.toStdString());
+    SimulationHandler sim(testGeom,params);
     sim.Run();
     while(sim.PollStatus() == SimulationHandler::Running);
     std::cout << "MaxCl: "<<testGeom.GetResults().CalcMaxCl().param<<std::endl;

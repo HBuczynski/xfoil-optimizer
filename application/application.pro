@@ -79,7 +79,13 @@ win32 { # For Windows
   QMAKE_CXXFLAGS_RELEASE *= -O2
   INCLUDEPATH += C:/boost_1_55_0
 }
-
+win64 { # For Windows
+  QMAKE_CXXFLAGS += -openmp
+  QMAKE_CXXFLAGS += -arch:AVX
+  QMAKE_CXXFLAGS += -D "_CRT_SECURE_NO_WARNINGS"
+  QMAKE_CXXFLAGS_RELEASE *= -O2
+  #INCLUDEPATH += C:/boost_1_55_0
+}
 linux { # For Linux
   QMAKE_CXXFLAGS += -fopenmp
   QMAKE_LFLAGS += -fopenmp

@@ -91,19 +91,43 @@ std::string ConfigurationReader::getProjectPath()
     return projectPath_;
 }
 
-Parameters ConfigurationReader::getApplicationParameters()
+Config::ApplicationParams ConfigurationReader::getApplicationParameters()
 {
-    return applicationParameters_;
+    Config::ApplicationParams rparams;
+    return rparams;
 }
 
-Parameters ConfigurationReader::getOptimizerParameters()
+Config::OptimizerParams ConfigurationReader::getOptimizerParameters()
 {
-    return optimizationParameters_;
-}
+    Config::OptimizerParams rparams;
+    rparams.fitness.optimizeStall = boost::get<std::string>(optimizationParameters_["optimizeStall"]) == "True";
+    rparams.fitness.optimizeCl = boost::get<std::string>(optimizationParameters_["optimizeCl"]) == "True";
+    rparams.fitness.optimizeCl = boost::get<std::string>(optimizationParameters_["optimizeCl"]) == "True";
+    rparams.fitness.optimizeMoment = boost::get<std::string>(optimizationParameters_["optimizeMoment"]) == "True";
+    rparams.fitness.optimizeGlide = boost::get<std::string>(optimizationParameters_["optimizeGlide"]) == "True";
 
-Parameters ConfigurationReader::getSimulatorParameters()
+    rparams.fitness.targetCd = boost::get<double>(optimizationParameters_["targetCd"]);
+    rparams.fitness.targetCl = boost::get<double>(optimizationParameters_["targetCl"]);
+    rparams.fitness.targetGlide = boost::get<double>(optimizationParameters_["targetGlide"]);
+    rparams.fitness.targetMoment = boost::get<double>(optimizationParameters_["targetMoment"]);
+    rparams.fitness.targetStallAlfa = boost::get<double>(optimizationParameters_["targetStalAlfa"]);
+    rparams.fitness.weightCd = boost::get<double>(optimizationParameters_["weightCd"]);
+    rparams.fitness.weightCl = boost::get<double>(optimizationParameters_["weightCl"]);
+    rparams.fitness.weightGlide = boost::get<double>(optimizationParameters_["weightGlide"]);
+    rparams.fitness.weightMoment = boost::get<double>(optimizationParameters_["weightMoment"]);
+    rparams.fitness.weightStall = boost::get<double>(optimizationParameters_["weightStall"]);
+    return rparams;
+}
+Config::SimulationParams ConfigurationReader::getSimulatorParameters()
 {
-    return simulaotorParameters_;
+    Config::SimulationParams rparams;
+    rparams.iterationLimit = boost::get<int>(simulaotorParameters_["maxIterations"]);
+    rparams.parallelSimulations = boost::get<int>(simulaotorParameters_["parallelTasks"]);
+    rparams.reynoldsNo = boost::get<int>(simulaotorParameters_["viscousRe"]);
+    rparams.viscousEnable = boost::get<std::string>(simulaotorParameters_["viscousEnable"]) == "True";
+    rparams.xfoilExecutablePath = boost::get<std::string>(simulaotorParameters_["xfoilPath"]);
+    rparams.xfoilTimeout = boost::get<int>(simulaotorParameters_["xfoilTimeout"]);
+    return rparams;
 }
 
 
@@ -118,7 +142,6 @@ bool ConfigurationReader::initializeLogger()
     bool isSuccess = utility::createDirectoryRecursively(directoryLogger);
 
     logger_ = &LogWriter::getInstance();
-
     return isSuccess && logger_->initialize(directoryLogger);
 }
 
@@ -152,18 +175,38 @@ void ConfigurationReader::saveToFile(const char *fileName)
 void ConfigurationReader::initializeAppParameters()
 {
     applicationParameters_["Config"] = "lolo";
-    applicationParameters_["IntTest"] = 4;
-    applicationParameters_["DoubleTest"] = 2.02344;
 }
 
 void ConfigurationReader::initializeOptParameters()
 {
-    optimizationParameters_["ParallelInstances"] = 4;
+    Config::OptimizerParams dparams;
+    //Fitness parameters//
+    optimizationParameters_["optimizeStall"] = dparams.fitness.optimizeStall;
+    optimizationParameters_["optimizeCl"] =dparams.fitness.optimizeCl;
+    optimizationParameters_["optimizeCl"] =dparams.fitness.optimizeCl;
+    optimizationParameters_["optimizeMoment"] =dparams.fitness.optimizeMoment;
+    optimizationParameters_["optimizeGlide"] =dparams.fitness.optimizeGlide;
+    optimizationParameters_["targetCd"] =dparams.fitness.targetCd;
+    optimizationParameters_["targetCl"] =dparams.fitness.targetCl;
+    optimizationParameters_["targetGlide"] =dparams.fitness.targetGlide;
+    optimizationParameters_["targetMoment"] =dparams.fitness.targetMoment;
+    optimizationParameters_["targetStalAlfa"] =dparams.fitness.targetStallAlfa;
+    optimizationParameters_["weightCd"] =dparams.fitness.weightCd;
+    optimizationParameters_["weightCl"] =dparams.fitness.weightCl;
+    optimizationParameters_["weightGlide"] =dparams.fitness.weightGlide;
+    optimizationParameters_["weightMoment"] =dparams.fitness.weightMoment;
+    optimizationParameters_["weightStall"] =dparams.fitness.weightStall;
 }
 
 void ConfigurationReader::initializeSimParameters()
 {
-    simulaotorParameters_["Julian"] = "tulipan";
+    Config::SimulationParams dparams;
+    simulaotorParameters_["parallelTasks"] = dparams.parallelSimulations;
+    simulaotorParameters_["xfoilPath"] = dparams.xfoilExecutablePath;
+    simulaotorParameters_["maxIterations"] = dparams.iterationLimit;
+    simulaotorParameters_["viscousRe"] = dparams.reynoldsNo;
+    simulaotorParameters_["viscousEnable"] = dparams.viscousEnable==true ? "True" : "False";
+    simulaotorParameters_["xfoilTimeout"] = dparams.xfoilTimeout;
 }
 
 bool ConfigurationReader::loadFromFile(const char *fileName)

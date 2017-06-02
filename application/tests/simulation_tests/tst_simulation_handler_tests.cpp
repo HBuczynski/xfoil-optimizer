@@ -26,6 +26,8 @@ private Q_SLOTS:
     void CreateSimulationSchedulerSpawnsNewProcess();
     void CalculatingTheSameGeometryObjectTwiceDoesNotDoubleDataPoints();
     void HandleMultipleParallelSimulations();
+private:
+    Config::SimulationParams params;
 };
 
 SimulationHandler_tests::SimulationHandler_tests()
@@ -40,13 +42,13 @@ void SimulationHandler_tests::LoadNACAProfileWithHandlerObject()
 
 void SimulationHandler_tests::CreateHandlerObjectSavesGeometry()
 {
-    SimulationHandler handler(SimulationHandler::GetNACAAirfoil("0012"));
+    SimulationHandler handler(SimulationHandler::GetNACAAirfoil("0012"),params);
     QVERIFY(utility::fileExists((handler.proxy_->GetExePath() + "/" + handler.InstantiateFilename("geometry.dat")).c_str()));
 }
 
 void SimulationHandler_tests::RunSimulationTestResultsFile()
 {
-    SimulationHandler *handler = new SimulationHandler(SimulationHandler::GetNACAAirfoil("0012"));
+    SimulationHandler *handler = new SimulationHandler(SimulationHandler::GetNACAAirfoil("0012"), params);
     handler->Run();
     while(handler->PollStatus() == SimulationHandler::Running);
     std::string resultPath = handler->proxy_->GetExePath() + "/" + handler->InstantiateFilename("result.txt");
@@ -57,7 +59,7 @@ void SimulationHandler_tests::RunSimulationTestResultsFile()
 void SimulationHandler_tests::RunSimulationResultsAreLoaded()
 {
     Geometry testGeom = SimulationHandler::GetNACAAirfoil("0012");
-    SimulationHandler *handler = new SimulationHandler(testGeom);
+    SimulationHandler *handler = new SimulationHandler(testGeom, params);
     handler->Run();
     while(handler->PollStatus() == SimulationHandler::Running);
     QVERIFY(testGeom.GetResults().GetPolarPointCount() != 0);
@@ -66,12 +68,12 @@ void SimulationHandler_tests::RunSimulationResultsAreLoaded()
 
 void SimulationHandler_tests::NotRunningSimulationThrows()
 {
-    SimulationHandler handler(SimulationHandler::GetNACAAirfoil("0012"));
+    SimulationHandler handler(SimulationHandler::GetNACAAirfoil("0012"),params);
 }
 void SimulationHandler_tests::DeleteHandlerObectCleansTemporaryFiles()
 {
     //Todo test also results file//
-    SimulationHandler *handler = new SimulationHandler(SimulationHandler::GetNACAAirfoil("0012"));
+    SimulationHandler *handler = new SimulationHandler(SimulationHandler::GetNACAAirfoil("0012"), params);
     std::string path = handler->proxy_->GetExePath() + "/" + handler->InstantiateFilename("geometry.dat");
     QVERIFY(utility::fileExists(path));
     delete handler;
@@ -80,29 +82,32 @@ void SimulationHandler_tests::DeleteHandlerObectCleansTemporaryFiles()
 }
 void SimulationHandler_tests::CreateSimulationSchedulerSpawnsNewProcess()
 {
-    Config::Optimization::SimulationParams params;
     SimulationScheduler *sched = new SimulationScheduler(params);
     Geometry testGeom = SimulationHandler::GetNACAAirfoil("0012");
     sched->AddTask(SimulationScheduler::Task(&testGeom));
+
+
     delete sched;
 
 }
 void SimulationHandler_tests::CalculatingTheSameGeometryObjectTwiceDoesNotDoubleDataPoints()
 {
-    Config::Optimization::SimulationParams params;
     SimulationScheduler *sched = new SimulationScheduler(params);
     Geometry testGeom = SimulationHandler::GetNACAAirfoil("0012");
     sched->AddTask(SimulationScheduler::Task(&testGeom));
-    while(!testGeom.GetResults().IsCalculated());
+    while(!sched->IsTasksFinished())
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
     int points = testGeom.GetResults().GetPolarPointCount();
     sched->AddTask(SimulationScheduler::Task(&testGeom));
+
     delete sched;
     QVERIFY(points == testGeom.GetResults().GetPolarPointCount());
 }
 
 void SimulationHandler_tests::HandleMultipleParallelSimulations()
 {
-    Config::Optimization::SimulationParams params;
     std::stringstream ss;
     SimulationScheduler *sched = new SimulationScheduler(params);
     Geometry testGeom[10];
@@ -112,7 +117,6 @@ void SimulationHandler_tests::HandleMultipleParallelSimulations()
         testGeom[i-2] = SimulationHandler::GetNACAAirfoil(ss.str());
         ss.str("");
         ss.clear();
-
     }
     for(int i = 0; i < 10; ++i)
     {

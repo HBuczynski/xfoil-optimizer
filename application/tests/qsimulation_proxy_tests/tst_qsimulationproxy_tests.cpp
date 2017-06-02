@@ -22,22 +22,23 @@ private Q_SLOTS:
     void RunMultipleParallelSimulations();
     void GenerateNACAProfile();
     //void RunSequenceSimulation();
-
+private:
+    Config::SimulationParams params;
 };
 
 QSimulationProxy_tests::QSimulationProxy_tests()
 {
-
+    //Set up params paths here//
 }
 
 void QSimulationProxy_tests::CreateProxyObjectNotRunsTheXfoil()
 {
-    QSimulationProxy proxy;
+    QSimulationProxy proxy(params);
     QVERIFY2(proxy.PollStatus() == SimulationProxy::NotRunning, "Failure - Bad object creation");
 }
 void QSimulationProxy_tests::RunAndTerminateTheProgram()
 {
-    QSimulationProxy proxy;
+    QSimulationProxy proxy(params);
     proxy.Run();
     QVERIFY2(proxy.PollStatus() != SimulationProxy::NotRunning, "Failure - process did not start - invalid state");
     proxy.Terminate();
@@ -45,7 +46,7 @@ void QSimulationProxy_tests::RunAndTerminateTheProgram()
 }
 void QSimulationProxy_tests::EnterMenuAndTerminate()
 {
-    QSimulationProxy proxy;
+    QSimulationProxy proxy(params);
     proxy.AddCommand("PLOP");
     proxy.AddCommand("G F");
     proxy.AddCommand("\r\n");
@@ -59,7 +60,7 @@ void QSimulationProxy_tests::EnterMenuAndTerminate()
 
 void QSimulationProxy_tests::RunASimulationAndRemoveResultsFile()
 {
-    QSimulationProxy proxy;
+    QSimulationProxy proxy(params);
     proxy.AddCommand("PLOP");
     proxy.AddCommand("G F");
     proxy.AddCommand("\r\n");
@@ -89,33 +90,39 @@ void QSimulationProxy_tests::RunASimulationAndRemoveResultsFile()
 void QSimulationProxy_tests::RunMultipleParallelSimulations()
 {
     const unsigned int simCount = 8;
-    QSimulationProxy proxy[simCount];
-    char fnamebuf[32];
-    for(unsigned int i = 0; i < simCount; ++i)
+    std::vector<QSimulationProxy*> proxyBuf;
+    for(int i = 0; i < simCount; ++i)
     {
-        proxy[i].AddCommand("PLOP");
-        proxy[i].AddCommand("G F");
-        proxy[i].AddCommand("\r\n");
-        proxy[i].AddCommand("NACA 0012");
-        proxy[i].AddCommand("OPER");
-        proxy[i].AddCommand("ALFA 0.0");
-        snprintf(fnamebuf,sizeof(fnamebuf),"test%d.dat",i);
-        proxy[i].AddCommand("CPWR " + std::string(fnamebuf));
+        proxyBuf.push_back(new QSimulationProxy(params));
     }
-    for(unsigned int i = 0; i < simCount; ++i)
+    char fnamebuf[32];
+    int i = 0;
+    for(auto proxy : proxyBuf)
     {
-            proxy[i].Run();
-            QVERIFY(proxy[i].PollStatus() != SimulationProxy::NotRunning);
+        proxy->AddCommand("PLOP");
+        proxy->AddCommand("G F");
+        proxy->AddCommand("\r\n");
+        proxy->AddCommand("NACA 0012");
+        proxy->AddCommand("OPER");
+        proxy->AddCommand("ALFA 0.0");
+        snprintf(fnamebuf,sizeof(fnamebuf),"test%d.dat",i);
+        proxy->AddCommand("CPWR " + std::string(fnamebuf));
+        ++i;
+    }
+    for(auto  proxy:proxyBuf)
+    {
+            proxy->Run();
+            QVERIFY(proxy->PollStatus() != SimulationProxy::NotRunning);
 
     }
     //Wait for all processes to finish or timeout//
     bool finished = false;
     for(int retries = 0; retries < 10; ++retries)
     {
-        for(unsigned int i = 0; i < simCount; ++i)
+        for(auto  proxy:proxyBuf)
         {
             finished = true;//Reset flag
-                if(proxy[i].PollStatus() == SimulationProxy::Running)
+                if(proxy->PollStatus() == SimulationProxy::Running)
                 {
                     finished =false;
                 }
@@ -124,24 +131,26 @@ void QSimulationProxy_tests::RunMultipleParallelSimulations()
             break;
     }
     QVERIFY(finished);
-    for(unsigned int i = 0; i < simCount; ++i)
+    for(auto  proxy:proxyBuf)
     {
-            proxy[i].Terminate();
-            QVERIFY(proxy[i].PollStatus() == SimulationProxy::Finished);
+            proxy->Terminate();
+            QVERIFY(proxy->PollStatus() == SimulationProxy::Finished);
     }
-    for(unsigned int i = 0; i < simCount; ++i)
+    i = 0;
+    for(auto proxy:proxyBuf)
     {
         snprintf(fnamebuf,sizeof(fnamebuf),"test%d.dat",i);
-        QString resFile = QString::fromStdString(proxy[i].GetExePath() + "/" + std::string(fnamebuf));
+        QString resFile = QString::fromStdString(proxy->GetExePath() + "/" + std::string(fnamebuf));
         QVERIFY(QFile::exists(resFile));
         QFile::remove(resFile);
         QVERIFY(!QFile::exists(resFile));
+        ++i;
     }
 }
 void QSimulationProxy_tests::GenerateNACAProfile()
 {
     //TODO - throw if this breaks//
-    QSimulationProxy proxy;
+    QSimulationProxy proxy(params);
     proxy.AddCommand("NACA 0012");
     proxy.AddCommand("SAVE NACA0012.dat");
     proxy.AddCommand("\r\n");

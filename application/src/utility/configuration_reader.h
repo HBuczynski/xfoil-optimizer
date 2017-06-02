@@ -17,9 +17,10 @@ public:
 	bool initialize();
 
     static std::string getProjectPath();
-    Parameters getApplicationParameters();
-    Parameters getOptimizerParameters();
-    Parameters getSimulatorParameters();
+
+    Config::ApplicationParams getApplicationParameters();
+    Config::OptimizerParams getOptimizerParameters();
+    Config::SimulationParams getSimulatorParameters();
 
 private:
     bool initializeDirectories();
