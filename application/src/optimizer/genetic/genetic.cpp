@@ -109,14 +109,20 @@ Genome *GeneticOptimizer::rouletteWheelSelection()
     double slice = (rand() % fitness)/1000;
     //go through the chromosones adding up the fitness so far
     double fitnessSoFar = 0.0;
+    Genome *selectedGenome;
 
     for (int i=0; i<populationCount_; i++)
     {
         fitnessSoFar += population_[i]->getFitness();
         //if the fitness so far > random number return the chromo at this point
         if (fitnessSoFar >= slice)
-            return population_[i];
+        {
+            selectedGenome = population_[i];
+            break;
+        }
     }
+
+    return selectedGenome;
 }
 
 AirfoilCoefficients GeneticOptimizer::generateRandomCoefficients()
