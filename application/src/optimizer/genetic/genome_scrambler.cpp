@@ -4,7 +4,7 @@
 
 void DudScrambler::Mutate(Genome *genome)
 {
-    char *bytesArray = genome->getCoefficientsArray();
+    unsigned char *bytesArray = genome->getCoefficientsArray();
 
     if(bytesArray != nullptr)
     {
@@ -15,7 +15,7 @@ void DudScrambler::Mutate(Genome *genome)
 
         for(int i =0; i < bytesCount; ++i)
         {
-            currentBitNumber = rand()%strlen(bytesArray);
+            currentBitNumber = rand()% sizeof(bytesArray)*8;
             currentBitValue = rand()%10;
 
             if(currentBitValue >=7)
@@ -26,16 +26,16 @@ void DudScrambler::Mutate(Genome *genome)
     }
 }
 
-Genome* DudScrambler::Crossover(const char *g1, const char*g2)
+Genome* DudScrambler::Crossover(const unsigned char *g1, const unsigned char*g2)
 {
-    char *newArray;
+    unsigned char *newArray;
 
-    if (strlen(g1) == strlen(g2))
+    if (sizeof(g1) == sizeof(g2))
     {
-        int arrayLength = strlen(g1);
+        int arrayLength = sizeof(g1)*8;
         int crossoverPoint = rand() % (arrayLength-30)+30;
 
-        newArray = new char[arrayLength];
+        newArray = new unsigned char[arrayLength];
 
         for(int i=0; i<arrayLength; ++i)
         {

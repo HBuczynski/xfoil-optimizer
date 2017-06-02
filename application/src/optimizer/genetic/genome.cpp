@@ -14,7 +14,7 @@ void Genome::setCoefficients(AirfoilCoefficients coefficients)
     calculateFitness();
 }
 
-void Genome::setBinaryArray(char *array)
+void Genome::setBinaryArray(unsigned char *array)
 {
     binaryCoefficientsArray_ = array;
     //setStructFromBinaryArray();
@@ -62,17 +62,19 @@ void Genome::convertBinaryCoefficientsToDouble(const BinaryAirfoilCoefficients &
     doubleCoefficients.q_l = binaryCoefficients.q_l*scale;
     doubleCoefficients.q_u = binaryCoefficients.q_u*scale;
 }
-void Genome::setBinaryArrayFromStruct(const BinaryAirfoilCoefficients &airfoilCoefficients)
+void Genome::setBinaryArrayFromStruct(BinaryAirfoilCoefficients &airfoilCoefficients)
 {
-    binaryCoefficientsArray_ = new char[sizeof(BinaryAirfoilCoefficients)];
+    binaryCoefficientsArray_ = new unsigned char[sizeof(BinaryAirfoilCoefficients)];
+
+    binaryCoefficientsArray_ = reinterpret_cast<uint8_t*>(&airfoilCoefficients);
 }
 
-void Genome::setStructFromBinaryArray(const char *array)
+void Genome::setStructFromBinaryArray(unsigned char *array)
 {
-
+    binaryCoefficients_ = reinterpret_cast<BinaryAirfoilCoefficients&>(array);
 }
 
-char *Genome::getCoefficientsArray()
+unsigned char *Genome::getCoefficientsArray()
 {
     return binaryCoefficientsArray_;
 }

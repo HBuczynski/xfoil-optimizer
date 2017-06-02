@@ -23,16 +23,16 @@ public:
     ~Genome();
 
     void setCoefficients(AirfoilCoefficients coefficients);
-    void setBinaryArray(char *array);
+    void setBinaryArray(unsigned char *array);
     double &getFitness();
-    char *getCoefficientsArray();
+    unsigned char *getCoefficientsArray();
     void calculateFitness();
 
 private:
     void convertDoubleCoefficientsToBinary(const AirfoilCoefficients &doubleCoefficients, BinaryAirfoilCoefficients &binaryCoefficients);
     void convertBinaryCoefficientsToDouble(const BinaryAirfoilCoefficients &binaryCoefficients, AirfoilCoefficients &doubleCoefficients);
-    void setBinaryArrayFromStruct(const BinaryAirfoilCoefficients &airfoilCoefficients);
-    void setStructFromBinaryArray(const char *array);
+    void setBinaryArrayFromStruct(BinaryAirfoilCoefficients &airfoilCoefficients);
+    void setStructFromBinaryArray(unsigned char *array);
 
 private:
     Geometry geom_;
@@ -40,7 +40,7 @@ private:
     AirfoilCoefficients doubleCoefficients_;
     BinaryAirfoilCoefficients binaryCoefficients_;
     FitnessCalculator fitnessCalculator_;
-    char *binaryCoefficientsArray_;
+    unsigned char *binaryCoefficientsArray_;
 
     const int coefficientsCount_;
     const int minCoefficientsRange_;

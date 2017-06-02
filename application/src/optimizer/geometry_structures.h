@@ -68,6 +68,7 @@ struct AirfoilCoefficients
     }
 };
 
+#pragma pack(push,1)
 struct BinaryAirfoilCoefficients
 {
     byte p_u;
@@ -118,6 +119,7 @@ struct BinaryAirfoilCoefficients
         return *this;
     }
 };
+#pragma pack(pop)
 
 class Point
 {
