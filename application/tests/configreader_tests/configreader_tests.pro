@@ -40,7 +40,15 @@ SOURCES += tst_configreadertest.cpp \
     ../../src/utility/tiny_xml/tinyxmlparser.cpp \
     ../../src/utility/log_writer.cpp \
     ../../src/utility/time_manager.cpp \
-    ../../src/utility/utility.cpp
+    ../../src/utility/utility.cpp \
+    ../../src/optimizer/geometry.cpp \
+    ../../src/optimizer/simulation_results.cpp \
+    ../../src/optimizer/genetic/fitness.cpp \
+    ../../src/optimizer/genetic/genetic.cpp \
+    ../../src/optimizer/genetic/genome.cpp \
+    ../../src/optimizer/genetic/genome_scrambler.cpp \
+    ../../src/xfoil/qsimulation.cpp \
+    ../../src/xfoil/simulation.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 HEADERS += \
@@ -50,4 +58,15 @@ HEADERS += \
     ../../src/utility/tiny_xml/tinyxml.h \
     ../../src/utility/log_writer.h \
     ../../src/utility/time_manager.h \
-    ../../src/utility/utility.h
+    ../../src/utility/utility.h \
+    ../../src/optimizer/airfoil_optimizer.h \
+    ../../src/optimizer/geometry.h \
+    ../../src/optimizer/geometry_structures.h \
+    ../../src/optimizer/simulation_results.h \
+    ../../src/optimizer/genetic/fitness.h \
+    ../../src/optimizer/genetic/genetic.h \
+    ../../src/optimizer/genetic/genome.h \
+    ../../src/optimizer/genetic/genome_scrambler.h \
+    ../../src/xfoil/qsimulation.h \
+    ../../src/xfoil/simulation.h \
+    ../../src/xfoil/simulation_proxy.h

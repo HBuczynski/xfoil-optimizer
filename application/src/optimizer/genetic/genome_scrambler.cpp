@@ -56,4 +56,6 @@ Genome* DudScrambler::Crossover(const unsigned char *g1, const unsigned char*g2)
         else
             return genome;
     }
+    //ERROR//
+    return nullptr;
 }

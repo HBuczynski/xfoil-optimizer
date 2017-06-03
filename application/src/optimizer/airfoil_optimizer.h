@@ -1,17 +1,22 @@
 #pragma once
 #include "optimizer/geometry.h"
-
+#include <QObject>
 //!  Interface class for various optimizers
 /*!
   Provides an interface for model to control and display results of the optimization
 */
-class AirfoilOptimizer
+class AirfoilOptimizer: public QObject
 {
+    Q_OBJECT
 public:
     virtual void AddBaseGeometry(Geometry &geom) = 0;
     virtual void OptimizeStep() = 0;
     virtual Geometry const GetTopGeometry(int place) = 0;
     virtual double const GetProgress() = 0;
+//public Q_SLOTS:
+//    virtual void simulationBatchComplete(){}
+//Q_SIGNALS:
+//    void optimizationFinished();
 };
 
 class DudOptimizer : public AirfoilOptimizer

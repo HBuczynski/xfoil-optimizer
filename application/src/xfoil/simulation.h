@@ -274,7 +274,7 @@ public slots:
     {
         //std::cout<<"Updated state\r\n";
         if(state == true && workerIdle !=state)
-            std::cout<<"Emit signal sim finished";
+            Q_EMIT simulationFinished();
         workerIdle = state;
     }
     void workerFinished()

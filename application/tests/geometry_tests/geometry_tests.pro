@@ -58,6 +58,8 @@ HEADERS += \
     ../../src/xfoil/simulation_proxy.h \
     ../../src/xfoil/simulation.h \
     ../../src/optimizer/simulation_results.h \
-    ../../src/utility/utility.h
+    ../../src/utility/utility.h \
+    ../../src/optimizer/airfoil_optimizer.h \
+    ../../src/optimizer/geometry_structures.h
 
 

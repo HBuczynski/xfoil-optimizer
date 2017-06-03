@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-
+#include <QObject>
 #include "optimizer/airfoil_optimizer.h"
 #include "xfoil/simulation.h"
 #include "optimizer/genetic/genome.h"
@@ -16,7 +16,7 @@
 
 class GeneticOptimizer : public AirfoilOptimizer
 {
-
+    Q_OBJECT
 public:
     enum GAState
     {
@@ -27,23 +27,29 @@ public:
         OptimizationCompleteFinalGeneration
     };
 
-    GeneticOptimizer():
+    GeneticOptimizer(Config::SimulationParams &params, Config::OptimizerParams::Fitness &fitness):
                                                         state_(GAState::NotInitialized),
                                                         totalFintess(0),
                                                         maxCoefficientValue_(3),
                                                         populationCount_(20),
                                                         elitesCount_(3),
                                                         continueOptimization_(true),
-                                                        iterationNumber_(20),
+                                                        iterationLimit_(20),
                                                         simulationScheduler_(nullptr),
                                                         fitnessModel_(nullptr)
     {
 
+        simulationParams_ = params;
+        fitnessParams_ = fitness;
+        //TO DO: constructor was changed
+        simulationScheduler_ = new SimulationScheduler(simulationParams_);
+        fitnessModel_ = new FitnessModel(fitnessParams_);
+        QObject::connect(simulationScheduler_, SIGNAL(simulationFinished()), this, SLOT(simulationBatchComplete()));
     }
 
     ~GeneticOptimizer();
 
-    void initialize(Config::SimulationParams &params, Config::OptimizerParams::Fitness &fitness);
+    void initialize();
     void runGeneticAlgorithm();
     GAState GetState();
 
@@ -54,10 +60,7 @@ public:
 
     }
 
-    virtual void OptimizeStep()
-    {
-
-    }
+    virtual void OptimizeStep();
 
     virtual Geometry const GetTopGeometry(int place)
     {
@@ -69,7 +72,10 @@ public:
     {
         return 0.0;
     }
-
+public Q_SLOTS:
+    virtual void simulationBatchComplete();
+Q_SIGNALS:
+    void optimizationFinished();
 private:
     void generateInitialPopulation();
     void addGenomeToElite(Genome *genome);
@@ -102,5 +108,6 @@ private:
     const int populationCount_;
     const int elitesCount_;
     const int maxCoefficientValue_;
-    const int iterationNumber_;
+    const int iterationLimit_;
+    int currentIterationNumber_ = 0;
 };

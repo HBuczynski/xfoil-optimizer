@@ -39,7 +39,11 @@ SOURCES += ../../src/utility/utility.cpp \
     ../../src/utility/tiny_xml/tinyxmlerror.cpp \
     ../../src/utility/tiny_xml/tinyxmlparser.cpp \
     ../../src/utility/log_writer.cpp \
-    ../../src/utility/time_manager.cpp
+    ../../src/utility/time_manager.cpp \
+    ../../src/optimizer/genetic/fitness.cpp \
+    ../../src/optimizer/genetic/genetic.cpp \
+    ../../src/optimizer/genetic/genome.cpp \
+    ../../src/optimizer/genetic/genome_scrambler.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
@@ -65,4 +69,10 @@ HEADERS += \
     ../../src/utility/tiny_xml/tinystr.h \
     ../../src/utility/tiny_xml/tinyxml.h \
     ../../src/utility/log_writer.h \
-    ../../src/utility/time_manager.h
+    ../../src/utility/time_manager.h \
+    ../../src/optimizer/airfoil_optimizer.h \
+    ../../src/optimizer/geometry_structures.h \
+    ../../src/optimizer/genetic/fitness.h \
+    ../../src/optimizer/genetic/genetic.h \
+    ../../src/optimizer/genetic/genome.h \
+    ../../src/optimizer/genetic/genome_scrambler.h

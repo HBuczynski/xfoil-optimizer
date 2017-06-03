@@ -11,57 +11,54 @@ GeneticOptimizer::~GeneticOptimizer()
         delete fitnessModel_;
 }
 
-void GeneticOptimizer::initialize(Config::SimulationParams &params, Config::OptimizerParams::Fitness &fitness)
+void GeneticOptimizer::initialize()
 {
-    simulationParams_ = params;
-    fitnessParams_ = fitness;
-    //TO DO: constructor was changed
-    simulationScheduler_ = new SimulationScheduler(simulationParams_);
-    fitnessModel_ = new FitnessModel(fitnessParams_);
+
 }
 
 void GeneticOptimizer::runGeneticAlgorithm()
 {
     generateInitialPopulation();
 
-    int currentIterationNumber = 0;
+    totalFintess = 0;
+    //start simulation of each genome
+    for(auto genome: population_)
+        simulationScheduler_->AddTask(Task(genome->getGeometry()));
+}
+void GeneticOptimizer::OptimizeStep()
+{
+    //int currentIterationNumber = 0;
     int newGenomeNumber = 0;
-
-    while(continueOptimization_ && currentIterationNumber < iterationNumber_)
+    //simulationScheduler_->WaitForFinished();
+    if(!simulationScheduler_->IsTasksFinished())
+        throw std::out_of_range("Should be finifhed task");
+    calculateFitness();
+    //check to see if algoirthm find any solution
+    for(auto genome : population_)
     {
-        totalFintess = 0;
-
-        //start simulation of each genome
-        for(auto genome: population_)
-            simulationScheduler_->AddTask(Task(genome->getGeometry()));
-
-        simulationScheduler_->WaitForFinished();
-
-        calculateFitness();
-
-        //check to see if algoirthm find any solution
-        for(auto genome : population_)
+        totalFintess += genome->getFitness();
+        if(checkGenomeFitness(genome))
         {
-            totalFintess += genome->getFitness();
-            if(checkGenomeFitness(genome))
-            {
-                continueOptimization_ = false;
-                return;
-            }
+            continueOptimization_ = false;
+            return;
         }
+    }
+    ++currentIterationNumber_;
 
+    if(continueOptimization_ && currentIterationNumber_ < iterationLimit_)
+    {
         while(newGenomeNumber < populationCount_)
         {
             Genome *newGenome = scrambler_.Crossover(rouletteWheelSelection()->getCoefficientsArray(), rouletteWheelSelection()->getCoefficientsArray());
             scrambler_.Mutate(newGenome);
             tempPopulation.push_back(newGenome);
-
-           ++newGenomeNumber;
+            ++newGenomeNumber;
         }
-
         createPopulationAfterReproduction();
-         ++currentIterationNumber;
     }
+    else
+        Q_EMIT optimizationFinished();
+
 }
 
 GeneticOptimizer::GAState GeneticOptimizer::GetState()
@@ -204,4 +201,10 @@ AirfoilCoefficients GeneticOptimizer::generateRandomCoefficients()
     randomCoefficients.q_u = (rand() % (maxCoefficientValue_*100)) / 100;
 
     return randomCoefficients;
+}
+//Slots//
+void GeneticOptimizer::simulationBatchComplete()
+{
+    std::cout<<"Signal received"<<std::endl;
+
 }

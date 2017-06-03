@@ -16,7 +16,7 @@ public:
     {
         int parallelSimulations = 4;
         int iterationLimit = 30;
-        std::string xfoilExecutablePath =  "C:\\Users\\Hubert\\Documents\\Projekt\\xfoil-optimizer\\xfoil\\win32";
+        std::string xfoilExecutablePath =  "C:\\Users\\Kub\\Documents\\workspace\\xfoil-optimizer\\xfoil\\win32";
         bool viscousEnable = true;
         int reynoldsNo = 10000000;
         int xfoilTimeout = 40;

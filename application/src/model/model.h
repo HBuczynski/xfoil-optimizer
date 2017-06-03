@@ -36,7 +36,7 @@ private:
     AviationProfileParameters targetProfileData_;
     LogWriter *logger_;
     ConfigurationReader configReader_;
-    GeneticOptimizer geneticOptimizer_;
+    GeneticOptimizer *geneticOptimizer_;
 
     std::string projectPath_;
     Config::ApplicationParams applicationParameters_;

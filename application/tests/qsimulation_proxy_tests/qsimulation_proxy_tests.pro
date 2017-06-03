@@ -32,7 +32,11 @@ SOURCES +=  ../../src/xfoil/simulation.cpp ../../src/xfoil/qsimulation.cpp \
             tst_qsimulationproxy_tests.cpp \
     ../../src/utility/utility.cpp \
     ../../src/optimizer/geometry.cpp \
-    ../../src/optimizer/simulation_results.cpp
+    ../../src/optimizer/simulation_results.cpp \
+    ../../src/optimizer/genetic/fitness.cpp \
+    ../../src/optimizer/genetic/genetic.cpp \
+    ../../src/optimizer/genetic/genome.cpp \
+    ../../src/optimizer/genetic/genome_scrambler.cpp
 
 INCLUDEPATH += ../../src
 win32 {
@@ -49,6 +53,13 @@ HEADERS += \
     ../../src/xfoil/simulation.h \
     ../../src/xfoil/qsimulation.h \
     ../../src/optimizer/simulation_results.h \
-    ../../src/xfoil/simulation_proxy.h
+    ../../src/xfoil/simulation_proxy.h \
+    ../../src/optimizer/airfoil_optimizer.h \
+    ../../src/optimizer/geometry.h \
+    ../../src/optimizer/geometry_structures.h \
+    ../../src/optimizer/genetic/fitness.h \
+    ../../src/optimizer/genetic/genetic.h \
+    ../../src/optimizer/genetic/genome.h \
+    ../../src/optimizer/genetic/genome_scrambler.h
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"

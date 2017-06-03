@@ -58,5 +58,8 @@ HEADERS += \
     ../../src/optimizer/geometry_structures.h \
     ../../src/optimizer/airfoil_optimizer.h \
     ../../src/utility/utility.h \
-    ../../src/optimizer/fitness.h \
-    ../../src/utility/config.h
+    ../../src/utility/config.h \
+    ../../src/optimizer/genetic/fitness.h \
+    ../../src/optimizer/genetic/genetic.h \
+    ../../src/optimizer/genetic/genome.h \
+    ../../src/optimizer/genetic/genome_scrambler.h

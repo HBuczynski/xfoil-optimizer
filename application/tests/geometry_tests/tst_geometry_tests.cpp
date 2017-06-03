@@ -113,6 +113,7 @@ void Geometry_Tests::CheckIfBasicProfileIsNotCrossed()
 void Geometry_Tests::CheckBasicAirfoilSimResultsMethodAccess()
 {
     Config::SimulationParams params;
+    params.viscousEnable = false;
     Geometry testGeom(profilePath.toStdString());
     SimulationHandler sim(testGeom,params);
     sim.Run();
