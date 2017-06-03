@@ -46,7 +46,6 @@ HEADERS += \
     src/gui/view.h \
     src/model/model.h \
     src/model/profile_parameters.h \
-    src/optimizer/genetic.h \
     src/utility/configuration_reader.h \
     src/utility/log_writer.h \
     src/utility/time_manager.h \
@@ -91,5 +90,6 @@ linux { # For Linux
   QMAKE_LFLAGS += -fopenmp
   QMAKE_CXXFLAGS += -mavx
   QMAKE_CXXFLAGS_RELEASE *= -O3
+  LIBS += -lboost_system
 }
 

@@ -54,7 +54,7 @@ void SimulationHandler::ReadResults()
         infile.close();
     }
     else
-        throw std::exception("Invalid data file");
+        throw std::invalid_argument("Invalid data file");
 
 
 }
@@ -93,7 +93,7 @@ void SimulationHandler::DeleteResults()
 void SimulationHandler::Run()
 {
     if(status_ != Idle)
-        throw std::exception("Invaid state - simulation running?");
+        throw std::invalid_argument("Invaid state - simulation running?");
     std::stringstream ss;
     proxy_->AddCommand("PLOP");
     proxy_->AddCommand("G F");
@@ -217,7 +217,7 @@ void SchedulerWorker::process()
     /*
 
     */
-    //IsTasksFinished();
+    IsTasksFinished();
     //Q_EMIT finishedWork();
 }
 bool SchedulerWorker::IsTasksFinished()

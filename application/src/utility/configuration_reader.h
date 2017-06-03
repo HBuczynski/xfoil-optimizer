@@ -25,7 +25,7 @@ public:
 
 private:
     bool initializeDirectories();
-    bool initializeLogger();
+    //bool initializeLogger();
 
     void saveToFile(const char * fileName);
     bool loadFromFile(const char* fileName);
@@ -42,7 +42,7 @@ private:
 
 
 private:
-    LogWriter *logger_;
+   //LogWriter *logger_;
 
     Parameters optimizationParameters_;
     Parameters applicationParameters_;

@@ -28,6 +28,7 @@ ConfigReaderTest::ConfigReaderTest()
 void ConfigReaderTest::initTestCase()
 {
     configFilePath = QString::fromStdString(ConfigurationReader::getParameterFilePath());
+    std::cout<<configFilePath.toStdString();
     //Delete initial config file//
     if(QFile::exists(configFilePath))
         QFile::remove(configFilePath);

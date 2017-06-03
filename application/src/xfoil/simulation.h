@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <exception>
 //#include <cstdio>
 
 #include "optimizer/simulation_results.h"
@@ -189,7 +190,6 @@ private:
     QMutex &queueMutex_;
     SimulationHandler::Status *handlerStatus_;
     SimulationHandler **handlers;
-    bool workerEnable_;
 };
 //!  Class controlling execution of external simulation tools
 /*!
@@ -211,7 +211,7 @@ public:
             handlerStatus_[i] = SimulationHandler::NotExisting;
         }
         //Initailize worker thread//
-        workerEnable_ = true;
+        //workerEnable_ = true;
         workerIdle = true;
         workerThread = new QThread;
 
@@ -226,7 +226,7 @@ public:
         QObject::connect(this, SIGNAL(stopWorker()), worker_, SLOT(stop()), Qt::QueuedConnection);
         //QObject::connect(this, SIGNAL(emitTask(Task)), worker_, SLOT(addTask(Task)), Qt::QueuedConnection);
         QObject::connect(workerThread, SIGNAL(finished()), this, SLOT(workerFinished()), Qt::QueuedConnection);
-        QObject::connect(worker_, SIGNAL(updateIdleState(bool)), this, SLOT(updateState(bool)), Qt::QueuedConnection);
+        QObject::connect(worker_, SIGNAL(updateIdleState(bool)), this, SLOT(updateState(bool)), Qt::DirectConnection);
 
         worker_->moveToThread(workerThread);
         workerThread->start();
@@ -246,6 +246,13 @@ public:
         QMutexLocker locker(&queueMutex_);
         taskQueue_.push(task);
     }
+    void AddBatchTask(std::vector<Task> &input)
+    {
+        QMutexLocker locker(&queueMutex_);
+        for(const auto &e:input)
+            taskQueue_.push(e);
+    }
+
     void WaitForFinished()
     {
         while(!worker_->IsTasksFinished())
@@ -256,26 +263,22 @@ public:
 
     bool IsTasksFinished() const
     {
-        return workerIdle;
+        return worker_->IsTasksFinished();
     }
 
 signals:
     void stopWorker();
     void emitTask(Task task);
-    //{
-      //  std::cout<<"STOPPING thread(from main)\r\n";
-     //   workerEnable_ = false;
-    //}
+
 public slots:
     void updateState(bool state)
     {
-        std::cout<<"Updated state\r\n";
+        //std::cout<<"Updated state\r\n";
         workerIdle = state;
     }
     void workerFinished()
     {
         std::cout<<"Finished thread\r\n";
-        workerEnable_ = false;
     }
     void errorString(QString str)
     {
@@ -291,8 +294,6 @@ private:
     QMutex queueMutex_;
     QThread *workerThread;
     SchedulerWorker *worker_;
-  //  QThread *workerThread_;
-    bool workerEnable_;
     bool workerIdle;
 
 

@@ -41,6 +41,9 @@ win32 {
 win64 {
     #INCLUDEPATH += C:/boost_1_55_0
 }
+linux { # For Linux
+    LIBS += -lboost_system
+}
 INCLUDEPATH += C:/boost_1_55_0
 HEADERS += \
     ../../src/xfoil/simulation.h \

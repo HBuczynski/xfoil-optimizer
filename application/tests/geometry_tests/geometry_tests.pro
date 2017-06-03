@@ -33,7 +33,9 @@ win32 {
 win64 {
     #INCLUDEPATH += C:/boost_1_55_0
 }
-
+linux { # For Linux
+    LIBS += -lboost_system
+}
 SOURCES += tst_geometry_tests.cpp \
     ../../src/optimizer/geometry.cpp \
     ../../src/optimizer/genetic/genome.cpp \

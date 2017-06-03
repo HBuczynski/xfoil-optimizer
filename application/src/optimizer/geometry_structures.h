@@ -2,6 +2,7 @@
 #define GEOMETRY_STRUCTURES_H
 
 typedef std::uint8_t byte;
+#include <cmath>
 
 struct AirfoilCoefficients
 {
@@ -140,7 +141,7 @@ public:
 inline bool operator==(const Point& lhs, const Point& rhs)
 {
     double eps = 0.00000001;
-    if(abs(lhs.x - rhs.x) < eps && abs(lhs.y - rhs.y) < eps)
+    if(std::abs(lhs.x - rhs.x) < eps && std::abs(lhs.y - rhs.y) < eps)
         return true;
     return false;
 }
