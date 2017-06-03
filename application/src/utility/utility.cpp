@@ -3,7 +3,7 @@
 
 #include <QDir>
 #include <fstream>
-
+#include <iostream>
 ExceptionHandler::ExceptionHandler(const std::string &ex) : e(ex)
 {
 
@@ -35,6 +35,7 @@ bool utility::createDirectoryRecursively(const std::string &directory)
                 bool isSuccess = utility::createDirectoryRecursively(directory.substr(0, slashIndex));
                 if (!isSuccess)
                 {
+                    std::cout<<"utility::createDirectoryRecursively could not create parent directory.";
                     //logger->addErrorMessage("utility::createDirectoryRecursively could not create parent directory.");
                     return false;
                 }
@@ -45,6 +46,7 @@ bool utility::createDirectoryRecursively(const std::string &directory)
             bool result = QDir().mkdir(directory.c_str());
 
             if (result == false) {
+                std::cout<<"utility::createDirectoryRecursively could not create directory.";
                 //logger->addErrorMessage("utility::createDirectoryRecursively could not create directory.");
                 return false;
             }

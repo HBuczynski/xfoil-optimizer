@@ -28,7 +28,9 @@
     std::string path = []()->std::string {
                                           char result[ PATH_MAX ];
                                           ssize_t count = readlink( "/proc/self/exe", result, PATH_MAX );
-                                          return std::string( result, (count > 0) ? count : 0 );
+                                          std::string str(result);
+                                          str = str.substr(0, str.find_last_of("/"));
+                                          return str;
                                          }();
     std::string  getUserName()
     {
@@ -61,18 +63,19 @@ bool ConfigurationReader::initialize()
         std::cout << "Error: Basic directory wasn't created. Exiting." << std::endl;
         return false;
     }
-
+/*
     if(!initializeLogger())
     {
         std::cout << "Error: Logger wasn't initialized. Exiting." << std::endl;
         //return false;
     }
-
+*/
     fileParametersPath_ = projectPath_ + ConfigurationReader::folderConfigName_ + separator + ConfigurationReader::fileConfigName_;
 
     if (loadFromFile(fileParametersPath_.c_str()))
     {
-        logger_->addInformationMessage("ConfigurationReader:: parameters were loaded with success from file.");
+        //std::cout << "Error: Logger wasn't initialized. Exiting." << std::endl;
+        //logger_->addInformationMessage("ConfigurationReader:: parameters were loaded with success from file.");
         return true;
     }
     else
@@ -81,12 +84,13 @@ bool ConfigurationReader::initialize()
         if (loadFromFile(fileParametersPath_.c_str()))
         {
 
-            logger_->addInformationMessage("ConfigurationReader:: parameters were loaded with success from file.");
+            //logger_->addInformationMessage("ConfigurationReader:: parameters were loaded with success from file.");
             return true;
         }
         else
         {
-            logger_->addErrorMessage("ConfigurationReader::failed to open xml file.");
+            std::cout << "ConfigurationReader::failed to open xml file."<< std::endl;
+            //logger_->addErrorMessage("ConfigurationReader::failed to open xml file.");
             return false;
         }
     }
@@ -134,7 +138,7 @@ Config::SimulationParams ConfigurationReader::getSimulatorParameters()
     rparams.iterationLimit = boost::get<int>(simulaotorParameters_["maxIterations"]);
     rparams.parallelSimulations = boost::get<int>(simulaotorParameters_["parallelTasks"]);
     rparams.reynoldsNo = boost::get<int>(simulaotorParameters_["viscousRe"]);
-    rparams.viscousEnable = boost::get<std::string>(simulaotorParameters_["viscousEnable"]) == "True";
+    //rparams.viscousEnable = boost::get<std::string>(simulaotorParameters_["viscousEnable"]) == "True";
     rparams.xfoilExecutablePath = boost::get<std::string>(simulaotorParameters_["xfoilPath"]);
     rparams.xfoilTimeout = boost::get<int>(simulaotorParameters_["xfoilTimeout"]);
     return rparams;
@@ -145,7 +149,7 @@ bool ConfigurationReader::initializeDirectories()
 {
    return utility::createDirectoryRecursively(projectPath_ + folderConfigName_);
 }
-
+/*
 bool ConfigurationReader::initializeLogger()
 {
     std::string directoryLogger = projectPath_ + "Logger";
@@ -154,7 +158,7 @@ bool ConfigurationReader::initializeLogger()
     logger_ = &LogWriter::getInstance();
     return isSuccess && logger_->initialize(directoryLogger);
 }
-
+*/
 void ConfigurationReader::saveToFile(const char *fileName)
 {
     initializeOptParameters();
@@ -237,7 +241,8 @@ bool ConfigurationReader::loadFromFile(const char *fileName)
 
     if (!pointerToElement)
     {
-        logger_->addErrorMessage("ConfigurationReader::failed to set pointer to first element in xml file.");
+        std::cout<<"ConfigurationReader::failed to set pointer to first element in xml file.\r\n";
+        //logger_->addErrorMessage("ConfigurationReader::failed to set pointer to first element in xml file.");
         return false;
     }
 
