@@ -50,6 +50,7 @@ void SimulationHandler::ReadResults()
             geometry_.simResults_.results_.push_back(resLine);
         }
         geometry_.simResults_.calculated_ = true;
+        std::cout<<"Loading results";
         infile.close();
     }
     else
@@ -164,92 +165,74 @@ SimulationHandler::Status SimulationHandler::PollStatus()
     return status_;
 }
 
-void SimulationScheduler::ConsumeTask()
+void SchedulerWorker::process()
 {
-    //Initialize pointers for handler objects//
-    SimulationHandler **handlers = new SimulationHandler*[params_.parallelSimulations];
+    //Free existing queue places//
     for(int i = 0; i < params_.parallelSimulations; ++i)
-        handlers[i] = nullptr;
-    while(workerEnable_)
     {
-        //Free existing queue places//
-        for(int i = 0; i < params_.parallelSimulations; ++i)
+        if(handlers[i] != nullptr)
         {
-            if(handlers[i] != nullptr)
+            handlerStatus_[i] = handlers[i]->PollStatus();
+            if(handlerStatus_[i] != SimulationHandler::Running)
             {
-                handlerStatus_[i] = handlers[i]->PollStatus();
-                if(handlerStatus_[i] != SimulationHandler::Running)
-                {
-                    std::cout<<"Task Finished, freeing spot"<<i<<"\r\n";
-                    delete handlers[i];
-                    handlers[i] = nullptr;
-                    handlerStatus_[i] = SimulationHandler::NotExisting;
-                }
-            }
-        }
-        //Look for new task//
-        if(!taskQueue_.empty())
-        {
-            for(int i = 0; i < params_.parallelSimulations; ++i)
-            {
-                //Search for empty queue place and run if available//
-                if(handlers[i] == nullptr)
-                {
-                    //Mutex it//
-                    queueMutex_.lock();
-                    Task task = taskQueue_.front();
-                    taskQueue_.pop();
-                    queueMutex_.unlock();
-                    handlers[i] = new SimulationHandler(*task.geometry, params_);
-                    handlers[i]->Run();
-                    handlerStatus_[i] = handlers[i]->PollStatus();
-                    break;
-                }
-            }
-        }
-        //Poll/ update task states
-        for(int i = 0; i < params_.parallelSimulations; ++i)
-        {
-            if(handlers[i] != nullptr)
-            {
-                handlerStatus_[i] = handlers[i]->PollStatus();
-            }
-        }
-    }
-    //Finish up all the tasks//
-    bool finished = false;
-    while(!finished)
-    {
-        finished = true;
-        for(int i = 0; i < params_.parallelSimulations; ++i)
-        {
-            if(handlers[i] != nullptr)
-            {
-                int timeout = 1000;//delay of 10s//
-                while(handlers[i]->PollStatus() == SimulationHandler::Running)
-                {
-                    if(--timeout < 0)
-                        break;
-                    std::this_thread::sleep_for(std::chrono::milliseconds(10));
-                }
+                std::cout<<"Task Finished, freeing spot"<<i<<"\r\n";
                 delete handlers[i];
                 handlers[i] = nullptr;
                 handlerStatus_[i] = SimulationHandler::NotExisting;
             }
         }
     }
-    delete handlers;
+    //Look for new task//
+    if(!taskQueue_.empty())
+    {
+        for(int i = 0; i < params_.parallelSimulations; ++i)
+        {
+            //Search for empty queue place and run if available//
+            if(handlers[i] == nullptr)
+            {
+                //Mutex it//
+                queueMutex_.lock();
+                Task task = taskQueue_.front();
+                taskQueue_.pop();
+                queueMutex_.unlock();
+                handlers[i] = new SimulationHandler(*task.geometry, params_);
+                handlers[i]->Run();
+                handlerStatus_[i] = handlers[i]->PollStatus();
+                break;
+            }
+        }
+    }
+    //Poll/ update task states
+    for(int i = 0; i < params_.parallelSimulations; ++i)
+    {
+        if(handlers[i] != nullptr)
+        {
+            handlerStatus_[i] = handlers[i]->PollStatus();
+        }
+    }
+    /*
+
+    */
+    IsTasksFinished();
+    //Q_EMIT finishedWork();
 }
-bool SimulationScheduler::IsTasksFinished() const
+bool SchedulerWorker::IsTasksFinished()
 {
     //Check for awaiting tasks
     if(taskQueue_.size() != 0)
+    {
+        emit updateIdleState(false);
         return false;
+    }
     //Check also for running tasks//
     for(int i = 0; i < params_.parallelSimulations; ++i)
     {
         if(handlerStatus_[i] != SimulationHandler::NotExisting)
+        {
+            emit updateIdleState(false);
             return false;
+        }
     }
+    emit updateIdleState(true);
     return true;
 }
