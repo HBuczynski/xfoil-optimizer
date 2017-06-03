@@ -117,10 +117,7 @@ void Geometry_Tests::CheckBasicAirfoilSimResultsMethodAccess()
     SimulationHandler sim(testGeom,params);
     sim.Run();
     while(sim.PollStatus() == SimulationHandler::Running);
-    std::cout << "MaxCl: "<<testGeom.GetResults().CalcMaxCl().param<<std::endl;
-    std::cout << "Max glide ratio: "<<testGeom.GetResults().CalcMaxGlideRatio().param<<std::endl;
-    std::cout << "Min cd : "<<testGeom.GetResults().CalcMinCd().param<<std::endl;
-    std::cout << "avg torque: "<<testGeom.GetResults().CalcAvgTorque()<<std::endl;
+    QVERIFY(testGeom.GetResults().IsCalculated());
 }
 
 QTEST_MAIN(Geometry_Tests)
