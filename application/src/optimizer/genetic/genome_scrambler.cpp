@@ -30,7 +30,9 @@ Genome* DudScrambler::Crossover(const unsigned char *g1, const unsigned char*g2)
 {
     unsigned char *newArray;
 
-    if (sizeof(g1) == sizeof(g2))
+    bool profileIsCrossed = true;
+
+    while(profileIsCrossed)
     {
         int arrayLength = sizeof(g1)*8;
         int crossoverPoint = rand() % (arrayLength-30)+30;
@@ -44,14 +46,14 @@ Genome* DudScrambler::Crossover(const unsigned char *g1, const unsigned char*g2)
             else
                 newArray[i] = g2[i];
         }
+
+        //Create new genome
+        Genome *genome = new Genome(newArray);
+        profileIsCrossed = genome->getGeometry()->isProfileCrossed();
+
+        if(profileIsCrossed)
+            delete genome;
+        else
+            return genome;
     }
-    else
-    {
-
-    }
-
-    //Create new genome
-    Genome *genome = new Genome(newArray);
-
-    return genome;
 }

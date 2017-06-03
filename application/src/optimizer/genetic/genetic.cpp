@@ -7,12 +7,17 @@ GeneticOptimizer::~GeneticOptimizer()
 {
     if(simulationScheduler_ != nullptr)
         delete simulationScheduler_;
+    if(fitnessModel_ != nullptr)
+        delete fitnessModel_;
 }
 
-void GeneticOptimizer::initialize(Config::SimulationParams &params)
+void GeneticOptimizer::initialize(Config::SimulationParams &params, Config::OptimizerParams::Fitness &fitness)
 {
     simulationParams_ = params;
+    fitnessParams_ = fitness;
+    //TO DO: constructor was changed
     simulationScheduler_ = new SimulationScheduler(simulationParams_);
+    fitnessModel_ = new FitnessModel(fitnessParams_);
 }
 
 void GeneticOptimizer::runGeneticAlgorithm()
@@ -27,12 +32,12 @@ void GeneticOptimizer::runGeneticAlgorithm()
         totalFintess = 0;
 
         //start simulation of each genome
-        //czy w addTask, geometria nie powinna być przyjmowana jako referencja ??
         for(auto genome: population_)
-            simulationScheduler_->AddTask(SimulationScheduler::Task(genome->getGeometry()));
+            simulationScheduler_->AddTask(Task(genome->getGeometry()));
 
-        // !!!!!!!!!!!!!1 calculate fitness
+        simulationScheduler_->WaitForFinished();
 
+        calculateFitness();
 
         //check to see if algoirthm find any solution
         for(auto genome : population_)
@@ -66,11 +71,22 @@ GeneticOptimizer::GAState GeneticOptimizer::GetState() const
 
 void GeneticOptimizer::generateInitialPopulation()
 {
-    for(int i=0; i<populationCount_; ++i)
+    int i=0;
+
+    while( i < populationCount_ )
     {
         Genome *genome = new Genome(generateRandomCoefficients());
-        //calculateFitness();
-        population_.push_back(genome);
+
+        if(genome->getGeometry()->isProfileCrossed())
+        {
+            delete genome;
+        }
+        else
+        {
+            //calculateFitness();
+            population_.push_back(genome);
+            ++i;
+        }
     }
 }
 
@@ -137,6 +153,14 @@ bool GeneticOptimizer::checkGenomeFitness(Genome *genome)
 {
     //TO DO: check if we find solution
     return true;
+}
+
+void GeneticOptimizer::calculateFitness()
+{
+    for(auto genome : population_)
+    {
+        genome->setFitness(fitnessModel_->Calculate(genome->getGeometry()->GetResults()));
+    }
 }
 
 Genome *GeneticOptimizer::rouletteWheelSelection()

@@ -28,14 +28,15 @@ public:
                                                         elitesCount_(3),
                                                         continueOptimization_(true),
                                                         iterationNumber_(20),
-                                                        simulationScheduler_(nullptr)
+                                                        simulationScheduler_(nullptr),
+                                                        fitnessModel_(nullptr)
     {
 
     }
 
     ~GeneticOptimizer();
 
-    void initialize(Config::SimulationParams &params);
+    void initialize(Config::SimulationParams &params, Config::OptimizerParams::Fitness &fitness);
     void runGeneticAlgorithm();
     GAState GetState() const;
 
@@ -75,6 +76,7 @@ private:
     void addGenomeToPopulation(Genome *genome);
     void createPopulationAfterReproduction();
     bool checkGenomeFitness(Genome *genome);
+    void calculateFitness();
 
     Genome *rouletteWheelSelection();
     AirfoilCoefficients generateRandomCoefficients();
@@ -85,8 +87,10 @@ private:
     GAState state_;
     DudScrambler scrambler_;
     SimulationScheduler *simulationScheduler_;
+    FitnessModel *fitnessModel_;
     Geometry baseGeometry_;
     Config::SimulationParams simulationParams_;
+    Config::OptimizerParams::Fitness fitnessParams_;
 
 
     bool continueOptimization_;

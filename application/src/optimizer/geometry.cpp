@@ -190,9 +190,9 @@ bool Geometry::isProfileCrossed()
     for(int i=0; i<vectorX_.size(); ++i)
     {
         if(upperPoints_[i].y <= lowerPoints_[i].y)
-            return false;
+            return true;
     }
-    return true;
+    return false;
 }
 void Geometry::Save(std::string filename)
 {
