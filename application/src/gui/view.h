@@ -20,13 +20,12 @@ public:
     void enableProgressBar();
     void disableProgressBar();
 
-    const QString &getFilePath();
-
 	~View();
 
 signals:
     void setBaseProfileValues(AviationProfileParameters data);
     void setTargetProfileValues(AviationProfileParameters data);
+    void redirectPathToBaseProfile(std::string path);
 
 public slots:
     void drawBaseChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
@@ -56,9 +55,6 @@ private:
 
     SettingsDialog settingDialog_;
     PlotDialog plotDialog_;
-
-    QString baseFilePath_;
-
 
     Model *model_;
     MainWindowObjects guiObjects_;

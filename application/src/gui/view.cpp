@@ -45,11 +45,6 @@ void View::disableProgressBar()
     guiObjects_.busyIndicator.object->setProperty("indeterminate", "false");
 }
 
-const QString &View::getFilePath()
-{
-    return baseFilePath_;
-}
-
 View::~View()
 {
 
@@ -127,7 +122,7 @@ void View::getFitnessParametersLabel(AviationProfileParameters data)
 {
    guiObjects_.fitnessValues.at(0)->setProperty("text", data.alfa);
    guiObjects_.fitnessValues.at(1)->setProperty("text", data.clMax);
-   guiObjects_.fitnessValues.at(2)->setProperty("text", data.thickness);
+   guiObjects_.fitnessValues.at(2)->setProperty("text", data.cdMax);
 }
 
 void View::initializeGuiObjects()
@@ -311,7 +306,8 @@ void View::setFilePath()
 {
     //TO DO:
     // Add initial directory to dat files
-    baseFilePath_ = QFileDialog::getOpenFileName(Q_NULLPTR,QString(),QString(),"*.dat");
+    std::string baseFilePath = (QFileDialog::getOpenFileName(Q_NULLPTR,QString(),QString(),"*.dat")).toStdString();
+    emit redirectPathToBaseProfile(baseFilePath);
 }
 
 void View::initializeModelViewConnection()
@@ -326,7 +322,7 @@ void View::initializeModelViewConnection()
     QObject::connect(model_, SIGNAL(setFitnessParameters(AviationProfileParameters)), this, SLOT(getFitnessParametersLabel(AviationProfileParameters)));
     QObject::connect(this, SIGNAL(setBaseProfileValues(AviationProfileParameters)), model_, SLOT(getBaseProfileValues(AviationProfileParameters)));
     QObject::connect(this, SIGNAL(setTargetProfileValues(AviationProfileParameters)), model_, SLOT(getTargetProfileValues(AviationProfileParameters)));
-
+    QObject::connect(this, SIGNAL(redirectPathToBaseProfile(std::string)), model_, SLOT(calculateBaseProfileParameters(std::string)));
     //initialize connection with buttons
     for(int i=0; i<guiObjects_.buttonsCount; ++i)
         QObject::connect(guiObjects_.settingsButtons.at(i), SIGNAL(buttonClick(QString)), this,  SLOT(buttonsClicked(QString)));

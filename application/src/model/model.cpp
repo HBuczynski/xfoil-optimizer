@@ -25,6 +25,11 @@ void Model::getBaseProfileValues(AviationProfileParameters data)
     baseProfileData_ = data;
 }
 
+void Model::calculateBaseProfileParameters(std::string path)
+{
+
+}
+
 void Model::initializeLogger()
 {
     logger_ = &LogWriter::getInstance();
