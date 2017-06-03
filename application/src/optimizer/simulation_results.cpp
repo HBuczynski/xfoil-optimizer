@@ -58,6 +58,18 @@ SimResults::PolarPoint SimResults::CalcMaxGlideRatio() const
 
     return ratio;
 }
+
+AviationProfileParameters SimResults::getProfileParameters()
+{
+    AviationProfileParameters parameters;
+
+    parameters.alfa = results_.front().alfa;
+    parameters.clMax = results_.front().cl;
+    parameters.cdMax = results_.front().cd;
+
+    return parameters;
+
+}
 double SimResults::CalcAvgTorque() const
 {
     if(!IsCalculated() || results_.size() == 0)

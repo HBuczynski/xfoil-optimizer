@@ -2,6 +2,7 @@
 
 #include <cstdlib>
 #include <map>
+#include <QDebug>
 
 GeneticOptimizer::~GeneticOptimizer()
 {
@@ -62,6 +63,29 @@ void GeneticOptimizer::runGeneticAlgorithm()
         createPopulationAfterReproduction();
          ++currentIterationNumber;
     }
+}
+
+AviationProfileParameters GeneticOptimizer::calculateBaseProfile(std::string path)
+{
+    while(path.find('/') != std::string::npos)
+        path.replace(path.find('/'),1, "\\\\");
+
+    Geometry geometry("C:\\Users\\Hubert\\Documents\\Projekt\\xfoil-optimizer\\xfoil\\win32/NACA_0012.dat");
+
+    if(!geometry.isProfileCrossed())
+    {
+        qDebug() << "profil nie crossed";
+        simulationScheduler_->AddTask(Task(&geometry));
+    }
+
+     qDebug() << "czeka";
+    simulationScheduler_->WaitForFinished();
+     qDebug() << "nie czeka";
+
+    SimResults &results = const_cast<SimResults&>(geometry.GetResults());
+    AviationProfileParameters parameters = results.getProfileParameters();
+
+    return parameters;
 }
 
 GeneticOptimizer::GAState GeneticOptimizer::GetState()

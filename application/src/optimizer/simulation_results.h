@@ -1,5 +1,7 @@
 #pragma once
 #include <vector>
+#include "model/profile_parameters.h"
+
 //!  Class containing simulation results from xfoil
 /*!
   A more elaborate class description. [TODO]
@@ -31,6 +33,8 @@ public:
     SimResults::PolarPoint CalcMaxCl() const;
     SimResults::PolarPoint CalcMinCd() const;
     SimResults::PolarPoint CalcMaxGlideRatio() const;
+    AviationProfileParameters getProfileParameters();
+
     double CalcAvgTorque() const;
     std::vector<ResultEntry>::size_type  GetPolarPointCount() const
     {

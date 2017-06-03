@@ -23,7 +23,6 @@ public:
 	~View();
 
 signals:
-    void setBaseProfileValues(AviationProfileParameters data);
     void setTargetProfileValues(AviationProfileParameters data);
     void redirectPathToBaseProfile(std::string path);
 
@@ -33,6 +32,7 @@ public slots:
     void drawGeneticPlot(const std::vector<double> &dataX, const std::vector<double> &dataY);
     void buttonsClicked(QString name);
     void getFitnessParametersLabel(AviationProfileParameters data);
+    void getBaseProfileValues(AviationProfileParameters data);
 
 private:
 	void initializeGuiObjects();
@@ -49,6 +49,7 @@ private:
     void initializeModelViewConnection();
 
     void setFilePath();
+    bool checkIfTargetIsSet();
 
     QQmlApplicationEngine engine_;
     QQmlComponent *componentMainWindow_;

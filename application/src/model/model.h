@@ -22,6 +22,7 @@ signals:
     void updateOptimizedChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
     void updateGeneticChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
     void setFitnessParameters(AviationProfileParameters data);
+    void setBasicProfileParameters(AviationProfileParameters data);
 
 public slots:
     void getTargetProfileValues(AviationProfileParameters data);
@@ -40,7 +41,8 @@ private:
     GeneticOptimizer geneticOptimizer_;
 
     std::string projectPath_;
+
     Config::ApplicationParams applicationParameters_;
     Config::SimulationParams simulationParameters_;
-//    OptimizerParameters optimizerParameres_;
+    Config::OptimizerParams optimizerParameters_;
 };

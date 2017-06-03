@@ -57,6 +57,7 @@ void Geometry_Tests::CreateVectorX()
 void Geometry_Tests::LoadingGeometryFromFileCreatesPoints()
 {
     Geometry geom(profilePath.toStdString());
+    qDebug() << profilePath.toStdString().c_str();
     QVERIFY(geom.GetPoints().size() > 0);
 }
 void Geometry_Tests::SavingAGeometryObjectGeneratesAFile()

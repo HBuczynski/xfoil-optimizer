@@ -13,26 +13,26 @@ View::View(Model *model): model_(model),
     initializeGuiObjects();
     initializeModelViewConnection();
 
-    //only for tests
-    std::vector<double> dataX;
-    dataX.push_back(0.15);
-    dataX.push_back(0.3);
-    dataX.push_back(0.74);
-    dataX.push_back(0.3);
-    dataX.push_back(0.15);
+//    //only for tests
+//    std::vector<double> dataX;
+//    dataX.push_back(0.15);
+//    dataX.push_back(0.3);
+//    dataX.push_back(0.74);
+//    dataX.push_back(0.3);
+//    dataX.push_back(0.15);
 
-    //only for tests
-    std::vector<double> dataY;
-    dataY.push_back(0.45);
-    dataY.push_back(0.6);
-    dataY.push_back(0.24);
-    dataY.push_back(0.3);
-    dataY.push_back(0.45);
+//    //only for tests
+//    std::vector<double> dataY;
+//    dataY.push_back(0.45);
+//    dataY.push_back(0.6);
+//    dataY.push_back(0.24);
+//    dataY.push_back(0.3);
+//    dataY.push_back(0.45);
 
-    //only for tests
-    model_->updateBaseChart(dataX, dataY);
-    model_->updateOptimizedChart(dataX, dataY);
-    model_->updateGeneticChart(dataX, dataY);
+//    //only for tests
+//    model_->updateBaseChart(dataX, dataY);
+//    model_->updateOptimizedChart(dataX, dataY);
+//    model_->updateGeneticChart(dataX, dataY);
 }
 
 void View::enableProgressBar()
@@ -104,9 +104,8 @@ void View::buttonsClicked(QString name)
         // check target values
         // zabezpieczenie przed ponownym kliknięciem przycisku RUN ??
 
-        if(guiObjects_.SET_BASE && guiObjects_.SET_TARGET)
+        if(guiObjects_.SET_BASE && checkIfTargetIsSet())
         {
-            emit setBaseProfileValues(baseParameters_);
             emit setTargetProfileValues(targetParameters_);
 
             enableProgressBar();
@@ -123,6 +122,15 @@ void View::getFitnessParametersLabel(AviationProfileParameters data)
    guiObjects_.fitnessValues.at(0)->setProperty("text", data.alfa);
    guiObjects_.fitnessValues.at(1)->setProperty("text", data.clMax);
    guiObjects_.fitnessValues.at(2)->setProperty("text", data.cdMax);
+}
+
+void View::getBaseProfileValues(AviationProfileParameters data)
+{
+    guiObjects_.baseParameters.at(0)->setProperty("text", data.alfa);
+    guiObjects_.baseParameters.at(1)->setProperty("text", data.clMax);
+    guiObjects_.baseParameters.at(2)->setProperty("text", data.cdMax);
+
+    guiObjects_.SET_BASE = true;
 }
 
 void View::initializeGuiObjects()
@@ -304,10 +312,23 @@ void View::initializePlotDialog()
 
 void View::setFilePath()
 {
-    //TO DO:
-    // Add initial directory to dat files
-    std::string baseFilePath = (QFileDialog::getOpenFileName(Q_NULLPTR,QString(),QString(),"*.dat")).toStdString();
-    emit redirectPathToBaseProfile(baseFilePath);
+    std::string baseFilePath("");
+    baseFilePath = (QFileDialog::getOpenFileName(Q_NULLPTR,QString(),QString(),"*.dat")).toStdString();
+
+    if(baseFilePath != "")
+        emit redirectPathToBaseProfile(baseFilePath);
+}
+
+bool View::checkIfTargetIsSet()
+{
+    bool flag = true;
+
+//    QString lol = guiObjects_.targetValues[0]->getPlaceHolderText();
+//    flag = flag && (guiObjects_.targetValues[0]->getText() != " ");
+//    flag = flag && (guiObjects_.targetValues.at(1)->getText() != " ");
+//    flag = flag && (guiObjects_.targetValues.at(2)->getText() != " ");
+
+    return flag;
 }
 
 void View::initializeModelViewConnection()
@@ -320,7 +341,7 @@ void View::initializeModelViewConnection()
     QObject::connect(model_, SIGNAL(updateGeneticChart(const std::vector<double> &,const std::vector<double> &)),
                      this, SLOT(drawGeneticPlot(std::vector<double>,std::vector<double>)));
     QObject::connect(model_, SIGNAL(setFitnessParameters(AviationProfileParameters)), this, SLOT(getFitnessParametersLabel(AviationProfileParameters)));
-    QObject::connect(this, SIGNAL(setBaseProfileValues(AviationProfileParameters)), model_, SLOT(getBaseProfileValues(AviationProfileParameters)));
+    QObject::connect(model_, SIGNAL(setBasicProfileParameters(AviationProfileParameters)), this, SLOT(getBaseProfileValues(AviationProfileParameters)));
     QObject::connect(this, SIGNAL(setTargetProfileValues(AviationProfileParameters)), model_, SLOT(getTargetProfileValues(AviationProfileParameters)));
     QObject::connect(this, SIGNAL(redirectPathToBaseProfile(std::string)), model_, SLOT(calculateBaseProfileParameters(std::string)));
     //initialize connection with buttons

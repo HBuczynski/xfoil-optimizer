@@ -34,7 +34,7 @@ GroupBox {
         y: 33
         width: 86
         height: 20
-        placeholderText: qsTr("")
+        placeholderText: qsTr(" ")
     }
 
     Label {
@@ -72,7 +72,7 @@ GroupBox {
         y: 73
         width: 86
         height: 20
-        placeholderText: qsTr("")
+        placeholderText: qsTr(" ")
     }
 
     TextField {
@@ -82,6 +82,6 @@ GroupBox {
         y: 117
         width: 86
         height: 20
-        placeholderText: qsTr("")
+        placeholderText: qsTr(" ")
     }
 }

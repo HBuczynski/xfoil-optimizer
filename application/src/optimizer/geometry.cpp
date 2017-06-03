@@ -34,7 +34,6 @@ void Geometry::Load(std::string filename)
         std::string name, line;
         if(!getline(file, name))
             throw std::out_of_range("File containing profile empty");
-
         upperPoints_.clear();
         lowerPoints_.clear();
 
@@ -46,13 +45,15 @@ void Geometry::Load(std::string filename)
             x = std::stod(line,&sz);
             y = std::stod(line.substr(sz));
 
+
             if(y >= 0)
                 upperPoints_.push_back(Point(x,y));
             else
                 lowerPoints_.push_back(Point(x,y));
+
+            qDebug() << "Puntkty: " << x << " " << y;
         }
         file.close();
-        this->CalculateCoefficients();
     }
     else
     {
@@ -78,7 +79,7 @@ void Geometry::CalculateCoefficients()
     coefficients_.d_l = 1.6;
 //    this->SaveCoefficients();
     this->calculateCordinateOfX();
-    this->Transform();
+    //this->Transform();
 }
 
 void Geometry::createNewGeometry(AirfoilCoefficients coeff)
@@ -187,10 +188,12 @@ void Geometry::calculateCordinateOfX()
 
 bool Geometry::isProfileCrossed()
 {
-    for(int i=0; i<vectorX_.size(); ++i)
+    for(int i=0; i<upperPoints_.size(); ++i)
     {
-        if(upperPoints_[i].y <= lowerPoints_[i].y)
-            return true;
+        if(upperPoints_[i].y <= lowerPoints_[lowerPoints_.size()-i-1].y)
+        {
+             return true;
+        }
     }
     return false;
 }

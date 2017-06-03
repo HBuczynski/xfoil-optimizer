@@ -27,7 +27,7 @@ void Model::getBaseProfileValues(AviationProfileParameters data)
 
 void Model::calculateBaseProfileParameters(std::string path)
 {
-
+    geneticOptimizer_.calculateBaseProfile(path);
 }
 
 void Model::initializeLogger()
@@ -42,12 +42,13 @@ void Model::initializeConfigurationReader()
     //to do - do smt if initialize return false
 
     applicationParameters_ = configReader_.getApplicationParameters();
-    //simulationParameters_ = configReader_.getSimulatorParameters();
-//    optimizerParameres_ = configReader_.getOptimizerParameters();
+    simulationParameters_ = configReader_.getSimulatorParameters();
+    optimizerParameters_ = configReader_.getOptimizerParameters();
     projectPath_ = configReader_.getProjectPath();
 }
 
 void Model::initializeGeneticAlgorithm()
 {
-   // geneticOptimizer_.initialize(simulationParameters_);
+   geneticOptimizer_.initialize(simulationParameters_, optimizerParameters_.fitness);
+   geneticOptimizer_.calculateBaseProfile("ll");
 }

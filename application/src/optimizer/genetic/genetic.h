@@ -6,6 +6,7 @@
 #include "optimizer/genetic/genome.h"
 #include "optimizer/genetic/genome_scrambler.h"
 #include "utility/config.h"
+#include "model/profile_parameters.h"
 
 
 
@@ -38,6 +39,7 @@ public:
 
     void initialize(Config::SimulationParams &params, Config::OptimizerParams::Fitness &fitness);
     void runGeneticAlgorithm();
+    AviationProfileParameters calculateBaseProfile(std::string path);
     GAState GetState();
 
     enum GAState
