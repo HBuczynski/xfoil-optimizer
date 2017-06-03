@@ -119,11 +119,12 @@ void SimulationHandler_tests::HandleMultipleParallelSimulations()
         ss.str("");
         ss.clear();
     }
+    std::vector<Task> inputPopulation;
     for(int i = 0; i < 10; ++i)
     {
-        sched->AddTask(Task(&(testGeom[i])));
+        inputPopulation.push_back(Task(&(testGeom[i])));
     }
-
+    sched->AddBatchTask(inputPopulation);
     sched->WaitForFinished();
     delete sched;
     for(int i = 0; i < 10; ++i)

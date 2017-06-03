@@ -217,7 +217,7 @@ void SchedulerWorker::process()
     /*
 
     */
-    //IsTasksFinished();
+    IsTasksFinished();
     //Q_EMIT finishedWork();
 }
 bool SchedulerWorker::IsTasksFinished()
