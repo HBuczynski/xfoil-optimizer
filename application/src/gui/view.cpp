@@ -45,11 +45,6 @@ void View::disableProgressBar()
     guiObjects_.busyIndicator.object->setProperty("indeterminate", "false");
 }
 
-const QString &View::getFilePath()
-{
-    return baseFilePath_;
-}
-
 View::~View()
 {
 
@@ -308,9 +303,11 @@ void View::initializePlotDialog()
 
 void View::setFilePath()
 {
-    //TO DO:
-    // Add initial directory to dat files
-    baseFilePath_ = QFileDialog::getOpenFileName(Q_NULLPTR,QString(),QString(),"*.dat");
+    std::string baseFilePath("");
+    baseFilePath = ((QFileDialog::getOpenFileName(Q_NULLPTR,QString(),QString(),"*.dat")).toStdString()).c_str();
+
+    if(baseFilePath != "")
+        emit redirectPathToBaseProfile(baseFilePath);
 }
 
 void View::initializeModelViewConnection()

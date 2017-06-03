@@ -20,8 +20,6 @@ public:
     void enableProgressBar();
     void disableProgressBar();
 
-    const QString &getFilePath();
-
 	~View();
 
 signals:
@@ -56,9 +54,6 @@ private:
 
     SettingsDialog settingDialog_;
     PlotDialog plotDialog_;
-
-    QString baseFilePath_;
-
 
     Model *model_;
     MainWindowObjects guiObjects_;
