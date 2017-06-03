@@ -124,7 +124,7 @@ Config::OptimizerParams ConfigurationReader::getOptimizerParameters()
     rparams.fitness.targetCl = boost::get<double>(optimizationParameters_["targetCl"]);
     rparams.fitness.targetGlide = boost::get<double>(optimizationParameters_["targetGlide"]);
     rparams.fitness.targetMoment = boost::get<double>(optimizationParameters_["targetMoment"]);
-    rparams.fitness.targetStallAlfa = boost::get<double>(optimizationParameters_["targetStalAlfa"]);
+    rparams.fitness.targetStallAlfa = boost::get<double>(optimizationParameters_["targetStall"]);
     rparams.fitness.weightCd = boost::get<double>(optimizationParameters_["weightCd"]);
     rparams.fitness.weightCl = boost::get<double>(optimizationParameters_["weightCl"]);
     rparams.fitness.weightGlide = boost::get<double>(optimizationParameters_["weightGlide"]);
@@ -324,16 +324,16 @@ void ConfigurationReader::loadOptimizerParameters(TiXmlElement *pointerToElement
 
     for (pointerToElement; pointerToElement; pointerToElement = pointerToElement->NextSiblingElement())
     {
-        pointerToElement->QueryDoubleAttribute("optimizeStall", &tempDouble);
-        optimizationParameters_["optimizeStall"] = tempDouble;
-        pointerToElement->QueryDoubleAttribute("optimizeCl", &tempDouble);
-        optimizationParameters_["optimizeCl"] = tempDouble;
-        pointerToElement->QueryDoubleAttribute("optimizeCd", &tempDouble);
-        optimizationParameters_["optimizeCd"] = tempDouble;
-        pointerToElement->QueryDoubleAttribute("optimizeMoment", &tempDouble);
-        optimizationParameters_["optimizeMoment"] = tempDouble;
-        pointerToElement->QueryDoubleAttribute("optimizeGlide", &tempDouble);
-        optimizationParameters_["optimizeGlide"] = tempDouble;
+        if(pointerToElement->QueryStringAttribute("optimizeStall", &tempString) != TIXML_NO_ATTRIBUTE)
+        optimizationParameters_["optimizeStall"] = tempString;
+        if(pointerToElement->QueryStringAttribute("optimizeCl", &tempString) != TIXML_NO_ATTRIBUTE)
+        optimizationParameters_["optimizeCl"] = tempString;
+        if(pointerToElement->QueryStringAttribute("optimizeCd", &tempString) != TIXML_NO_ATTRIBUTE)
+        optimizationParameters_["optimizeCd"] = tempString;
+        if(pointerToElement->QueryStringAttribute("optimizeMoment", &tempString) != TIXML_NO_ATTRIBUTE)
+        optimizationParameters_["optimizeMoment"] = tempString;
+        if(pointerToElement->QueryStringAttribute("optimizeGlide", &tempString) != TIXML_NO_ATTRIBUTE)
+        optimizationParameters_["optimizeGlide"] = tempString;
 
         if(pointerToElement->QueryDoubleAttribute("targetStall", &tempDouble) != TIXML_NO_ATTRIBUTE)
         optimizationParameters_["targetStall"] = tempDouble;
