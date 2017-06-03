@@ -17,12 +17,14 @@ public:
     SimulationHandler_tests();
 
 private Q_SLOTS:
+
     void LoadNACAProfileWithHandlerObject();
     void CreateHandlerObjectSavesGeometry();
     void RunSimulationTestResultsFile();
     void RunSimulationResultsAreLoaded();
     void NotRunningSimulationThrows();
     void DeleteHandlerObectCleansTemporaryFiles();
+
     void CreateSimulationSchedulerSpawnsNewProcess();
     void CalculatingTheSameGeometryObjectTwiceDoesNotDoubleDataPoints();
     void HandleMultipleParallelSimulations();
@@ -32,8 +34,9 @@ private:
 
 SimulationHandler_tests::SimulationHandler_tests()
 {
-
+        params.viscousEnable = false;
 }
+
 void SimulationHandler_tests::LoadNACAProfileWithHandlerObject()
 {
     Geometry profile = SimulationHandler::GetNACAAirfoil("0012");
@@ -84,24 +87,21 @@ void SimulationHandler_tests::CreateSimulationSchedulerSpawnsNewProcess()
 {
     SimulationScheduler *sched = new SimulationScheduler(params);
     Geometry testGeom = SimulationHandler::GetNACAAirfoil("0012");
-    sched->AddTask(SimulationScheduler::Task(&testGeom));
-
-
+    sched->AddTask(Task(&testGeom));
+    sched->WaitForFinished();
     delete sched;
 
 }
+
 void SimulationHandler_tests::CalculatingTheSameGeometryObjectTwiceDoesNotDoubleDataPoints()
 {
     SimulationScheduler *sched = new SimulationScheduler(params);
     Geometry testGeom = SimulationHandler::GetNACAAirfoil("0012");
-    sched->AddTask(SimulationScheduler::Task(&testGeom));
-    while(!sched->IsTasksFinished())
-    {
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    }
+    sched->AddTask(Task(&testGeom));
+    sched->WaitForFinished();
     int points = testGeom.GetResults().GetPolarPointCount();
-    sched->AddTask(SimulationScheduler::Task(&testGeom));
-
+    sched->AddTask(Task(&testGeom));
+    sched->WaitForFinished();
     delete sched;
     QVERIFY(points == testGeom.GetResults().GetPolarPointCount());
 }
@@ -110,6 +110,7 @@ void SimulationHandler_tests::HandleMultipleParallelSimulations()
 {
     std::stringstream ss;
     SimulationScheduler *sched = new SimulationScheduler(params);
+
     Geometry testGeom[10];
     for(int i = 2; i < 12; ++i)
     {
@@ -120,22 +121,18 @@ void SimulationHandler_tests::HandleMultipleParallelSimulations()
     }
     for(int i = 0; i < 10; ++i)
     {
-        sched->AddTask(SimulationScheduler::Task(&(testGeom[i])));
+        sched->AddTask(Task(&(testGeom[i])));
     }
 
-    while(!sched->IsTasksFinished())
-    {
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    }
+    sched->WaitForFinished();
     delete sched;
-
     for(int i = 0; i < 10; ++i)
     {
-        std::cout<<testGeom[i].GetResults().IsCalculated();
+        //std::cout<<testGeom[i].GetResults().IsCalculated();
         QVERIFY(testGeom[i].GetResults().IsCalculated());
     }
 }
 
-QTEST_APPLESS_MAIN(SimulationHandler_tests)
+QTEST_MAIN(SimulationHandler_tests)
 
 #include "tst_simulation_handler_tests.moc"

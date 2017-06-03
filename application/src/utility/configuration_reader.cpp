@@ -49,7 +49,7 @@ ConfigurationReader::~ConfigurationReader()
 
 bool ConfigurationReader::initialize()
 {
-    qDebug() << projectPath_.c_str();
+    //qDebug() << projectPath_.c_str();
     if(!initializeDirectories())
     {
         std::cout << "Error: Basic directory wasn't created. Exiting." << std::endl;
@@ -59,7 +59,7 @@ bool ConfigurationReader::initialize()
     if(!initializeLogger())
     {
         std::cout << "Error: Logger wasn't initialized. Exiting." << std::endl;
-        return false;
+        //return false;
     }
 
     fileParametersPath_ = projectPath_ + ConfigurationReader::folderConfigName_ + separator + ConfigurationReader::fileConfigName_;
@@ -89,6 +89,10 @@ bool ConfigurationReader::initialize()
 std::string ConfigurationReader::getProjectPath()
 {
     return projectPath_;
+}
+std::string ConfigurationReader::getParameterFilePath()
+{
+    return projectPath_ + folderConfigName_ + separator + fileConfigName_;
 }
 
 Config::ApplicationParams ConfigurationReader::getApplicationParameters()
@@ -140,7 +144,7 @@ bool ConfigurationReader::initializeLogger()
 {
     std::string directoryLogger = projectPath_ + "Logger";
     bool isSuccess = utility::createDirectoryRecursively(directoryLogger);
-
+    std::cout<<"Success??:"<<isSuccess<<std::endl;
     logger_ = &LogWriter::getInstance();
     return isSuccess && logger_->initialize(directoryLogger);
 }
@@ -183,14 +187,14 @@ void ConfigurationReader::initializeOptParameters()
     //Fitness parameters//
     optimizationParameters_["optimizeStall"] = dparams.fitness.optimizeStall;
     optimizationParameters_["optimizeCl"] =dparams.fitness.optimizeCl;
-    optimizationParameters_["optimizeCl"] =dparams.fitness.optimizeCl;
+    optimizationParameters_["optimizeCd"] =dparams.fitness.optimizeCd;
     optimizationParameters_["optimizeMoment"] =dparams.fitness.optimizeMoment;
     optimizationParameters_["optimizeGlide"] =dparams.fitness.optimizeGlide;
     optimizationParameters_["targetCd"] =dparams.fitness.targetCd;
     optimizationParameters_["targetCl"] =dparams.fitness.targetCl;
     optimizationParameters_["targetGlide"] =dparams.fitness.targetGlide;
     optimizationParameters_["targetMoment"] =dparams.fitness.targetMoment;
-    optimizationParameters_["targetStalAlfa"] =dparams.fitness.targetStallAlfa;
+    optimizationParameters_["targetStall"] =dparams.fitness.targetStallAlfa;
     optimizationParameters_["weightCd"] =dparams.fitness.weightCd;
     optimizationParameters_["weightCl"] =dparams.fitness.weightCl;
     optimizationParameters_["weightGlide"] =dparams.fitness.weightGlide;
@@ -309,8 +313,39 @@ void ConfigurationReader::loadOptimizerParameters(TiXmlElement *pointerToElement
 
     for (pointerToElement; pointerToElement; pointerToElement = pointerToElement->NextSiblingElement())
     {
-        pointerToElement->QueryIntAttribute("ParallelInstances", &tempInt);
-        optimizationParameters_["ParallelInstances"] = tempInt;
+        pointerToElement->QueryDoubleAttribute("optimizeStall", &tempDouble);
+        optimizationParameters_["optimizeStall"] = tempDouble;
+        pointerToElement->QueryDoubleAttribute("optimizeCl", &tempDouble);
+        optimizationParameters_["optimizeCl"] = tempDouble;
+        pointerToElement->QueryDoubleAttribute("optimizeCd", &tempDouble);
+        optimizationParameters_["optimizeCd"] = tempDouble;
+        pointerToElement->QueryDoubleAttribute("optimizeMoment", &tempDouble);
+        optimizationParameters_["optimizeMoment"] = tempDouble;
+        pointerToElement->QueryDoubleAttribute("optimizeGlide", &tempDouble);
+        optimizationParameters_["optimizeGlide"] = tempDouble;
+
+        pointerToElement->QueryDoubleAttribute("targetStall", &tempDouble);
+        optimizationParameters_["targetStall"] = tempDouble;
+        pointerToElement->QueryDoubleAttribute("targetCl", &tempDouble);
+        optimizationParameters_["targetCl"] = tempDouble;
+        pointerToElement->QueryDoubleAttribute("targetCd", &tempDouble);
+        optimizationParameters_["targetCd"] = tempDouble;
+        pointerToElement->QueryDoubleAttribute("targetMoment", &tempDouble);
+        optimizationParameters_["targetMoment"] = tempDouble;
+        pointerToElement->QueryDoubleAttribute("targetGlide", &tempDouble);
+        optimizationParameters_["targetGlide"] = tempDouble;
+
+        pointerToElement->QueryDoubleAttribute("weightStall", &tempDouble);
+        optimizationParameters_["weightStall"] = tempDouble;
+        pointerToElement->QueryDoubleAttribute("weightCl", &tempDouble);
+        optimizationParameters_["weightCl"] = tempDouble;
+        pointerToElement->QueryDoubleAttribute("weightCd", &tempDouble);
+        optimizationParameters_["weightCd"] = tempDouble;
+        pointerToElement->QueryDoubleAttribute("weightMoment", &tempDouble);
+        optimizationParameters_["weightMoment"] = tempDouble;
+        pointerToElement->QueryDoubleAttribute("weightGlide", &tempDouble);
+        optimizationParameters_["weightGlide"] = tempDouble;
+
     }
 }
 
@@ -324,9 +359,16 @@ void ConfigurationReader::loadSimulatorParameters(TiXmlElement *pointerToElement
 
     for (pointerToElement; pointerToElement; pointerToElement = pointerToElement->NextSiblingElement())
     {
-        pointerToElement->QueryStringAttribute("Julian", &tempString);
-        simulaotorParameters_["Julian"] = tempString;
-
+        pointerToElement->QueryIntAttribute("parallelTasks", &tempInt);
+            simulaotorParameters_["parallelTasks"] = tempInt;
+        pointerToElement->QueryStringAttribute("xfoilPath", &tempString);
+            simulaotorParameters_["xfoilPath"] = tempString;
+        pointerToElement->QueryIntAttribute("viscousRe", &tempInt);
+            simulaotorParameters_["viscousRe"] = tempInt;
+        pointerToElement->QueryStringAttribute("viscousEnable", &tempString);
+            simulaotorParameters_["viscousEnable"] = tempString;
+        pointerToElement->QueryIntAttribute("xfoilTimeout", &tempInt);
+            simulaotorParameters_["xfoilTimeout"] = tempInt;
     }
 }
 

@@ -15,10 +15,12 @@
 #include "utility/config.h"
 //#include "utility/configuration_reader.h"
 
-
-#include <thread>
+#include <qthread.h>
+#include <qtimer.h>
+#include <qmutex.h>
+//#include <thread>
 #include <queue>
-#include <mutex>
+//#include <mutex>
 
 //!  Class controlling execution single simulation tool using proxy interface
 /*!
@@ -95,16 +97,111 @@ private:
 };
 
 
+struct Task
+{
+    Task(Geometry * geom):
+        geometry(geom),
+        handlerAssigned(-1)
+    {
+
+    }
+    Geometry * geometry;
+    int handlerAssigned = -1;
+};
+class SchedulerWorker : public QObject
+{
+    Q_OBJECT
+public:
+    explicit SchedulerWorker(std::queue<Task> &taskQueue, QMutex &mutex,Config::SimulationParams params,QObject *parent = 0):
+        params_(params),
+        taskQueue_(taskQueue),
+        queueMutex_(mutex)
+    {
+    }
+
+Q_SIGNALS:
+    //void bufferFillCountChanged(int cCount);
+    void finishedWork();
+    void updateIdleState(bool state);
+
+    void error(QString str);
+public Q_SLOTS:
+    void stop()
+    {
+        //Finish up all the tasks//
+        bool finished = false;
+        while(!finished)
+        {
+            finished = true;
+            for(int i = 0; i < params_.parallelSimulations; ++i)
+            {
+                if(handlers[i] != nullptr)
+                {
+                    int timeout = 1000;//delay of 10s//
+                    while(handlers[i]->PollStatus() == SimulationHandler::Running)
+                    {
+                        if(--timeout < 0)
+                            break;
+                        //std::this_thread::sleep_for(std::chrono::milliseconds(10));
+                        QThread::msleep(10);
+                    }
+                    delete handlers[i];
+                    handlers[i] = nullptr;
+                    handlerStatus_[i] = SimulationHandler::NotExisting;
+                }
+            }
+        }
+
+        delete [] handlers;
+        delete [] handlerStatus_;
+        emit error(QString("Hello from error"));
+        emit finishedWork();
+    }
+    void start()
+    {
+        //Initialize pointers for handler objects//
+        handlers = new SimulationHandler*[params_.parallelSimulations];
+        handlerStatus_ = new SimulationHandler::Status[params_.parallelSimulations];
+        for(int i = 0; i < params_.parallelSimulations; ++i)
+        {
+            handlers[i] = nullptr;
+            handlerStatus_[i] = SimulationHandler::NotExisting;
+        }
+        //Start timer to periodically call update on thread//
+        timer = new QTimer(this);
+        timer->setInterval(100);
+        timer->connect(timer, SIGNAL(timeout()), this, SLOT(process()));
+        timer->start();
+    }
+    void addTask(Task task)
+    {
+        std::cout<<"Adding task" << std::endl;
+        taskQueue_.push(task);
+    }
+
+    void process();
+    bool IsTasksFinished();
+private:
+
+    QTimer * timer;
+    Config::SimulationParams params_;
+    std::queue<Task> &taskQueue_;
+    QMutex &queueMutex_;
+    SimulationHandler::Status *handlerStatus_;
+    SimulationHandler **handlers;
+    bool workerEnable_;
+};
 //!  Class controlling execution of external simulation tools
 /*!
   Controls multiple instances of xfoil optimizer running in parallel
   Runs a thread that polls and initiates all xfoil proxy instances
   Has an internal queue for requests
 */
-class SimulationScheduler
+class SimulationScheduler : public QObject
 {
+    Q_OBJECT
 public:
-    SimulationScheduler(Config::SimulationParams params):
+    SimulationScheduler(Config::SimulationParams params,QObject *parent = 0):
         params_(params)
     {
         //Initialize handler state array//
@@ -115,53 +212,88 @@ public:
         }
         //Initailize worker thread//
         workerEnable_ = true;
-        workerThread_ = new std::thread (&SimulationScheduler::ConsumeTask, this);
+        workerIdle = true;
+        workerThread = new QThread;
+
+        worker_ = new SchedulerWorker(taskQueue_, queueMutex_,params,parent);
+        QObject::connect(worker_, SIGNAL(error(QString)), this, SLOT(errorString(QString)));
+        QObject::connect(workerThread, SIGNAL(started()), worker_, SLOT(start()));
+        QObject::connect(worker_, SIGNAL(finishedWork()), workerThread, SLOT(quit()));
+        QObject::connect(worker_, SIGNAL(finishedWork()), worker_, SLOT(deleteLater()));
+        QObject::connect(workerThread, SIGNAL(finished()), workerThread, SLOT(deleteLater()));
+
+        //My Signals and slots//
+        QObject::connect(this, SIGNAL(stopWorker()), worker_, SLOT(stop()), Qt::QueuedConnection);
+        //QObject::connect(this, SIGNAL(emitTask(Task)), worker_, SLOT(addTask(Task)), Qt::QueuedConnection);
+        QObject::connect(workerThread, SIGNAL(finished()), this, SLOT(workerFinished()), Qt::QueuedConnection);
+        QObject::connect(worker_, SIGNAL(updateIdleState(bool)), this, SLOT(updateState(bool)), Qt::QueuedConnection);
+
+        worker_->moveToThread(workerThread);
+        workerThread->start();
+      // workerThread_ = new std::thread (&SimulationScheduler::ConsumeTask, this);
 
     }
     ~SimulationScheduler()
     {
         //Terminate worker thread//
-        workerEnable_ = false;
-        workerThread_->join();
-        delete workerThread_;
+        Q_EMIT stopWorker();
         delete[] handlerStatus_;
     }
 
-    struct Task
-    {
-        Task(Geometry * geom):
-            geometry(geom),
-            handlerAssigned(-1)
-        {
 
-        }
-        Geometry * geometry;
-        int handlerAssigned = -1;
-    };
     void AddTask(Task task)
     {
-        std::lock_guard<std::mutex> lock(queueMutex_);
+        QMutexLocker locker(&queueMutex_);
         taskQueue_.push(task);
     }
-    bool IsTasksFinished() const;
+    void WaitForFinished()
+    {
+        while(!worker_->IsTasksFinished())
+        {
+            QThread::msleep(10);
+        }
+    }
 
-    //void FinishTasks();
+    bool IsTasksFinished() const
+    {
+        return workerIdle;
+    }
+
+signals:
+    void stopWorker();
+    void emitTask(Task task);
+    //{
+      //  std::cout<<"STOPPING thread(from main)\r\n";
+     //   workerEnable_ = false;
+    //}
+public slots:
+    void updateState(bool state)
+    {
+        std::cout<<"Updated state\r\n";
+        workerIdle = state;
+    }
+    void workerFinished()
+    {
+        std::cout<<"Finished thread\r\n";
+        workerEnable_ = false;
+    }
+    void errorString(QString str)
+    {
+        std::cout<<str.toStdString();
+    }
+
 private:
-    void ConsumeTask();
-    bool VerifyParams(Parameters &params);
+
     const Config::SimulationParams params_;
-
-
-    //int parallelInstances_;
-
-
-
     std::vector<Geometry*> tasks;
     std::queue<Task> taskQueue_;
     SimulationHandler::Status *handlerStatus_;
-    std::mutex queueMutex_;
-    std::thread *workerThread_;
+    QMutex queueMutex_;
+    QThread *workerThread;
+    SchedulerWorker *worker_;
+  //  QThread *workerThread_;
     bool workerEnable_;
+    bool workerIdle;
 
 
 };
