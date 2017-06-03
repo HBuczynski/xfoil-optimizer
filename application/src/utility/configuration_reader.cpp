@@ -138,7 +138,7 @@ Config::SimulationParams ConfigurationReader::getSimulatorParameters()
     rparams.iterationLimit = boost::get<int>(simulaotorParameters_["maxIterations"]);
     rparams.parallelSimulations = boost::get<int>(simulaotorParameters_["parallelTasks"]);
     rparams.reynoldsNo = boost::get<int>(simulaotorParameters_["viscousRe"]);
-    //rparams.viscousEnable = boost::get<std::string>(simulaotorParameters_["viscousEnable"]) == "True";
+    rparams.viscousEnable = boost::get<std::string>(simulaotorParameters_["viscousEnable"]) == "True";
     rparams.xfoilExecutablePath = boost::get<std::string>(simulaotorParameters_["xfoilPath"]);
     rparams.xfoilTimeout = boost::get<int>(simulaotorParameters_["xfoilTimeout"]);
     return rparams;
@@ -335,26 +335,26 @@ void ConfigurationReader::loadOptimizerParameters(TiXmlElement *pointerToElement
         pointerToElement->QueryDoubleAttribute("optimizeGlide", &tempDouble);
         optimizationParameters_["optimizeGlide"] = tempDouble;
 
-        pointerToElement->QueryDoubleAttribute("targetStall", &tempDouble);
+        if(pointerToElement->QueryDoubleAttribute("targetStall", &tempDouble) != TIXML_NO_ATTRIBUTE)
         optimizationParameters_["targetStall"] = tempDouble;
-        pointerToElement->QueryDoubleAttribute("targetCl", &tempDouble);
+        if(pointerToElement->QueryDoubleAttribute("targetCl", &tempDouble) != TIXML_NO_ATTRIBUTE)
         optimizationParameters_["targetCl"] = tempDouble;
-        pointerToElement->QueryDoubleAttribute("targetCd", &tempDouble);
+        if(pointerToElement->QueryDoubleAttribute("targetCd", &tempDouble) != TIXML_NO_ATTRIBUTE)
         optimizationParameters_["targetCd"] = tempDouble;
-        pointerToElement->QueryDoubleAttribute("targetMoment", &tempDouble);
+        if(pointerToElement->QueryDoubleAttribute("targetMoment", &tempDouble) != TIXML_NO_ATTRIBUTE)
         optimizationParameters_["targetMoment"] = tempDouble;
-        pointerToElement->QueryDoubleAttribute("targetGlide", &tempDouble);
+        if(pointerToElement->QueryDoubleAttribute("targetGlide", &tempDouble) != TIXML_NO_ATTRIBUTE)
         optimizationParameters_["targetGlide"] = tempDouble;
 
-        pointerToElement->QueryDoubleAttribute("weightStall", &tempDouble);
+        if(pointerToElement->QueryDoubleAttribute("weightStall", &tempDouble) != TIXML_NO_ATTRIBUTE)
         optimizationParameters_["weightStall"] = tempDouble;
-        pointerToElement->QueryDoubleAttribute("weightCl", &tempDouble);
+        if(pointerToElement->QueryDoubleAttribute("weightCl", &tempDouble) != TIXML_NO_ATTRIBUTE)
         optimizationParameters_["weightCl"] = tempDouble;
-        pointerToElement->QueryDoubleAttribute("weightCd", &tempDouble);
+        if(pointerToElement->QueryDoubleAttribute("weightCd", &tempDouble) != TIXML_NO_ATTRIBUTE)
         optimizationParameters_["weightCd"] = tempDouble;
-        pointerToElement->QueryDoubleAttribute("weightMoment", &tempDouble);
+        if(pointerToElement->QueryDoubleAttribute("weightMoment", &tempDouble) != TIXML_NO_ATTRIBUTE)
         optimizationParameters_["weightMoment"] = tempDouble;
-        pointerToElement->QueryDoubleAttribute("weightGlide", &tempDouble);
+        if(pointerToElement->QueryDoubleAttribute("weightGlide", &tempDouble) != TIXML_NO_ATTRIBUTE)
         optimizationParameters_["weightGlide"] = tempDouble;
 
     }
@@ -370,15 +370,17 @@ void ConfigurationReader::loadSimulatorParameters(TiXmlElement *pointerToElement
 
     for (pointerToElement; pointerToElement; pointerToElement = pointerToElement->NextSiblingElement())
     {
-        pointerToElement->QueryIntAttribute("parallelTasks", &tempInt);
+        if(pointerToElement->QueryIntAttribute("maxIterations", &tempInt) != TIXML_NO_ATTRIBUTE)
+            simulaotorParameters_["maxIterations"] = tempInt;
+        if(pointerToElement->QueryIntAttribute("parallelTasks", &tempInt) != TIXML_NO_ATTRIBUTE)
             simulaotorParameters_["parallelTasks"] = tempInt;
-        pointerToElement->QueryStringAttribute("xfoilPath", &tempString);
+        if(pointerToElement->QueryStringAttribute("xfoilPath", &tempString) != TIXML_NO_ATTRIBUTE)
             simulaotorParameters_["xfoilPath"] = tempString;
-        pointerToElement->QueryIntAttribute("viscousRe", &tempInt);
+        if(pointerToElement->QueryIntAttribute("viscousRe", &tempInt) != TIXML_NO_ATTRIBUTE)
             simulaotorParameters_["viscousRe"] = tempInt;
-        pointerToElement->QueryStringAttribute("viscousEnable", &tempString);
+        if(pointerToElement->QueryStringAttribute("viscousEnable", &tempString) != TIXML_NO_ATTRIBUTE)
             simulaotorParameters_["viscousEnable"] = tempString;
-        pointerToElement->QueryIntAttribute("xfoilTimeout", &tempInt);
+        if(pointerToElement->QueryIntAttribute("xfoilTimeout", &tempInt) != TIXML_NO_ATTRIBUTE)
             simulaotorParameters_["xfoilTimeout"] = tempInt;
     }
 }
