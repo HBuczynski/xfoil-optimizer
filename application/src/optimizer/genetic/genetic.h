@@ -21,7 +21,7 @@ public:
     enum GAState;
 
     GeneticOptimizer():
-                                                        state_(NotInitialized),
+                                                        state_(GAState::NotInitialized),
                                                         totalFintess(0),
                                                         maxCoefficientValue_(3),
                                                         populationCount_(20),
@@ -38,7 +38,7 @@ public:
 
     void initialize(Config::SimulationParams &params, Config::OptimizerParams::Fitness &fitness);
     void runGeneticAlgorithm();
-    GAState GetState() const;
+    GAState GetState();
 
     enum GAState
     {

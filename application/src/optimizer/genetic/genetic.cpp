@@ -64,7 +64,7 @@ void GeneticOptimizer::runGeneticAlgorithm()
     }
 }
 
-GeneticOptimizer::GAState GeneticOptimizer::GetState() const
+GeneticOptimizer::GAState GeneticOptimizer::GetState()
 {
     return state_;
 }
