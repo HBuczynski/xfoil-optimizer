@@ -122,8 +122,8 @@ void Geometry::LoadFromCoefficients(std::string filename)
         std::string name, line;
         if(!getline(file, name, '\t'))
             throw std::out_of_range("File containing coefficients empty");
-            std::string::size_type sz;
 
+        std::string::size_type sz;
         getline(file,line);
         coefficients_.p_u = std::stod(line,&sz);
         getline(file,line, '\t');

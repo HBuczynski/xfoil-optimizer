@@ -31,7 +31,11 @@ QSimulationProxy::QSimulationProxy(const Config::SimulationParams &params, QObje
 void QSimulationProxy::Run()
 {
     QString programPath = QString::fromStdString(params_.xfoilExecutablePath);
+    #if defined(WIN64) || defined(_WIN64) || defined(__WIN64) && !defined(__CYGWIN__)
     QString program = "\"" + programPath + "/xfoil.exe" + "\"";
+    #else
+    QString program = programPath + "/xfoil";
+    #endif
     QStringList arglist;
 
     process_->setWorkingDirectory(programPath);

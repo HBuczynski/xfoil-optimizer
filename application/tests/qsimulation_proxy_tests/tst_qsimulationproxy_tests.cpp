@@ -75,8 +75,9 @@ void QSimulationProxy_tests::RunASimulationAndRemoveResultsFile()
     proxy.Run();
     std::cout<<"Run()\r\n";
     QVERIFY2(proxy.PollStatus() != SimulationProxy::NotRunning, "Failure - process did not start - invalid state");
-    proxy.Terminate();
 
+    while(proxy.PollStatus() ==SimulationProxy::Running )
+        QThread::msleep(1);
     std::cout<<"Terminte()\r\n";
     QVERIFY2(proxy.PollStatus() == SimulationProxy::Finished, "Failure - process not terminated - invalid state");
 

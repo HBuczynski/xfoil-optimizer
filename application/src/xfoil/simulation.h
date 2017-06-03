@@ -155,6 +155,7 @@ public Q_SLOTS:
 
         delete [] handlers;
         delete [] handlerStatus_;
+        delete timer;
         emit error(QString("Hello from error"));
         emit finishedWork();
     }
@@ -224,7 +225,6 @@ public:
 
         //My Signals and slots//
         QObject::connect(this, SIGNAL(stopWorker()), worker_, SLOT(stop()), Qt::QueuedConnection);
-        //QObject::connect(this, SIGNAL(emitTask(Task)), worker_, SLOT(addTask(Task)), Qt::QueuedConnection);
         QObject::connect(workerThread, SIGNAL(finished()), this, SLOT(workerFinished()), Qt::QueuedConnection);
         QObject::connect(worker_, SIGNAL(updateIdleState(bool)), this, SLOT(updateState(bool)), Qt::DirectConnection);
 
@@ -268,12 +268,13 @@ public:
 
 signals:
     void stopWorker();
-    void emitTask(Task task);
-
+    void simulationFinished();
 public slots:
     void updateState(bool state)
     {
         //std::cout<<"Updated state\r\n";
+        if(state == true && workerIdle !=state)
+            std::cout<<"Emit signal sim finished";
         workerIdle = state;
     }
     void workerFinished()
