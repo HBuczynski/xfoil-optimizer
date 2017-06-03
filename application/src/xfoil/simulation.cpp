@@ -50,7 +50,7 @@ void SimulationHandler::ReadResults()
             geometry_.simResults_.results_.push_back(resLine);
         }
         geometry_.simResults_.calculated_ = true;
-        std::cout<<"Loading results";
+        //std::cout<<"Loading results";
         infile.close();
     }
     else
@@ -175,7 +175,9 @@ void SchedulerWorker::process()
             handlerStatus_[i] = handlers[i]->PollStatus();
             if(handlerStatus_[i] != SimulationHandler::Running)
             {
-                std::cout<<"Task Finished, freeing spot"<<i<<"\r\n";
+                //std::cout<<"Task Finished, freeing spot"<<i<<"\r\n";
+                //for(int j = 0; j < params_.parallelSimulations; ++j)
+                //    std::cout<<handlerStatus_[j];
                 delete handlers[i];
                 handlers[i] = nullptr;
                 handlerStatus_[i] = SimulationHandler::NotExisting;
@@ -193,11 +195,13 @@ void SchedulerWorker::process()
                 //Mutex it//
                 queueMutex_.lock();
                 Task task = taskQueue_.front();
-                taskQueue_.pop();
-                queueMutex_.unlock();
+
                 handlers[i] = new SimulationHandler(*task.geometry, params_);
                 handlers[i]->Run();
                 handlerStatus_[i] = handlers[i]->PollStatus();
+                //std::cout<<"Adding task at spot"<<i<<"\r\n";
+                taskQueue_.pop();
+                queueMutex_.unlock();
                 break;
             }
         }
@@ -213,7 +217,7 @@ void SchedulerWorker::process()
     /*
 
     */
-    IsTasksFinished();
+    //IsTasksFinished();
     //Q_EMIT finishedWork();
 }
 bool SchedulerWorker::IsTasksFinished()
@@ -234,5 +238,6 @@ bool SchedulerWorker::IsTasksFinished()
         }
     }
     emit updateIdleState(true);
+    //std::cout<<"Free now";
     return true;
 }
