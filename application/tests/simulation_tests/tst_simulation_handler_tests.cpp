@@ -45,13 +45,15 @@ void SimulationHandler_tests::LoadNACAProfileWithHandlerObject()
 
 void SimulationHandler_tests::CreateHandlerObjectSavesGeometry()
 {
-    SimulationHandler handler(SimulationHandler::GetNACAAirfoil("0012"),params);
+    Geometry geom = SimulationHandler::GetNACAAirfoil("0012");
+    SimulationHandler handler(geom,params);
     QVERIFY(utility::fileExists((handler.proxy_->GetExePath() + "/" + handler.InstantiateFilename("geometry.dat")).c_str()));
 }
 
 void SimulationHandler_tests::RunSimulationTestResultsFile()
 {
-    SimulationHandler *handler = new SimulationHandler(SimulationHandler::GetNACAAirfoil("0012"), params);
+    Geometry geom = SimulationHandler::GetNACAAirfoil("0012");
+    SimulationHandler *handler = new SimulationHandler(geom, params);
     handler->Run();
     while(handler->PollStatus() == SimulationHandler::Running);
     std::string resultPath = handler->proxy_->GetExePath() + "/" + handler->InstantiateFilename("result.txt");
@@ -71,12 +73,14 @@ void SimulationHandler_tests::RunSimulationResultsAreLoaded()
 
 void SimulationHandler_tests::NotRunningSimulationThrows()
 {
-    SimulationHandler handler(SimulationHandler::GetNACAAirfoil("0012"),params);
+    Geometry geom = SimulationHandler::GetNACAAirfoil("0012");
+    SimulationHandler handler(geom,params);
 }
 void SimulationHandler_tests::DeleteHandlerObectCleansTemporaryFiles()
 {
     //Todo test also results file//
-    SimulationHandler *handler = new SimulationHandler(SimulationHandler::GetNACAAirfoil("0012"), params);
+    Geometry geom = SimulationHandler::GetNACAAirfoil("0012");
+    SimulationHandler *handler = new SimulationHandler(geom, params);
     std::string path = handler->proxy_->GetExePath() + "/" + handler->InstantiateFilename("geometry.dat");
     QVERIFY(utility::fileExists(path));
     delete handler;

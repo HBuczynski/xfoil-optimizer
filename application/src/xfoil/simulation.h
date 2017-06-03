@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <exception>
 //#include <cstdio>
 
 #include "optimizer/simulation_results.h"

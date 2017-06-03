@@ -17,7 +17,14 @@ class GeneticOptimizer : public AirfoilOptimizer
 {
 
 public:
-    enum GAState;
+    enum GAState
+    {
+        NotInitialized,
+        SimulationInProgress,
+        GenerationComplete,
+        OptimizationCompleteTargetReached,
+        OptimizationCompleteFinalGeneration
+    };
     GeneticOptimizer():
         state_(NotInitialized)
     {
@@ -34,14 +41,7 @@ public:
         return state_;
     }
 
-    enum GAState
-    {
-        NotInitialized,
-        SimulationInProgress,
-        GenerationComplete,
-        OptimizationCompleteTargetReached,
-        OptimizationCompleteFinalGeneration
-    };
+
 
     virtual void AddBaseGeometry(Geometry &geom)
     {

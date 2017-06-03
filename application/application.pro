@@ -83,5 +83,6 @@ linux { # For Linux
   QMAKE_LFLAGS += -fopenmp
   QMAKE_CXXFLAGS += -mavx
   QMAKE_CXXFLAGS_RELEASE *= -O3
+  LIBS += -lboost_system
 }
 

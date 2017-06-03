@@ -29,7 +29,9 @@ INCLUDEPATH += ../../src
 win32 {
     INCLUDEPATH += C:/boost_1_55_0
 }
-
+linux { # For Linux
+    LIBS += -lboost_system
+}
 SOURCES += tst_configreadertest.cpp \
     ../../src/utility/configuration_reader.cpp \
     ../../src/utility/tiny_xml/tinystr.cpp \

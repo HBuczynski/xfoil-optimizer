@@ -30,8 +30,14 @@
                                           ssize_t count = readlink( "/proc/self/exe", result, PATH_MAX );
                                           return std::string( result, (count > 0) ? count : 0 );
                                          }();
+    std::string  getUserName()
+    {
+        char username[LOGIN_NAME_MAX];
+        getlogin_r(username, LOGIN_NAME_MAX);
+        return std::string(username);
+    }
 
-    std::string ConfigurationReader::projectPath_ = getUserName() + "/XFOIL_Optimizer/";
+    const std::string ConfigurationReader::projectPath_ = path + "/XFOIL_Optimizer/";
 #endif
 
 const std::string ConfigurationReader::folderConfigName_ = "Config";
