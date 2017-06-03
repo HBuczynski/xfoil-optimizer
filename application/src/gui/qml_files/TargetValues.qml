@@ -18,7 +18,7 @@ GroupBox {
         id: label1
         width: 37
         height: 20
-        text: qsTr("CL")
+        text: qsTr("Cl max")
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignLeft
         anchors.top: parent.top
@@ -57,7 +57,7 @@ GroupBox {
         y: -1
         width: 37
         height: 20
-        text: qsTr("Label")
+        text: qsTr("Cd max")
         verticalAlignment: Text.AlignVCenter
         anchors.leftMargin: 18
         anchors.top: parent.top

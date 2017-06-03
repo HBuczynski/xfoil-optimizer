@@ -25,7 +25,6 @@ public:
     double &getFitness();
     unsigned char *getCoefficientsArray();
 
-private:
     void convertDoubleCoefficientsToBinary(const AirfoilCoefficients &doubleCoefficients, BinaryAirfoilCoefficients &binaryCoefficients);
     void convertBinaryCoefficientsToDouble(const BinaryAirfoilCoefficients &binaryCoefficients, AirfoilCoefficients &doubleCoefficients);
     void setBinaryArrayFromStruct(BinaryAirfoilCoefficients &airfoilCoefficients);

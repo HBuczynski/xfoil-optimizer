@@ -32,6 +32,27 @@ win64 {
     #INCLUDEPATH += C:/boost_1_55_0
 }
 
-SOURCES += tst_geneticalgorithm_teststest.cpp
+SOURCES += tst_geneticalgorithm_teststest.cpp \
+    ../../src/optimizer/geometry.cpp \
+    ../../src/optimizer/genetic/genome.cpp \
+    ../../src/optimizer/genetic/fitness.cpp \
+    ../../src/optimizer/genetic/genetic.cpp \
+    ../../src/optimizer/genetic/genome_scrambler.cpp \
+    ../../src/xfoil/qsimulation.cpp \
+    ../../src/xfoil/simulation.cpp \
+    ../../src/optimizer/simulation_results.cpp \
+    ../../src/utility/utility.cpp
+
+HEADERS += \
+    ../../src/optimizer/geometry.h \
+    ../../src/optimizer/genetic/genome.h \
+    ../../src/optimizer/genetic/fitness.h \
+    ../../src/optimizer/genetic/genetic.h \
+    ../../src/optimizer/genetic/genome_scrambler.h \
+    ../../src/xfoil/qsimulation.h \
+    ../../src/xfoil/simulation_proxy.h \
+    ../../src/xfoil/simulation.h \
+    ../../src/optimizer/simulation_results.h \
+    ../../src/utility/utility.h
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"

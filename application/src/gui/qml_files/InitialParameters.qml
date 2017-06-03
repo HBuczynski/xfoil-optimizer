@@ -19,9 +19,7 @@ GroupBox {
     Text {
         id: text1
         height: 24
-        color: "#0e26d6"
         text: qsTr("CL max")
-        styleColor: "#f12121"
         transformOrigin: Item.Center
         anchors.right: parent.right
         anchors.rightMargin: 107
@@ -37,7 +35,7 @@ GroupBox {
         x: -6
         y: -5
         height: 24
-        text: qsTr("alfa max")
+        text: qsTr("Alfa max")
         anchors.left: parent.left
         anchors.topMargin: 71
         anchors.top: parent.top
@@ -52,7 +50,7 @@ GroupBox {
         x: 2
         y: -9
         height: 24
-        text: qsTr("Text")
+        text: qsTr("Cd max")
         anchors.left: parent.left
         anchors.topMargin: 113
         anchors.top: parent.top

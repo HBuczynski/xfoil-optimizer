@@ -114,11 +114,12 @@ void View::buttonsClicked(QString name)
             emit setBaseProfileValues(baseParameters_);
             emit setTargetProfileValues(targetParameters_);
 
+            enableProgressBar();
+
+
             //TO DO
             //run optimization
         }
-
-        enableProgressBar();
     }
 }
 

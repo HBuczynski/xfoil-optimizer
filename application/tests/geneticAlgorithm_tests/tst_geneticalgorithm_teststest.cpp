@@ -1,5 +1,7 @@
 #include <QString>
 #include <QtTest>
+#include "optimizer/genetic/genome.h"
+#include "optimizer/geometry_structures.h"
 
 class GeneticAlgorithm_testsTest : public QObject
 {
@@ -14,12 +16,14 @@ private Q_SLOTS:
 
 GeneticAlgorithm_testsTest::GeneticAlgorithm_testsTest()
 {
+
 }
 
 void GeneticAlgorithm_testsTest::testCase1()
 {
     QVERIFY2(true, "Failure");
 }
+
 
 QTEST_APPLESS_MAIN(GeneticAlgorithm_testsTest)
 
