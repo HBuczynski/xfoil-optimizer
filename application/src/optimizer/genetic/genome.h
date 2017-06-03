@@ -2,7 +2,7 @@
 
 #include "optimizer/geometry.h"
 #include "optimizer/genetic/fitness.h"
-
+#include <random>
 
 //!  Class providing basic 2D airfoil geometry representation
 /*!
@@ -18,30 +18,27 @@ public:
 
     ~Genome();
 
-    void setCoefficients(AirfoilCoefficients coefficients);
-    void setBinaryArray(unsigned char *array);
-    void setFitness(double value);
+    void Set(AirfoilCoefficients &coefficients);
     Geometry* getGeometry();
+    void setFitness(double value);
     double &getFitness();
     unsigned char *getCoefficientsArray();
-
+    AirfoilCoefficients getCoefficients();
+    uint8_t getRandomByte();
+    void Set(BinaryAirfoilCoefficients &airfoilCoefficients);
+    void Set(unsigned char *array);
+    void Randomize();
 private:
-    void convertDoubleCoefficientsToBinary(const AirfoilCoefficients &doubleCoefficients, BinaryAirfoilCoefficients &binaryCoefficients);
-    void convertBinaryCoefficientsToDouble(const BinaryAirfoilCoefficients &binaryCoefficients, AirfoilCoefficients &doubleCoefficients);
-    void setBinaryArrayFromStruct(BinaryAirfoilCoefficients &airfoilCoefficients);
-    void setStructFromBinaryArray(unsigned char *array);
-
-private:
+    uint8_t convertTobyte(double val);
+    double convertTodouble(uint8_t val);
     Geometry *geom_;
-
-    AirfoilCoefficients doubleCoefficients_;
+    std::mt19937 rng;
+    std::uniform_int_distribution<std::mt19937::result_type> bytedist;
+    static bool rngSeeded_;
     BinaryAirfoilCoefficients binaryCoefficients_;
 
-    unsigned char *binaryCoefficientsArray_;
+    const double minCoeffRange_;
+    const double maxCoeffRange_;
 
-    const int coefficientsCount_;
-    const int minCoefficientsRange_;
-    const int maxCoefficientsRange_;
-    const int maxBitsCount_;
     double fitness_;
 };
