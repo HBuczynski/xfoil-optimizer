@@ -19,11 +19,17 @@ void GeneticOptimizer::initialize()
 void GeneticOptimizer::runGeneticAlgorithm()
 {
     generateInitialPopulation();
-
     totalFintess = 0;
     //start simulation of each genome
+    std::cout<<"Starting to playyy"<<std::endl;
+    std::vector<Task> tasks;
+
     for(auto genome: population_)
-        simulationScheduler_->AddTask(Task(genome->getGeometry()));
+        tasks.push_back(Task(genome->getGeometry()));
+    simulationScheduler_->AddBatchTask(tasks);
+
+    simRunning_ = true;
+    std::cout<<"Running"<<std::endl;
 }
 void GeneticOptimizer::OptimizeStep()
 {
@@ -33,12 +39,14 @@ void GeneticOptimizer::OptimizeStep()
     if(!simulationScheduler_->IsTasksFinished())
         throw std::out_of_range("Should be finifhed task");
     calculateFitness();
+
     //check to see if algoirthm find any solution
     for(auto genome : population_)
     {
         totalFintess += genome->getFitness();
         if(checkGenomeFitness(genome))
         {
+            std::cout<<"Optimization Finished"<<std::endl;
             continueOptimization_ = false;
             return;
         }
@@ -69,11 +77,9 @@ GeneticOptimizer::GAState GeneticOptimizer::GetState()
 void GeneticOptimizer::generateInitialPopulation()
 {
     int i=0;
-    std::cout <<"Generate initial population"<<std::endl;
     while( i < populationCount_ )
     {
-        std::cout <<"Generate initial population2"<<std::endl;
-        Genome *genome = new Genome(generateRandomCoefficients());
+        Genome *genome = new Genome();
 
         if(genome->getGeometry()->isProfileCrossed())
         {
@@ -81,12 +87,10 @@ void GeneticOptimizer::generateInitialPopulation()
         }
         else
         {
-            //calculateFitness();
             population_.push_back(genome);
             ++i;
         }
     }
-    std::cout <<"Generated initial population"<<std::endl;
 }
 
 void GeneticOptimizer::addGenomeToElite(Genome *genome)
@@ -184,30 +188,12 @@ Genome *GeneticOptimizer::rouletteWheelSelection()
 
     return selectedGenome;
 }
-
-AirfoilCoefficients GeneticOptimizer::generateRandomCoefficients()
-{
-        std::cout<< "rand()";
-    AirfoilCoefficients randomCoefficients;
-
-    randomCoefficients.a_l = (rand() % (maxCoefficientValue_*100)) / 100;
-    randomCoefficients.a_u = (rand() % (maxCoefficientValue_*100)) / 100;
-    randomCoefficients.b_l = (rand() % (maxCoefficientValue_*100)) / 100;
-    randomCoefficients.b_u = (rand() % (maxCoefficientValue_*100)) / 100;
-    randomCoefficients.c_l = (rand() % (maxCoefficientValue_*100)) / 100;
-    randomCoefficients.c_u = (rand() % (maxCoefficientValue_*100)) / 100;
-    randomCoefficients.d_l = (rand() % (maxCoefficientValue_*100)) / 100;
-    randomCoefficients.d_u = (rand() % (maxCoefficientValue_*100)) / 100;
-    randomCoefficients.p_l = (rand() % (maxCoefficientValue_*100)) / 100;
-    randomCoefficients.p_u = (rand() % (maxCoefficientValue_*100)) / 100;
-    randomCoefficients.q_l = (rand() % (maxCoefficientValue_*100)) / 100;
-    randomCoefficients.q_u = (rand() % (maxCoefficientValue_*100)) / 100;
-
-    return randomCoefficients;
-}
 //Slots//
 void GeneticOptimizer::simulationBatchComplete()
 {
-    std::cout<<"Signal received"<<std::endl;
-
+    std::cout<<"Next Population?"<<std::endl;
+    bool wasRunning = simRunning_;
+    simRunning_ = false;
+    if(wasRunning)
+        OptimizeStep();
 }

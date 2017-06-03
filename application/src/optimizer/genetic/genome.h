@@ -15,6 +15,7 @@ public:
 
     Genome(AirfoilCoefficients coeff);
     Genome(unsigned char *array);
+    Genome();
 
     ~Genome();
 

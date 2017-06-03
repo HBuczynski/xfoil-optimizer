@@ -28,6 +28,7 @@ public:
     };
 
     GeneticOptimizer(Config::SimulationParams &params, Config::OptimizerParams::Fitness &fitness):
+                                                        simRunning_(false),
                                                         state_(GAState::NotInitialized),
                                                         totalFintess(0),
                                                         maxCoefficientValue_(3),
@@ -44,7 +45,7 @@ public:
         //TO DO: constructor was changed
         simulationScheduler_ = new SimulationScheduler(simulationParams_);
         fitnessModel_ = new FitnessModel(fitnessParams_);
-        QObject::connect(simulationScheduler_, SIGNAL(simulationFinished()), this, SLOT(simulationBatchComplete()));
+        QObject::connect(simulationScheduler_, SIGNAL(simulationFinished()), this, SLOT(simulationBatchComplete()),Qt::DirectConnection);
     }
 
     ~GeneticOptimizer();
@@ -72,6 +73,12 @@ public:
     {
         return 0.0;
     }
+    bool isRunning()
+    {
+        return simRunning_;
+        //return !simulationScheduler_->IsTasksFinished();
+    }
+
 public Q_SLOTS:
     virtual void simulationBatchComplete();
 Q_SIGNALS:
@@ -85,7 +92,6 @@ private:
     void calculateFitness();
 
     Genome *rouletteWheelSelection();
-    AirfoilCoefficients generateRandomCoefficients();
 
 private:
 
@@ -110,4 +116,5 @@ private:
     const int maxCoefficientValue_;
     const int iterationLimit_;
     int currentIterationNumber_ = 0;
+    bool simRunning_;
 };

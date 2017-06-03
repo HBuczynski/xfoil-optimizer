@@ -272,7 +272,7 @@ signals:
 public slots:
     void updateState(bool state)
     {
-        //std::cout<<"Updated state\r\n";
+        //std::cout<<"Updated state"<<state<<std::endl;
         if(state == true && workerIdle !=state)
             Q_EMIT simulationFinished();
         workerIdle = state;

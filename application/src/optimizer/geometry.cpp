@@ -42,6 +42,7 @@ void Geometry::Load(std::string filename)
         {
             std::string::size_type sz;
             double x,y;
+
             //Can cause exception throws out of range
             x = std::stod(line,&sz);
             y = std::stod(line.substr(sz));

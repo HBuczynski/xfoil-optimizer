@@ -26,6 +26,15 @@ Genome::Genome(unsigned char *array) :
 
     Set(array);
 }
+Genome::Genome() :
+                                                    rng(std::random_device()()),
+                                                    bytedist(0,255),
+                                                    minCoeffRange_(0.0),
+                                                    maxCoeffRange_(5.0),
+                                                    geom_(nullptr)
+{
+    Randomize();
+}
 
 Genome::~Genome()
 {
@@ -89,7 +98,10 @@ void Genome::Randomize()
     uint8_t *array = getCoefficientsArray();
     for(int i = 0; i < sizeof(BinaryAirfoilCoefficients); ++i)
             array[i] = getRandomByte();
-
+    AirfoilCoefficients coeff = getCoefficients();
+    if(geom_ != nullptr)
+        delete geom_; //Reload gemetry
+    geom_ = new Geometry(coeff);
 }
 
 void Genome::setFitness(double value)

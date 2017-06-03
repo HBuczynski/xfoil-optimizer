@@ -86,12 +86,12 @@ void QSimulationProxy::finished(int exitCode, QProcess::ExitStatus status)
 {
     status_ = Finished;
     /* feedback some text about finished */
-    //std::cout<<"PROCESS FINSHED\r\n";
+   // std::cout<<"PROCESS FINSHED"<<std::endl;
 } // end_slot (SimulationProxy::finished)
 
 void QSimulationProxy::stateChanged(QProcess::ProcessState state)
 {
-    //std::cout<<"STATECHANGED\r\n"<<state;
+    //std::cout<<"STATECHANGED\r\n"<<state<<std::endl;
     switch(state)
     {
      case QProcess::NotRunning:

@@ -3,6 +3,8 @@
 double FitnessModel::Calculate(const SimResults &results)
 {
     //TODO check somehow if results range is viable//
+    if(!results.IsCalculated() || results.GetPolarPointCount() < 10)
+        return 0.0;
     SimResults::PolarPoint maxCl, minCd, maxGlide;
     double avgTorq;
     maxCl = results.CalcMaxCl();

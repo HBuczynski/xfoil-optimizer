@@ -1,5 +1,5 @@
 #include "xfoil/simulation.h"
-
+#include <QDebug>
 using std::ifstream;
 unsigned int SimulationHandler::id_total = 0;
 void SimulationHandler::ReadResults()
@@ -15,6 +15,7 @@ void SimulationHandler::ReadResults()
             if(!getline(infile, line))
             {
                 //File was too short wtf//
+                std::cout<<"File was too short, failed to interpret"<<std::endl;
                 failure = true;
                 break;
             }
@@ -30,6 +31,8 @@ void SimulationHandler::ReadResults()
         }
         while(getline(infile, line))
         {
+            if(line.find("*") != std::string::npos)
+                continue;
             //Read 7 double parameters in a single line//
             std::string::size_type sz;
             SimResults::ResultEntry resLine;
@@ -50,11 +53,14 @@ void SimulationHandler::ReadResults()
             geometry_.simResults_.results_.push_back(resLine);
         }
         geometry_.simResults_.calculated_ = true;
-        //std::cout<<"Loading results";
+       // qDebug()<<"Loading results";
         infile.close();
     }
     else
+    {
+        qDebug()<<"Invalid data file";
         throw std::invalid_argument("Invalid data file");
+    }
 
 
 }
@@ -154,7 +160,7 @@ SimulationHandler::Status SimulationHandler::PollStatus()
                 status_ = Error;
             break;
             case SimulationProxy::Finished:
-                //std::cout <<"FIN";
+                //qDebug()<<"FIN";
                 ReadResults();
                 status_ = Finished;
             break;
@@ -173,6 +179,7 @@ void SchedulerWorker::process()
         if(handlers[i] != nullptr)
         {
             handlerStatus_[i] = handlers[i]->PollStatus();
+           // qDebug() << (int)handlerStatus_[i]<<i;
             if(handlerStatus_[i] != SimulationHandler::Running)
             {
                 //std::cout<<"Task Finished, freeing spot"<<i<<"\r\n";
