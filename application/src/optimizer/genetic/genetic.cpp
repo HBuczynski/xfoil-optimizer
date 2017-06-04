@@ -9,6 +9,7 @@ GeneticOptimizer::~GeneticOptimizer()
         delete simulationScheduler_;
     if(fitnessModel_ != nullptr)
         delete fitnessModel_;
+    delete scrambler_;
 }
 
 void GeneticOptimizer::initialize()
@@ -21,7 +22,7 @@ void GeneticOptimizer::runGeneticAlgorithm()
     generateInitialPopulation();
     totalFintess = 0;
     //start simulation of each genome
-    std::cout<<"Starting to playyy"<<std::endl;
+    //std::cout<<"Starting to playyy"<<std::endl;
     std::vector<Task> tasks;
 
     for(auto genome: population_)
@@ -29,7 +30,7 @@ void GeneticOptimizer::runGeneticAlgorithm()
     simulationScheduler_->AddBatchTask(tasks);
 
     simRunning_ = true;
-    std::cout<<"Running"<<std::endl;
+    //std::cout<<"Running"<<std::endl;
 }
 void GeneticOptimizer::OptimizeStep()
 {
@@ -46,38 +47,52 @@ void GeneticOptimizer::OptimizeStep()
         totalFintess += genome->getFitness();
         if(checkGenomeFitness(genome))
         {
-            std::cout<<"Optimization Finished"<<std::endl;
+            std::cout<<"Optimization Finished - targets reached"<<std::endl;
             continueOptimization_ = false;
             return;
         }
     }
     ++currentIterationNumber_;
 
-    if(continueOptimization_ && currentIterationNumber_ < iterationLimit_)
+    if(continueOptimization_ && currentIterationNumber_ < optParams_.geneticOptimizer.generationCount)
     {
-        while(newGenomeNumber < populationCount_)
+        while(newGenomeNumber < optParams_.geneticOptimizer.generationCount)
         {
-            Genome *newGenome = scrambler_.Crossover(rouletteWheelSelection()->getCoefficientsArray(), rouletteWheelSelection()->getCoefficientsArray());
-            scrambler_.Mutate(newGenome);
-            tempPopulation.push_back(newGenome);
-            ++newGenomeNumber;
+            std::cout<<"next iteration bef cross"<<std::endl;
+            Genome *newGenome = scrambler_->Crossover(rouletteWheelSelection(), rouletteWheelSelection());
+            std::cout<<"next iteration afterbef cross"<<std::endl;
+            if(newGenome != nullptr)
+            {
+                scrambler_->Mutate(newGenome);
+                if(newGenome != nullptr)
+                {
+                    tempPopulation.push_back(newGenome);
+                    ++newGenomeNumber;
+                }
+            }
         }
         createPopulationAfterReproduction();
     }
     else
+    {
         Q_EMIT optimizationFinished();
-
+        std::cout<<"Optimization Finished - population count reached"<<std::endl;
+    }
 }
 
 GeneticOptimizer::GAState GeneticOptimizer::GetState()
 {
     return state_;
 }
+void GeneticOptimizer::requestStop()
+{
+    continueOptimization_ = false;
+}
 
 void GeneticOptimizer::generateInitialPopulation()
 {
     int i=0;
-    while( i < populationCount_ )
+    while( i < optParams_.geneticOptimizer.populationSize )
     {
         Genome *genome = new Genome();
 
@@ -143,19 +158,19 @@ void GeneticOptimizer::createPopulationAfterReproduction()
     int i=0;
     for(auto iter = aggregatePopulation.rbegin(); (iter != aggregatePopulation.rend()); ++iter)
     {
-        if(i<populationCount_)
+        if(i<optParams_.geneticOptimizer.populationSize)
             population_.push_back(iter->second);
         else
             delete iter->second;
         ++i;
     }
-
+    std::cout<<"New population count is :"<<i<<std::endl;
 }
 
 bool GeneticOptimizer::checkGenomeFitness(Genome *genome)
 {
     //TO DO: check if we find solution
-    return true;
+    return false;
 }
 
 void GeneticOptimizer::calculateFitness()
@@ -163,29 +178,33 @@ void GeneticOptimizer::calculateFitness()
     for(auto genome : population_)
     {
         genome->setFitness(fitnessModel_->Calculate(genome->getGeometry()->GetResults()));
+
     }
 }
 
 Genome *GeneticOptimizer::rouletteWheelSelection()
 {
     //generate a random number between 0 & total fitness count
-    int fitness = totalFintess*1000;
-    double slice = (rand() % fitness)/1000;
+    int fitness = totalFintess;
+    double slice = (double)(rand() % fitness);
     //go through the chromosones adding up the fitness so far
     double fitnessSoFar = 0.0;
     Genome *selectedGenome;
 
-    for (int i=0; i<populationCount_; i++)
+    for (int i=0; i<optParams_.geneticOptimizer.populationSize; i++)
     {
         fitnessSoFar += population_[i]->getFitness();
+        std::cout<<population_[i]->getFitness()<<std::endl;
         //if the fitness so far > random number return the chromo at this point
         if (fitnessSoFar >= slice)
         {
             selectedGenome = population_[i];
+            std::cout<<"Selected sth"<<std::endl;
             break;
         }
     }
-
+    std::cout<<"Selected sth????"<<std::endl;
+    totalFintess = 0;
     return selectedGenome;
 }
 //Slots//

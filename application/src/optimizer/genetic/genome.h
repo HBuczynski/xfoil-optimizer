@@ -23,20 +23,22 @@ public:
     Geometry* getGeometry();
     void setFitness(double value);
     double &getFitness();
-    unsigned char *getCoefficientsArray();
+    uint8_t * getCoefficientsArray();
     AirfoilCoefficients getCoefficients();
+    BinaryAirfoilCoefficients getBinaryCoefficients();
     uint8_t getRandomByte();
     void Set(BinaryAirfoilCoefficients &airfoilCoefficients);
     void Set(unsigned char *array);
     void Randomize();
+    void reload();
+    BinaryAirfoilCoefficients binaryCoefficients_;
 private:
     uint8_t convertTobyte(double val);
     double convertTodouble(uint8_t val);
     Geometry *geom_;
     std::mt19937 rng;
     std::uniform_int_distribution<std::mt19937::result_type> bytedist;
-    static bool rngSeeded_;
-    BinaryAirfoilCoefficients binaryCoefficients_;
+
 
     const double minCoeffRange_;
     const double maxCoeffRange_;

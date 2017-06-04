@@ -27,24 +27,21 @@ public:
         OptimizationCompleteFinalGeneration
     };
 
-    GeneticOptimizer(Config::SimulationParams &params, Config::OptimizerParams::Fitness &fitness):
+    GeneticOptimizer(Config::SimulationParams &params, Config::OptimizerParams &optParams):
                                                         simRunning_(false),
                                                         state_(GAState::NotInitialized),
                                                         totalFintess(0),
                                                         maxCoefficientValue_(3),
-                                                        populationCount_(20),
+                                                        optParams_(optParams),
                                                         elitesCount_(3),
                                                         continueOptimization_(true),
-                                                        iterationLimit_(20),
+                                                        simulationParams_(params),
                                                         simulationScheduler_(nullptr),
                                                         fitnessModel_(nullptr)
     {
-
-        simulationParams_ = params;
-        fitnessParams_ = fitness;
-        //TO DO: constructor was changed
         simulationScheduler_ = new SimulationScheduler(simulationParams_);
-        fitnessModel_ = new FitnessModel(fitnessParams_);
+        fitnessModel_ = new FitnessModel(optParams_.fitness);
+        scrambler_ = new SingleCrossoverMultiMutationScrambler(optParams_.geneticOptimizer);
         QObject::connect(simulationScheduler_, SIGNAL(simulationFinished()), this, SLOT(simulationBatchComplete()),Qt::DirectConnection);
     }
 
@@ -79,8 +76,10 @@ public:
         //return !simulationScheduler_->IsTasksFinished();
     }
 
+
 public Q_SLOTS:
     virtual void simulationBatchComplete();
+    void requestStop();
 Q_SIGNALS:
     void optimizationFinished();
 private:
@@ -97,12 +96,12 @@ private:
 
     //Members//
     GAState state_;
-    DudScrambler scrambler_;
+    GenomeScrambler *scrambler_;
     SimulationScheduler *simulationScheduler_;
     FitnessModel *fitnessModel_;
     Geometry baseGeometry_;
-    Config::SimulationParams simulationParams_;
-    Config::OptimizerParams::Fitness fitnessParams_;
+    const Config::SimulationParams simulationParams_;
+    const Config::OptimizerParams optParams_;
 
 
     bool continueOptimization_;
@@ -111,10 +110,8 @@ private:
     std::vector<Genome*> tempPopulation;
     double totalFintess;
 
-    const int populationCount_;
     const int elitesCount_;
     const int maxCoefficientValue_;
-    const int iterationLimit_;
     int currentIterationNumber_ = 0;
     bool simRunning_;
 };

@@ -46,20 +46,9 @@ public:
         };
         struct GeneticOptimizerParams
         {
-            enum CrossoverMethod
-            {
-                SinglepointCrossover,
-                MultipointCrossover,
-                UniformCrossover
-            };
-            enum MutationMethod
-            {
-                FlipbitMutation,
-                UniformMutation
-            };
-            MutationMethod mutationMethod = FlipbitMutation;
-            CrossoverMethod crossoverMethod = SinglepointCrossover;
-            double mutationRate = 0.1;
+            int generationCount = 20;
+            int populationSize = 100;
+            double mutationRate = 0.005;
         };
 
 

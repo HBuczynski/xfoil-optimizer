@@ -14,6 +14,7 @@ public:
 private Q_SLOTS:
     void GenomObjectRandomizesAfterCreation();
     void PerformSingleOptimizationStepOnSmallPopulation();
+    void PerformMultipleOptimizationStepOnSmallPopulation();
 };
 
 GeneticAlgorithm_testsTest::GeneticAlgorithm_testsTest()
@@ -39,13 +40,34 @@ void GeneticAlgorithm_testsTest::PerformSingleOptimizationStepOnSmallPopulation(
     Config::OptimizerParams paramsOpt;
     Config::SimulationParams paramsSim;
     paramsSim.viscousEnable = false;
-    GeneticOptimizer *optimizer = new GeneticOptimizer(paramsSim,paramsOpt.fitness);
+    paramsOpt.geneticOptimizer.populationSize = 20;
+    paramsOpt.geneticOptimizer.generationCount = 1;
+    GeneticOptimizer *optimizer = new GeneticOptimizer(paramsSim,paramsOpt);
+    optimizer->initialize();
+    optimizer->runGeneticAlgorithm();
+    optimizer->requestStop();
+    while(optimizer->isRunning())
+    {
+        QThread::msleep(10);
+    }
+
+    delete optimizer;
+}
+void GeneticAlgorithm_testsTest::PerformMultipleOptimizationStepOnSmallPopulation()
+{
+    Config::OptimizerParams paramsOpt;
+    Config::SimulationParams paramsSim;
+    paramsSim.viscousEnable = false;
+    paramsOpt.geneticOptimizer.populationSize = 10;
+    paramsOpt.geneticOptimizer.generationCount = 4;
+    GeneticOptimizer *optimizer = new GeneticOptimizer(paramsSim,paramsOpt);
     optimizer->initialize();
     optimizer->runGeneticAlgorithm();
     while(optimizer->isRunning())
     {
         QThread::msleep(10);
     }
+
     delete optimizer;
 }
 
