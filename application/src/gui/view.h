@@ -34,6 +34,7 @@ public slots:
     void buttonsClicked(QString name);
     void getFitnessParametersLabel(AviationProfileParameters data);
     void getBaseProfileValues(AviationProfileParameters data);
+    void setOptimizerSettings();
 
 private:
 	void initializeGuiObjects();

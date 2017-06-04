@@ -148,6 +148,11 @@ void View::getBaseProfileValues(AviationProfileParameters data)
     guiObjects_.SET_BASE = true;
 }
 
+void View::setOptimizerSettings()
+{
+    qDebug() << "zmiana parametrow";
+}
+
 void View::getFitnessParametersLabel(AviationProfileParameters data)
 {
    guiObjects_.fitnessValues.at(0)->setProperty("text", data.alfa);
@@ -353,16 +358,18 @@ void View::initializeModelViewConnection()
                      this, SLOT(drawOptimizedChart(const std::vector<double> &,const std::vector<double> &)));
     QObject::connect(model_, SIGNAL(updateGeneticChart(const std::vector<double> &,const std::vector<double> &)),
                      this, SLOT(drawGeneticPlot(std::vector<double>,std::vector<double>)));
+
     QObject::connect(model_, SIGNAL(setFitnessParameters(AviationProfileParameters)), this, SLOT(getFitnessParametersLabel(AviationProfileParameters)));
     QObject::connect(model_, SIGNAL(setBasicProfileParameters(AviationProfileParameters)), this, SLOT(getBaseProfileValues(AviationProfileParameters)));
     QObject::connect(this, SIGNAL(setTargetProfileValues(AviationProfileParameters)), model_, SLOT(getTargetProfileValues(AviationProfileParameters)));
     QObject::connect(this, SIGNAL(redirectPathToBaseProfile(std::string)), model_, SLOT(calculateBaseProfileParameters(std::string)));
     QObject::connect(this, SIGNAL(stopSimulation()), model_, SLOT(stopSimulation()));
+
+    QObject::connect(&settingDialog_, SIGNAL(redirectOptimizerParameters()), this, SLOT(setOptimizerSettings()));
     //initialize connection with buttons
     for(int i=0; i<guiObjects_.buttonsCount; ++i)
         QObject::connect(guiObjects_.settingsButtons.at(i), SIGNAL(buttonClick(QString)), this,  SLOT(buttonsClicked(QString)));
 
     QObject::connect(guiObjects_.runButton, SIGNAL(buttonClick(QString)), this,  SLOT(buttonsClicked(QString)));
     QObject::connect(guiObjects_.stopButton, SIGNAL(buttonClick(QString)), this,  SLOT(buttonsClicked(QString)));
-
 }

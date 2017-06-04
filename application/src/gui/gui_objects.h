@@ -48,6 +48,10 @@ struct SettingsObjects
     QObject* windowFrame;
     QObject* applyButton;
     QObject* cancelButton;
+
+    QObject* generationCount;
+    QObject* populationSize;
+    QObject* muatationRate;
 };
 
 struct Plot
