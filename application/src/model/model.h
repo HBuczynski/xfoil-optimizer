@@ -22,17 +22,17 @@ signals:
     void updateOptimizedChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
     void updateGeneticChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
     void setFitnessParameters(AviationProfileParameters data);
+    void setBasicProfileParameters(AviationProfileParameters data);
 
 public slots:
     void getTargetProfileValues(AviationProfileParameters data);
-    void getBaseProfileValues(AviationProfileParameters data);
+    void calculateBaseProfileParameters(std::string path);
 
 private:
 	void initializeLogger();
     void initializeConfigurationReader();
     void initializeGeneticAlgorithm();
 
-    AviationProfileParameters baseProfileData_;
     AviationProfileParameters targetProfileData_;
     LogWriter *logger_;
     ConfigurationReader configReader_;

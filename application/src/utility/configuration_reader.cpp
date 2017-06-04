@@ -8,7 +8,7 @@
 #if defined(WIN64) || defined(_WIN64) || defined(__WIN64) && !defined(__CYGWIN__)
 
     #include <windows.h>
-    const static std::string separator("\\");
+    const std::string ConfigurationReader::separator = "\\";
     std::string path = []()->std::string {
                                             WCHAR result[MAX_PATH];
                                             std::wstring lol(result, GetModuleFileName(NULL, result, MAX_PATH));
@@ -24,7 +24,7 @@
     #include <limits.h>
     #include <unistd.h>
 
-    static const std::string separator("/");
+    const std::string ConfigurationReader::separator = "/";
     std::string path = []()->std::string {
                                           char result[ PATH_MAX ];
                                           ssize_t count = readlink( "/proc/self/exe", result, PATH_MAX );
@@ -103,6 +103,11 @@ std::string ConfigurationReader::getProjectPath()
 std::string ConfigurationReader::getParameterFilePath()
 {
     return projectPath_ + folderConfigName_ + separator + fileConfigName_;
+}
+
+std::string ConfigurationReader::getSeparator()
+{
+    return separator;
 }
 
 Config::ApplicationParams ConfigurationReader::getApplicationParameters()

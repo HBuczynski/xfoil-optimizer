@@ -18,6 +18,7 @@ public:
 
     static std::string getProjectPath();
     static std::string getParameterFilePath();
+    static std::string getSeparator();
 
     Config::ApplicationParams getApplicationParameters();
     Config::OptimizerParams getOptimizerParameters();
@@ -51,6 +52,7 @@ private:
     static const std::string projectPath_;
     static const std::string folderConfigName_;
     static const std::string fileConfigName_;
+    const static std::string separator;
 
     std::string fileParametersPath_;
 };

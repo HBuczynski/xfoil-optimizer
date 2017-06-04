@@ -23,8 +23,8 @@ public:
 	~View();
 
 signals:
-    void setBaseProfileValues(AviationProfileParameters data);
     void setTargetProfileValues(AviationProfileParameters data);
+    void redirectPathToBaseProfile(std::string path);
 
 public slots:
     void drawBaseChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
@@ -32,6 +32,7 @@ public slots:
     void drawGeneticPlot(const std::vector<double> &dataX, const std::vector<double> &dataY);
     void buttonsClicked(QString name);
     void getFitnessParametersLabel(AviationProfileParameters data);
+    void getBaseProfileValues(AviationProfileParameters data);
 
 private:
 	void initializeGuiObjects();
@@ -46,6 +47,7 @@ private:
     void initializePlotDialog();
 
     void initializeModelViewConnection();
+    bool checkIfTargetIsSet();
 
     void setFilePath();
 

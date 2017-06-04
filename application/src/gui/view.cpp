@@ -14,25 +14,25 @@ View::View(Model *model): model_(model),
     initializeModelViewConnection();
 
     //only for tests
-    std::vector<double> dataX;
-    dataX.push_back(0.15);
-    dataX.push_back(0.3);
-    dataX.push_back(0.74);
-    dataX.push_back(0.3);
-    dataX.push_back(0.15);
+//    std::vector<double> dataX;
+//    dataX.push_back(0.15);
+//    dataX.push_back(0.3);
+//    dataX.push_back(0.74);
+//    dataX.push_back(0.3);
+//    dataX.push_back(0.15);
 
-    //only for tests
-    std::vector<double> dataY;
-    dataY.push_back(0.45);
-    dataY.push_back(0.6);
-    dataY.push_back(0.24);
-    dataY.push_back(0.3);
-    dataY.push_back(0.45);
+//    //only for tests
+//    std::vector<double> dataY;
+//    dataY.push_back(0.45);
+//    dataY.push_back(0.6);
+//    dataY.push_back(0.24);
+//    dataY.push_back(0.3);
+//    dataY.push_back(0.45);
 
-    //only for tests
-    model_->updateBaseChart(dataX, dataY);
-    model_->updateOptimizedChart(dataX, dataY);
-    model_->updateGeneticChart(dataX, dataY);
+//    //only for tests
+//    model_->updateBaseChart(dataX, dataY);
+//    model_->updateOptimizedChart(dataX, dataY);
+//    model_->updateGeneticChart(dataX, dataY);
 }
 
 void View::enableProgressBar()
@@ -104,9 +104,8 @@ void View::buttonsClicked(QString name)
         // check target values
         // zabezpieczenie przed ponownym kliknięciem przycisku RUN ??
 
-        if(guiObjects_.SET_BASE && guiObjects_.SET_TARGET)
+        if(checkIfTargetIsSet() && guiObjects_.SET_BASE)
         {
-            emit setBaseProfileValues(baseParameters_);
             emit setTargetProfileValues(targetParameters_);
 
             //TO DO
@@ -117,11 +116,38 @@ void View::buttonsClicked(QString name)
     }
 }
 
+bool View::checkIfTargetIsSet()
+{
+    bool flag = true;
+
+    flag = flag && (guiObjects_.targetValues[0]->property("text").toString() != " ");
+    flag = flag && (guiObjects_.targetValues[1]->property("text").toString() != " ");
+    flag = flag && (guiObjects_.targetValues[2]->property("text").toString() != " ");
+
+    if(flag)
+    {
+        targetParameters_.clMax =guiObjects_.targetValues[0]->property("text").toString().toDouble();
+        targetParameters_.alfa = guiObjects_.targetValues[1]->property("text").toString().toDouble();
+        targetParameters_.cdMax = guiObjects_.targetValues[2]->property("text").toString().toDouble();
+    }
+
+    return flag;
+}
+
+void View::getBaseProfileValues(AviationProfileParameters data)
+{
+    guiObjects_.baseParameters.at(0)->setProperty("text", data.alfa);
+    guiObjects_.baseParameters.at(1)->setProperty("text", data.clMax);
+    guiObjects_.baseParameters.at(2)->setProperty("text", data.cdMax);
+
+    guiObjects_.SET_BASE = true;
+}
+
 void View::getFitnessParametersLabel(AviationProfileParameters data)
 {
    guiObjects_.fitnessValues.at(0)->setProperty("text", data.alfa);
    guiObjects_.fitnessValues.at(1)->setProperty("text", data.clMax);
-   guiObjects_.fitnessValues.at(2)->setProperty("text", data.thickness);
+   guiObjects_.fitnessValues.at(2)->setProperty("text", data.cdMax);
 }
 
 void View::initializeGuiObjects()
@@ -320,9 +346,9 @@ void View::initializeModelViewConnection()
     QObject::connect(model_, SIGNAL(updateGeneticChart(const std::vector<double> &,const std::vector<double> &)),
                      this, SLOT(drawGeneticPlot(std::vector<double>,std::vector<double>)));
     QObject::connect(model_, SIGNAL(setFitnessParameters(AviationProfileParameters)), this, SLOT(getFitnessParametersLabel(AviationProfileParameters)));
-    QObject::connect(this, SIGNAL(setBaseProfileValues(AviationProfileParameters)), model_, SLOT(getBaseProfileValues(AviationProfileParameters)));
+    QObject::connect(model_, SIGNAL(setBasicProfileParameters(AviationProfileParameters)), this, SLOT(getBaseProfileValues(AviationProfileParameters)));
     QObject::connect(this, SIGNAL(setTargetProfileValues(AviationProfileParameters)), model_, SLOT(getTargetProfileValues(AviationProfileParameters)));
-
+    QObject::connect(this, SIGNAL(redirectPathToBaseProfile(std::string)), model_, SLOT(calculateBaseProfileParameters(std::string)));
     //initialize connection with buttons
     for(int i=0; i<guiObjects_.buttonsCount; ++i)
         QObject::connect(guiObjects_.settingsButtons.at(i), SIGNAL(buttonClick(QString)), this,  SLOT(buttonsClicked(QString)));
