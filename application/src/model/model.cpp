@@ -24,7 +24,7 @@ void Model::calculateBaseProfileParameters(std::string path)
 {
 
 #if defined(WIN64) || defined(_WIN64) || defined(__WIN64) && !defined(__CYGWIN__)
-    std::string separator = "\\";
+    std::string separator = "\\\\";
 #else
     std::string separator ="/";
 #endif
