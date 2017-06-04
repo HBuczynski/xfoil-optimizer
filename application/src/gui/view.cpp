@@ -100,21 +100,23 @@ void View::buttonsClicked(QString name)
     }
     else if(name == "runButton")
     {
-        //TO DO
-        // check target values
-        // zabezpieczenie przed ponownym kliknięciem przycisku RUN ??
-
-        if(checkIfTargetIsSet() && guiObjects_.SET_BASE)
+        if(checkIfTargetIsSet() && guiObjects_.SET_BASE && !guiObjects_.RUN_BUTTON_IS_PRESSED)
         {
             emit setTargetProfileValues(targetParameters_);
             enableProgressBar();
 
+            guiObjects_.RUN_BUTTON_IS_PRESSED = true;
+
+            enableProgressBar();
             //TO DO
             //run optimization
-        }
+        }        
     }
     else if(name == "stopButton")
     {
+        guiObjects_.RUN_BUTTON_IS_PRESSED = false;
+        disableProgressBar();
+
         emit stopSimulation();
     }
 }

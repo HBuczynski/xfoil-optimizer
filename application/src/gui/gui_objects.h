@@ -39,6 +39,7 @@ struct MainWindowObjects
 
     bool SET_TARGET = false;
     bool SET_BASE = false;
+    bool RUN_BUTTON_IS_PRESSED = false;
 };
 
 struct SettingsObjects
