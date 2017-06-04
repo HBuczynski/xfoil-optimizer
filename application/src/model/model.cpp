@@ -37,6 +37,11 @@ void Model::calculateBaseProfileParameters(std::string path)
 
 }
 
+void Model::stopSimulation()
+{
+    qDebug() << "stop";
+}
+
 void Model::initializeLogger()
 {
     logger_ = &LogWriter::getInstance();

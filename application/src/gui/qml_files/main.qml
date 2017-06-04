@@ -8,8 +8,8 @@ ApplicationWindow {
     width: 1024
     height: 768
     title: "XFOIL OPTIMIZER"
-    minimumWidth: 800
-    minimumHeight: 480
+    minimumWidth: 1023
+    minimumHeight: 767
     maximumWidth: 1024
     maximumHeight: 768
     visible: true
@@ -67,9 +67,9 @@ ApplicationWindow {
             id: runButton
             objectName: "runButton"
             anchors.top: parent.top
-            anchors.topMargin: 166
+            anchors.topMargin: 120
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 0
+            anchors.bottomMargin: 40
             anchors.left: parent.left
             anchors.leftMargin: 668
             anchors.right: parent.right
@@ -79,6 +79,10 @@ ApplicationWindow {
 
             MouseArea {
                 id:mouseArea4
+                anchors.rightMargin: 1
+                anchors.bottomMargin: 0
+                anchors.leftMargin: 0
+                anchors.topMargin: 0
                 anchors.top: parent.top
                 anchors.fill: runButton
                 onClicked: runButton.buttonClick("runButton")
@@ -92,6 +96,40 @@ ApplicationWindow {
                 font.pointSize: 8
             }
 
+        }
+
+        Button {
+            id: stopButton
+            objectName:  "stopButton"
+            anchors.left: parent.left
+            anchors.leftMargin: 668
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: -2
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.top: runButton.bottom
+            anchors.topMargin: 8
+
+            signal buttonClick(string name)
+
+            MouseArea {
+                id:mouseArea6
+                anchors.rightMargin: 1
+                anchors.bottomMargin: 0
+                anchors.leftMargin: 0
+                anchors.topMargin: 0
+                anchors.top: parent.top
+                anchors.fill: stopButton
+                onClicked: stopButton.buttonClick("stopButton")
+            }
+
+            Text {
+                id: runButonText
+                text: "STOP"
+                anchors.centerIn: parent
+                font.bold: true
+                font.pointSize: 8
+            }
         }
     }
 

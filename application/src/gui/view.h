@@ -25,6 +25,7 @@ public:
 signals:
     void setTargetProfileValues(AviationProfileParameters data);
     void redirectPathToBaseProfile(std::string path);
+    void stopSimulation();
 
 public slots:
     void drawBaseChart(const std::vector<double> &dataX, const std::vector<double> &dataY);

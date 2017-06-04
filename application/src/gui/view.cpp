@@ -107,12 +107,15 @@ void View::buttonsClicked(QString name)
         if(checkIfTargetIsSet() && guiObjects_.SET_BASE)
         {
             emit setTargetProfileValues(targetParameters_);
+            enableProgressBar();
 
             //TO DO
             //run optimization
         }
-
-        enableProgressBar();
+    }
+    else if(name == "stopButton")
+    {
+        emit stopSimulation();
     }
 }
 
@@ -204,6 +207,9 @@ void View::initializeButtons()
     //initialize run button
     guiObjects_.runButton = guiObjects_.mainWindow->findChild<QObject*>("runButton");
     isSuccess = isSuccess && guiObjects_.runButton;
+
+    guiObjects_.stopButton = guiObjects_.mainWindow->findChild<QObject*>("stopButton");
+    isSuccess = isSuccess && guiObjects_.stopButton;
 
     if(!isSuccess)
         throw ExceptionHandler("Gui buttons object didn't initialize.");
@@ -349,9 +355,12 @@ void View::initializeModelViewConnection()
     QObject::connect(model_, SIGNAL(setBasicProfileParameters(AviationProfileParameters)), this, SLOT(getBaseProfileValues(AviationProfileParameters)));
     QObject::connect(this, SIGNAL(setTargetProfileValues(AviationProfileParameters)), model_, SLOT(getTargetProfileValues(AviationProfileParameters)));
     QObject::connect(this, SIGNAL(redirectPathToBaseProfile(std::string)), model_, SLOT(calculateBaseProfileParameters(std::string)));
+    QObject::connect(this, SIGNAL(stopSimulation()), model_, SLOT(stopSimulation()));
     //initialize connection with buttons
     for(int i=0; i<guiObjects_.buttonsCount; ++i)
         QObject::connect(guiObjects_.settingsButtons.at(i), SIGNAL(buttonClick(QString)), this,  SLOT(buttonsClicked(QString)));
 
     QObject::connect(guiObjects_.runButton, SIGNAL(buttonClick(QString)), this,  SLOT(buttonsClicked(QString)));
+    QObject::connect(guiObjects_.stopButton, SIGNAL(buttonClick(QString)), this,  SLOT(buttonsClicked(QString)));
+
 }

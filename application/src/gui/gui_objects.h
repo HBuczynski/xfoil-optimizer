@@ -25,6 +25,7 @@ struct MainWindowObjects
     QObject* basePlot;
     QObject* optimizedPlot;
     QObject* runButton;
+    QObject* stopButton;
 
     std::vector<QObject*> settingsButtons;
     std::vector<QObject*> baseParameters;

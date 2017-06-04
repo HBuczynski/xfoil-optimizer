@@ -27,6 +27,7 @@ signals:
 public slots:
     void getTargetProfileValues(AviationProfileParameters data);
     void calculateBaseProfileParameters(std::string path);
+    void stopSimulation();
 
 private:
 	void initializeLogger();
