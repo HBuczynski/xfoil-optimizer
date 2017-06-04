@@ -34,55 +34,55 @@ QSimulationProxy_tests::QSimulationProxy_tests()
 void QSimulationProxy_tests::CreateProxyObjectNotRunsTheXfoil()
 {
     QSimulationProxy proxy(params);
-    QVERIFY2(proxy.PollStatus() == SimulationProxy::NotRunning, "Failure - Bad object creation");
+    QVERIFY2(proxy.pollStatus() == SimulationProxy::NotRunning, "Failure - Bad object creation");
 }
 void QSimulationProxy_tests::RunAndTerminateTheProgram()
 {
     QSimulationProxy proxy(params);
-    proxy.Run();
-    QVERIFY2(proxy.PollStatus() != SimulationProxy::NotRunning, "Failure - process did not start - invalid state");
-    proxy.Terminate();
-    QVERIFY2(proxy.PollStatus() == SimulationProxy::Finished, "Failure - process not terminated - invalid state");
+    proxy.run();
+    QVERIFY2(proxy.pollStatus() != SimulationProxy::NotRunning, "Failure - process did not start - invalid state");
+    proxy.terminate();
+    QVERIFY2(proxy.pollStatus() == SimulationProxy::Finished, "Failure - process not terminated - invalid state");
 }
 void QSimulationProxy_tests::EnterMenuAndTerminate()
 {
     QSimulationProxy proxy(params);
-    proxy.AddCommand("PLOP");
-    proxy.AddCommand("G F");
-    proxy.AddCommand("\r\n");
-    proxy.AddCommand("NACA 0012");
-    proxy.AddCommand("OPER");
-    proxy.Run();
-    QVERIFY2(proxy.PollStatus() != SimulationProxy::NotRunning, "Failure - process did not start - invalid state");
-    proxy.Terminate();
-    QVERIFY2(proxy.PollStatus() == SimulationProxy::Finished, "Failure - process not terminated - invalid state");
+    proxy.addCommand("PLOP");
+    proxy.addCommand("G F");
+    proxy.addCommand("\r\n");
+    proxy.addCommand("NACA 0012");
+    proxy.addCommand("OPER");
+    proxy.run();
+    QVERIFY2(proxy.pollStatus() != SimulationProxy::NotRunning, "Failure - process did not start - invalid state");
+    proxy.terminate();
+    QVERIFY2(proxy.pollStatus() == SimulationProxy::Finished, "Failure - process not terminated - invalid state");
 }
 
 void QSimulationProxy_tests::RunASimulationAndRemoveResultsFile()
 {
     QSimulationProxy proxy(params);
-    proxy.AddCommand("PLOP");
-    proxy.AddCommand("G F");
-    proxy.AddCommand("\r\n");
-    proxy.AddCommand("NACA 0012");
-    proxy.AddCommand("OPER");
-    proxy.AddCommand("ALFA 0.0");
-    proxy.AddCommand("CPWR test.dat");
+    proxy.addCommand("PLOP");
+    proxy.addCommand("G F");
+    proxy.addCommand("\r\n");
+    proxy.addCommand("NACA 0012");
+    proxy.addCommand("OPER");
+    proxy.addCommand("ALFA 0.0");
+    proxy.addCommand("CPWR test.dat");
 
     //proxy.AddCommand("\r\n");
     //proxy.AddCommand("QUIT");
 
-    proxy.Run();
+    proxy.run();
     std::cout<<"Run()\r\n";
-    QVERIFY2(proxy.PollStatus() != SimulationProxy::NotRunning, "Failure - process did not start - invalid state");
+    QVERIFY2(proxy.pollStatus() != SimulationProxy::NotRunning, "Failure - process did not start - invalid state");
 
-    while(proxy.PollStatus() ==SimulationProxy::Running )
+    while(proxy.pollStatus() ==SimulationProxy::Running )
         QThread::msleep(1);
     std::cout<<"Terminte()\r\n";
-    QVERIFY2(proxy.PollStatus() == SimulationProxy::Finished, "Failure - process not terminated - invalid state");
+    QVERIFY2(proxy.pollStatus() == SimulationProxy::Finished, "Failure - process not terminated - invalid state");
 
 
-    QString resFile = QString::fromStdString(proxy.GetExePath() + "/test.dat");
+    QString resFile = QString::fromStdString(proxy.getExePath() + "/test.dat");
     QVERIFY(QFile::exists(resFile));
     QFile::remove(resFile);
     QVERIFY(!QFile::exists(resFile));
@@ -100,20 +100,20 @@ void QSimulationProxy_tests::RunMultipleParallelSimulations()
     int i = 0;
     for(auto proxy : proxyBuf)
     {
-        proxy->AddCommand("PLOP");
-        proxy->AddCommand("G F");
-        proxy->AddCommand("\r\n");
-        proxy->AddCommand("NACA 0012");
-        proxy->AddCommand("OPER");
-        proxy->AddCommand("ALFA 0.0");
+        proxy->addCommand("PLOP");
+        proxy->addCommand("G F");
+        proxy->addCommand("\r\n");
+        proxy->addCommand("NACA 0012");
+        proxy->addCommand("OPER");
+        proxy->addCommand("ALFA 0.0");
         snprintf(fnamebuf,sizeof(fnamebuf),"test%d.dat",i);
-        proxy->AddCommand("CPWR " + std::string(fnamebuf));
+        proxy->addCommand("CPWR " + std::string(fnamebuf));
         ++i;
     }
     for(auto  proxy:proxyBuf)
     {
-            proxy->Run();
-            QVERIFY(proxy->PollStatus() != SimulationProxy::NotRunning);
+            proxy->run();
+            QVERIFY(proxy->pollStatus() != SimulationProxy::NotRunning);
 
     }
     //Wait for all processes to finish or timeout//
@@ -123,7 +123,7 @@ void QSimulationProxy_tests::RunMultipleParallelSimulations()
         for(auto  proxy:proxyBuf)
         {
             finished = true;//Reset flag
-                if(proxy->PollStatus() == SimulationProxy::Running)
+                if(proxy->pollStatus() == SimulationProxy::Running)
                 {
                     finished =false;
                 }
@@ -134,14 +134,14 @@ void QSimulationProxy_tests::RunMultipleParallelSimulations()
     QVERIFY(finished);
     for(auto  proxy:proxyBuf)
     {
-            proxy->Terminate();
-            QVERIFY(proxy->PollStatus() == SimulationProxy::Finished);
+            proxy->terminate();
+            QVERIFY(proxy->pollStatus() == SimulationProxy::Finished);
     }
     i = 0;
     for(auto proxy:proxyBuf)
     {
         snprintf(fnamebuf,sizeof(fnamebuf),"test%d.dat",i);
-        QString resFile = QString::fromStdString(proxy->GetExePath() + "/" + std::string(fnamebuf));
+        QString resFile = QString::fromStdString(proxy->getExePath() + "/" + std::string(fnamebuf));
         QVERIFY(QFile::exists(resFile));
         QFile::remove(resFile);
         QVERIFY(!QFile::exists(resFile));
@@ -152,14 +152,14 @@ void QSimulationProxy_tests::GenerateNACAProfile()
 {
     //TODO - throw if this breaks//
     QSimulationProxy proxy(params);
-    proxy.AddCommand("NACA 0012");
-    proxy.AddCommand("SAVE NACA0012.dat");
-    proxy.AddCommand("\r\n");
-    proxy.Run();
-    QVERIFY2(proxy.PollStatus() != SimulationProxy::NotRunning, "Failure - process did not start - invalid state");
-    proxy.Terminate();
-    QVERIFY2(proxy.PollStatus() == SimulationProxy::Finished, "Failure - process not terminated - invalid state");
-    QString resFile = QString::fromStdString(proxy.GetExePath() + "/NACA0012.dat");
+    proxy.addCommand("NACA 0012");
+    proxy.addCommand("SAVE NACA0012.dat");
+    proxy.addCommand("\r\n");
+    proxy.run();
+    QVERIFY2(proxy.pollStatus() != SimulationProxy::NotRunning, "Failure - process did not start - invalid state");
+    proxy.terminate();
+    QVERIFY2(proxy.pollStatus() == SimulationProxy::Finished, "Failure - process not terminated - invalid state");
+    QString resFile = QString::fromStdString(proxy.getExePath() + "/NACA0012.dat");
     QVERIFY(QFile::exists(resFile));
     QFile::remove(resFile);
     QVERIFY(!QFile::exists(resFile));

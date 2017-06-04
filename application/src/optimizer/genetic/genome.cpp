@@ -8,7 +8,7 @@ Genome::Genome(AirfoilCoefficients coeff) :
 {
 
     std::cout<<"Constructor of genome"<<std::endl<<std::flush;
-    Set(coeff);
+    set(coeff);
 
 }
 uint8_t Genome::getRandomByte()
@@ -24,7 +24,7 @@ Genome::Genome(unsigned char *array) :
                                                     geom_(nullptr)
 {
 
-    Set(array);
+    set(array);
 }
 Genome::Genome() :
                                                     rng(std::random_device()()),
@@ -33,7 +33,7 @@ Genome::Genome() :
                                                     maxCoeffRange_(5.0),
                                                     geom_(nullptr)
 {
-    Randomize();
+    randomize();
 }
 
 Genome::~Genome()
@@ -42,7 +42,7 @@ Genome::~Genome()
         delete geom_;
 }
 
-void Genome::Set(AirfoilCoefficients &coefficients)
+void Genome::set(AirfoilCoefficients &coefficients)
 {
     BinaryAirfoilCoefficients binaryCoefficients;
     binaryCoefficients.a_l = convertTobyte(coefficients.a_l);
@@ -57,7 +57,7 @@ void Genome::Set(AirfoilCoefficients &coefficients)
     binaryCoefficients.p_u = convertTobyte(coefficients.p_u);
     binaryCoefficients.q_l = convertTobyte(coefficients.q_l);
     binaryCoefficients.q_u = convertTobyte(coefficients.q_u);
-    Set(binaryCoefficients);
+    set(binaryCoefficients);
 }
 AirfoilCoefficients Genome::getCoefficients()
 {
@@ -93,7 +93,7 @@ double Genome::convertTodouble(uint8_t val)
     vald *= scale;
     return vald;
 }
-void Genome::Randomize()
+void Genome::randomize()
 {
     uint8_t *array = getCoefficientsArray();
     for(int i = 0; i < sizeof(BinaryAirfoilCoefficients); ++i)
@@ -116,9 +116,9 @@ double &Genome::getFitness()
     return fitness_;
 }
 
-void Genome::Set(BinaryAirfoilCoefficients &airfoilCoefficients)
+void Genome::set(BinaryAirfoilCoefficients &airfoilCoefficients)
 {
-    Set(reinterpret_cast<uint8_t*>(&airfoilCoefficients));
+    set(reinterpret_cast<uint8_t*>(&airfoilCoefficients));
 }
 void Genome::reload()
 {
@@ -128,7 +128,7 @@ void Genome::reload()
     geom_ = new Geometry(coeff);
 }
 
-void Genome::Set(unsigned char *array)
+void Genome::set(unsigned char *array)
 {
     memcpy(getCoefficientsArray(),array,sizeof(BinaryAirfoilCoefficients));
     reload();

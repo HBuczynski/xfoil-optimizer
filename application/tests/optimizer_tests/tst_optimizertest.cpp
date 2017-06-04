@@ -36,11 +36,11 @@ void OptimizerTest::cleanupTestCase()
 
 void OptimizerTest::GivenDudOptimizerProgressChanges()
 {
-    Geometry geom = SimulationHandler::GetNACAAirfoil("0012");
+    Geometry geom = SimulationHandler::getNACAAirfoil("0012");
     DudOptimizer optimizer(geom);
-    double savedProgress = optimizer.GetProgress();
-    optimizer.OptimizeStep();
-    QVERIFY(optimizer.GetProgress() > savedProgress);
+    double savedProgress = optimizer.getProgress();
+    optimizer.optimizeStep();
+    QVERIFY(optimizer.getProgress() > savedProgress);
 }
 void OptimizerTest::OptimizerIsNotInitializedAtConstruction()
 {

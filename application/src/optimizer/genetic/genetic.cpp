@@ -3,6 +3,24 @@
 #include <cstdlib>
 #include <map>
 
+GeneticOptimizer::GeneticOptimizer(Config::SimulationParams &params, Config::OptimizerParams &optParams):
+                                                                                                            simRunning_(false),
+                                                                                                            state_(GAState::NotInitialized),
+                                                                                                            totalFintess(0),
+                                                                                                            maxCoefficientValue_(3),
+                                                                                                            optParams_(optParams),
+                                                                                                            elitesCount_(3),
+                                                                                                            continueOptimization_(true),
+                                                                                                            simulationParams_(params),
+                                                                                                            simulationScheduler_(nullptr),
+                                                                                                            fitnessModel_(nullptr)
+{
+    simulationScheduler_ = new SimulationScheduler(simulationParams_);
+    fitnessModel_ = new FitnessModel(optParams_.fitness);
+    scrambler_ = new SingleCrossoverMultiMutationScrambler(optParams_.geneticOptimizer);
+    QObject::connect(simulationScheduler_, SIGNAL(simulationFinished()), this, SLOT(simulationBatchComplete()),Qt::DirectConnection);
+}
+
 GeneticOptimizer::~GeneticOptimizer()
 {
     if(simulationScheduler_ != nullptr)
@@ -27,17 +45,17 @@ void GeneticOptimizer::runGeneticAlgorithm()
 
     for(auto genome: population_)
         tasks.push_back(Task(genome->getGeometry()));
-    simulationScheduler_->AddBatchTask(tasks);
+    simulationScheduler_->addBatchTask(tasks);
 
     simRunning_ = true;
     //std::cout<<"Running"<<std::endl;
 }
-void GeneticOptimizer::OptimizeStep()
+void GeneticOptimizer::optimizeStep()
 {
     //int currentIterationNumber = 0;
     int newGenomeNumber = 0;
     //simulationScheduler_->WaitForFinished();
-    if(!simulationScheduler_->IsTasksFinished())
+    if(!simulationScheduler_->isTasksFinished())
         throw std::out_of_range("Should be finifhed task");
     calculateFitness();
 
@@ -59,11 +77,11 @@ void GeneticOptimizer::OptimizeStep()
         while(newGenomeNumber < optParams_.geneticOptimizer.generationCount)
         {
             std::cout<<"next iteration bef cross"<<std::endl;
-            Genome *newGenome = scrambler_->Crossover(rouletteWheelSelection(), rouletteWheelSelection());
+            Genome *newGenome = scrambler_->crossover(rouletteWheelSelection(), rouletteWheelSelection());
             std::cout<<"next iteration afterbef cross"<<std::endl;
             if(newGenome != nullptr)
             {
-                scrambler_->Mutate(newGenome);
+                scrambler_->mutate(newGenome);
                 if(newGenome != nullptr)
                 {
                     tempPopulation.push_back(newGenome);
@@ -80,10 +98,33 @@ void GeneticOptimizer::OptimizeStep()
     }
 }
 
-GeneticOptimizer::GAState GeneticOptimizer::GetState()
+const Geometry GeneticOptimizer::getTopGeometry(int place)
+{
+    //TODO//
+    return baseGeometry_;
+}
+
+const double GeneticOptimizer::getProgress()
+{
+    return 0.0;
+}
+
+bool GeneticOptimizer::isRunning()
+{
+    return simRunning_;
+    //return !simulationScheduler_->IsTasksFinished();
+}
+
+GeneticOptimizer::GAState GeneticOptimizer::getState()
 {
     return state_;
 }
+
+void GeneticOptimizer::addBaseGeometry(Geometry &geom)
+{
+
+}
+
 void GeneticOptimizer::requestStop()
 {
     continueOptimization_ = false;
@@ -177,7 +218,7 @@ void GeneticOptimizer::calculateFitness()
 {
     for(auto genome : population_)
     {
-        genome->setFitness(fitnessModel_->Calculate(genome->getGeometry()->GetResults()));
+        genome->setFitness(fitnessModel_->calculate(genome->getGeometry()->getResults()));
 
     }
 }
@@ -214,5 +255,5 @@ void GeneticOptimizer::simulationBatchComplete()
     bool wasRunning = simRunning_;
     simRunning_ = false;
     if(wasRunning)
-        OptimizeStep();
+        optimizeStep();
 }

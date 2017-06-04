@@ -27,61 +27,28 @@ public:
         OptimizationCompleteFinalGeneration
     };
 
-    GeneticOptimizer(Config::SimulationParams &params, Config::OptimizerParams &optParams):
-                                                        simRunning_(false),
-                                                        state_(GAState::NotInitialized),
-                                                        totalFintess(0),
-                                                        maxCoefficientValue_(3),
-                                                        optParams_(optParams),
-                                                        elitesCount_(3),
-                                                        continueOptimization_(true),
-                                                        simulationParams_(params),
-                                                        simulationScheduler_(nullptr),
-                                                        fitnessModel_(nullptr)
-    {
-        simulationScheduler_ = new SimulationScheduler(simulationParams_);
-        fitnessModel_ = new FitnessModel(optParams_.fitness);
-        scrambler_ = new SingleCrossoverMultiMutationScrambler(optParams_.geneticOptimizer);
-        QObject::connect(simulationScheduler_, SIGNAL(simulationFinished()), this, SLOT(simulationBatchComplete()),Qt::DirectConnection);
-    }
+    GeneticOptimizer(Config::SimulationParams &params, Config::OptimizerParams &optParams);
 
     ~GeneticOptimizer();
 
     void initialize();
     void runGeneticAlgorithm();
-    GAState GetState();
+    GAState getState();
 
+    virtual void addBaseGeometry(Geometry &geom);
+    virtual void optimizeStep();
+    virtual Geometry const getTopGeometry(int place);
+    virtual double const getProgress();
 
-
-    virtual void AddBaseGeometry(Geometry &geom)
-    {
-
-    }
-
-    virtual void OptimizeStep();
-
-    virtual Geometry const GetTopGeometry(int place)
-    {
-        //TODO//
-        return baseGeometry_;
-    }
-
-    virtual double const GetProgress()
-    {
-        return 0.0;
-    }
-    bool isRunning()
-    {
-        return simRunning_;
-        //return !simulationScheduler_->IsTasksFinished();
-    }
-
+    bool isRunning();
 
 public Q_SLOTS:
     virtual void simulationBatchComplete();
     void requestStop();
+
 Q_SIGNALS:
     void optimizationFinished();
+
 private:
     void generateInitialPopulation();
     void addGenomeToElite(Genome *genome);

@@ -9,10 +9,10 @@ class AirfoilOptimizer: public QObject
 {
     Q_OBJECT
 public:
-    virtual void AddBaseGeometry(Geometry &geom) = 0;
-    virtual void OptimizeStep() = 0;
-    virtual Geometry const GetTopGeometry(int place) = 0;
-    virtual double const GetProgress() = 0;
+    virtual void addBaseGeometry(Geometry &geom) = 0;
+    virtual void optimizeStep() = 0;
+    virtual Geometry const getTopGeometry(int place) = 0;
+    virtual double const getProgress() = 0;
 //public Q_SLOTS:
 //    virtual void simulationBatchComplete(){}
 //Q_SIGNALS:
@@ -27,22 +27,22 @@ public:
     {
 
     }
-    virtual void AddBaseGeometry(Geometry &geom) override
+    virtual void addBaseGeometry(Geometry &geom) override
     {
         baseGeom_ = geom;
     }
-    virtual void OptimizeStep() override
+    virtual void optimizeStep() override
     {
         if(progress_ < 1.0)
         {
             progress_ += 0.1;
         }
     }
-    virtual Geometry const GetTopGeometry(int place) override
+    virtual Geometry const getTopGeometry(int place) override
     {
         return baseGeom_;
     }
-    virtual double const GetProgress() override
+    virtual double const getProgress() override
     {
         return progress_;
     }
