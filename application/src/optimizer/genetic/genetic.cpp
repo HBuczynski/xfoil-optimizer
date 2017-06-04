@@ -69,9 +69,10 @@ GeneticOptimizer::GAState GeneticOptimizer::GetState()
 void GeneticOptimizer::generateInitialPopulation()
 {
     int i=0;
-
+    std::cout <<"Generate initial population"<<std::endl;
     while( i < populationCount_ )
     {
+        std::cout <<"Generate initial population2"<<std::endl;
         Genome *genome = new Genome(generateRandomCoefficients());
 
         if(genome->getGeometry()->isProfileCrossed())
@@ -85,6 +86,7 @@ void GeneticOptimizer::generateInitialPopulation()
             ++i;
         }
     }
+    std::cout <<"Generated initial population"<<std::endl;
 }
 
 void GeneticOptimizer::addGenomeToElite(Genome *genome)
@@ -185,6 +187,7 @@ Genome *GeneticOptimizer::rouletteWheelSelection()
 
 AirfoilCoefficients GeneticOptimizer::generateRandomCoefficients()
 {
+        std::cout<< "rand()";
     AirfoilCoefficients randomCoefficients;
 
     randomCoefficients.a_l = (rand() % (maxCoefficientValue_*100)) / 100;

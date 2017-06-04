@@ -52,7 +52,7 @@ void Geometry_Tests::CreateVectorX()
 {
     Geometry geom1(profilePath.toStdString());
     QVERIFY((*(--geom1.GetPoints().end())).x == 1);
-    QVERIFY(geom1.GetPoints().size() == 2*geom1.getPointsCount()-1);
+    QVERIFY(geom1.GetPoints().size() == 2*geom1.getPointsCount());
 }
 void Geometry_Tests::LoadingGeometryFromFileCreatesPoints()
 {

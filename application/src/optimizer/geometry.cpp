@@ -187,9 +187,9 @@ void Geometry::calculateCordinateOfX()
 
 bool Geometry::isProfileCrossed()
 {
-    for(int i=0; i<vectorX_.size(); ++i)
+    for(int i=0; i<lowerPoints_.size(); --i)
     {
-        if(upperPoints_[i].y <= lowerPoints_[i].y)
+        if(upperPoints_[i].y <= lowerPoints_[lowerPoints_.size()-1-i].y)
             return true;
     }
     return false;
@@ -201,9 +201,9 @@ void Geometry::Save(std::string filename)
     if (file.is_open())
     {
         file << filename << std::endl;
-        for(size_t i = (upperPoints_.size()-1); i>0; --i)
+        for(Point a: upperPoints_)
         {
-            file << "     "<< (upperPoints_[i]).x << "    " << (upperPoints_[i]).y << std::endl;
+            file << "     "<< a.x << "    " << a.y << std::endl;
         }
 
         for(Point a : lowerPoints_)
@@ -223,7 +223,7 @@ void Geometry::Transform()
     upperPoints_.clear();
     lowerPoints_.clear();
     //Calculate points based on new coefficients
-    for(int i=0; i<vectorX_.size(); ++i)
+    for(int i=vectorX_.size()-1; i>=0; --i)
     {
         upperPoints_.push_back(Point(vectorX_[i], (coefficients_.p_u*pow(vectorX_[i], coefficients_.a_u)*pow((1-vectorX_[i]), coefficients_.b_u)+
                            coefficients_.q_u*pow(vectorX_[i], coefficients_.c_u)*pow((1-vectorX_[i]), coefficients_.d_u))));
@@ -258,8 +258,8 @@ std::vector<Point> Geometry::GetPoints()
 {
     std::vector<Point> points;
 
-    for(size_t i = (upperPoints_.size()-1); i>0; --i)
-        points.push_back((upperPoints_[i]));
+    for(Point a: upperPoints_)
+        points.push_back(a);
 
     for(Point a : lowerPoints_)
         points.push_back(a);

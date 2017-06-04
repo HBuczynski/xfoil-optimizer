@@ -1,51 +1,95 @@
 #include "optimizer/genetic/genome.h"
-
-Genome::Genome(AirfoilCoefficients coeff) :         doubleCoefficients_(coeff),
-                                                    coefficientsCount_(12),
-                                                    minCoefficientsRange_(0),
-                                                    maxCoefficientsRange_(5),
-                                                    maxBitsCount_(255),
-                                                    binaryCoefficientsArray_(nullptr),
+Genome::Genome(AirfoilCoefficients coeff) :
+                                                    rng(std::random_device()()),
+                                                    bytedist(0,255),
+                                                    minCoeffRange_(0.0),
+                                                    maxCoeffRange_(5.0),
                                                     geom_(nullptr)
 {
-    convertDoubleCoefficientsToBinary(doubleCoefficients_, binaryCoefficients_);
-    setBinaryArrayFromStruct(binaryCoefficients_);
-    geom_ = new Geometry(doubleCoefficients_);
+
+    std::cout<<"Constructor of genome"<<std::endl<<std::flush;
+    Set(coeff);
 
 }
+uint8_t Genome::getRandomByte()
+{
+    return (uint8_t)bytedist(rng);
+}
 
-Genome::Genome(unsigned char *array) :              coefficientsCount_(12),
-                                                    minCoefficientsRange_(0),
-                                                    maxCoefficientsRange_(5),
-                                                    maxBitsCount_(255),
+Genome::Genome(unsigned char *array) :
+                                                    rng(std::random_device()()),
+                                                    bytedist(0,255),
+                                                    minCoeffRange_(0.0),
+                                                    maxCoeffRange_(5.0),
                                                     geom_(nullptr)
 {
-    binaryCoefficientsArray_ = array;
-    setStructFromBinaryArray(binaryCoefficientsArray_);
-    convertBinaryCoefficientsToDouble(binaryCoefficients_, doubleCoefficients_);
-    geom_ = new Geometry(doubleCoefficients_);
+
+    Set(array);
 }
 
 Genome::~Genome()
 {
-    if(binaryCoefficientsArray_ != nullptr)
-        delete [] binaryCoefficientsArray_;
     if(geom_ != nullptr)
         delete geom_;
 }
 
-void Genome::setCoefficients(AirfoilCoefficients coefficients)
+void Genome::Set(AirfoilCoefficients &coefficients)
 {
-    doubleCoefficients_ = coefficients;
-    convertDoubleCoefficientsToBinary(doubleCoefficients_, binaryCoefficients_);
-    setBinaryArrayFromStruct(binaryCoefficients_);
+    BinaryAirfoilCoefficients binaryCoefficients;
+    binaryCoefficients.a_l = convertTobyte(coefficients.a_l);
+    binaryCoefficients.a_u = convertTobyte(coefficients.a_u);
+    binaryCoefficients.b_l = convertTobyte(coefficients.b_l);
+    binaryCoefficients.b_u = convertTobyte(coefficients.b_u);
+    binaryCoefficients.c_l = convertTobyte(coefficients.c_l);
+    binaryCoefficients.c_u = convertTobyte(coefficients.c_u);
+    binaryCoefficients.d_l = convertTobyte(coefficients.d_l);
+    binaryCoefficients.d_u = convertTobyte(coefficients.d_u);
+    binaryCoefficients.p_l = convertTobyte(coefficients.p_l);
+    binaryCoefficients.p_u = convertTobyte(coefficients.p_u);
+    binaryCoefficients.q_l = convertTobyte(coefficients.q_l);
+    binaryCoefficients.q_u = convertTobyte(coefficients.q_u);
+    Set(binaryCoefficients);
+}
+AirfoilCoefficients Genome::getCoefficients()
+{
+    AirfoilCoefficients coeff;
+    coeff.a_l = convertTodouble(binaryCoefficients_.a_l);
+    coeff.a_u = convertTodouble(binaryCoefficients_.a_u);
+    coeff.b_l = convertTodouble(binaryCoefficients_.b_l);
+    coeff.b_u = convertTodouble(binaryCoefficients_.b_u);
+    coeff.c_l = convertTodouble(binaryCoefficients_.c_l);
+    coeff.c_u = convertTodouble(binaryCoefficients_.c_u);
+    coeff.d_l = convertTodouble(binaryCoefficients_.d_l);
+    coeff.d_u = convertTodouble(binaryCoefficients_.d_u);
+    coeff.p_l = convertTodouble(binaryCoefficients_.p_l);
+    coeff.p_u = convertTodouble(binaryCoefficients_.p_u);
+    coeff.q_l = convertTodouble(binaryCoefficients_.q_l);
+    coeff.q_u = convertTodouble(binaryCoefficients_.q_u);
+    return coeff;
 }
 
-void Genome::setBinaryArray(unsigned char *array)
+uint8_t Genome::convertTobyte(double val)
 {
-    binaryCoefficientsArray_ = array;
-    setStructFromBinaryArray(binaryCoefficientsArray_);
-    convertBinaryCoefficientsToDouble(binaryCoefficients_, doubleCoefficients_);
+    double scale = 255.0 / (maxCoeffRange_ - minCoeffRange_);
+    if(val > maxCoeffRange_)
+        val = maxCoeffRange_;
+    val -= minCoeffRange_;
+    val *= scale;
+    return (uint8_t) std::round(val);
+}
+double Genome::convertTodouble(uint8_t val)
+{
+    double scale = (maxCoeffRange_ - minCoeffRange_) / 255.0;
+    double vald = (double) val;
+    vald *= scale;
+    return vald;
+}
+void Genome::Randomize()
+{
+    uint8_t *array = getCoefficientsArray();
+    for(int i = 0; i < sizeof(BinaryAirfoilCoefficients); ++i)
+            array[i] = getRandomByte();
+
 }
 
 void Genome::setFitness(double value)
@@ -63,53 +107,21 @@ double &Genome::getFitness()
     return fitness_;
 }
 
-void Genome::convertDoubleCoefficientsToBinary(const AirfoilCoefficients &doubleCoefficients, BinaryAirfoilCoefficients &binaryCoefficients)
+void Genome::Set(BinaryAirfoilCoefficients &airfoilCoefficients)
 {
-    const double scale = (maxCoefficientsRange_-minCoefficientsRange_) / maxBitsCount_;
-
-    binaryCoefficients.a_l = static_cast<byte>(doubleCoefficients.a_l/scale);
-    binaryCoefficients.a_u = static_cast<byte>(doubleCoefficients.a_u/scale);
-    binaryCoefficients.b_l = static_cast<byte>(doubleCoefficients.b_l/scale);
-    binaryCoefficients.b_u = static_cast<byte>(doubleCoefficients.b_u/scale);
-    binaryCoefficients.c_l = static_cast<byte>(doubleCoefficients.c_l/scale);
-    binaryCoefficients.c_u = static_cast<byte>(doubleCoefficients.c_u/scale);
-    binaryCoefficients.d_l = static_cast<byte>(doubleCoefficients.d_u/scale);
-    binaryCoefficients.d_u = static_cast<byte>(doubleCoefficients.d_l/scale);
-    binaryCoefficients.q_l = static_cast<byte>(doubleCoefficients.q_l/scale);
-    binaryCoefficients.q_u = static_cast<byte>(doubleCoefficients.q_u/scale);
-    binaryCoefficients.p_l = static_cast<byte>(doubleCoefficients.p_l/scale);
-    binaryCoefficients.p_u = static_cast<byte>(doubleCoefficients.p_u/scale);
+    Set(reinterpret_cast<uint8_t*>(&airfoilCoefficients));
 }
 
-void Genome::convertBinaryCoefficientsToDouble(const BinaryAirfoilCoefficients &binaryCoefficients, AirfoilCoefficients &doubleCoefficients)
+void Genome::Set(unsigned char *array)
 {
-    const double scale = (maxCoefficientsRange_-minCoefficientsRange_) / maxBitsCount_;
-
-    doubleCoefficients.a_l = binaryCoefficients.a_l*scale;
-    doubleCoefficients.a_u = binaryCoefficients.a_u*scale;
-    doubleCoefficients.b_l = binaryCoefficients.b_l*scale;
-    doubleCoefficients.b_u = binaryCoefficients.b_u*scale;
-    doubleCoefficients.c_l = binaryCoefficients.c_l*scale;
-    doubleCoefficients.c_u = binaryCoefficients.c_u*scale;
-    doubleCoefficients.d_l = binaryCoefficients.d_l*scale;
-    doubleCoefficients.d_u = binaryCoefficients.d_u*scale;
-    doubleCoefficients.p_l = binaryCoefficients.p_l*scale;
-    doubleCoefficients.p_u = binaryCoefficients.p_u*scale;
-    doubleCoefficients.q_l = binaryCoefficients.q_l*scale;
-    doubleCoefficients.q_u = binaryCoefficients.q_u*scale;
-}
-void Genome::setBinaryArrayFromStruct(BinaryAirfoilCoefficients &airfoilCoefficients)
-{
-    binaryCoefficientsArray_ = new unsigned char[sizeof(BinaryAirfoilCoefficients)];
-    binaryCoefficientsArray_ = reinterpret_cast<uint8_t*>(&airfoilCoefficients);
-}
-
-void Genome::setStructFromBinaryArray(unsigned char *array)
-{
-    binaryCoefficients_ = reinterpret_cast<BinaryAirfoilCoefficients&>(array);
+    memcpy(getCoefficientsArray(),array,sizeof(BinaryAirfoilCoefficients));
+    AirfoilCoefficients coeff = getCoefficients();//We can now get them as they were copied//
+    if(geom_ != nullptr)
+        delete geom_; //Reload gemetry
+    geom_ = new Geometry(coeff);
 }
 
 unsigned char *Genome::getCoefficientsArray()
 {
-    return binaryCoefficientsArray_;
+    return reinterpret_cast<uint8_t*>(&binaryCoefficients_);
 }
