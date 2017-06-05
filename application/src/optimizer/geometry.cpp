@@ -188,9 +188,6 @@ void Geometry::calculateCordinateOfX()
 
 bool Geometry::isProfileCrossed()
 {
-    //Check for obvious deformation - crossing//
-    std::cout<<coefficients_.a_l;
-    return false;
     for(int i=0; i<lowerPoints_.size(); ++i)
     {
         if(upperPoints_[i].y <= lowerPoints_[lowerPoints_.size()-1-i].y)
@@ -279,11 +276,19 @@ void Geometry::transform()
 
     size_t lastElement = upperPoints_.size() - 1;
 
-    if(upperPoints_[lastElement].y == lowerPoints_[lastElement].y)
+
+    if(upperPoints_[lastElement].y == lowerPoints_[0].y)
     {
        upperPoints_[lastElement].y = (upperPoints_[lastElement-1].y)/2;
+       lowerPoints_[0].y = (lowerPoints_[1].y)/2;
+    }
+
+    if(upperPoints_[0].y == lowerPoints_[lastElement].y)
+    {
+       upperPoints_[0].y = (upperPoints_[1].y)/2;
        lowerPoints_[lastElement].y = (lowerPoints_[lastElement-1].y)/2;
     }
+
 }
 
 void Geometry::regressionAlgorithm()

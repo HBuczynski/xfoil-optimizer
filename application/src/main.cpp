@@ -1,5 +1,6 @@
 #include "gui/view.h"
 
+#include <QDebug>
 //Test area for me
 #include "optimizer/airfoil_optimizer.h"
 
@@ -10,5 +11,11 @@ int main(int argc, char *argv[])
     Model *model = new Model;
     View *view = new View(model);
 
-    return app.exec();
+    if(app.exec() == 0)
+    {
+        delete model;
+        delete view;
+    }
+
+    return 0;
 }

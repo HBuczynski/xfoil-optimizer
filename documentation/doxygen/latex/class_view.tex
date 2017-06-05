@@ -1,0 +1,76 @@
+\hypertarget{class_view}{}\section{View Class Reference}
+\label{class_view}\index{View@{View}}
+
+
+Class controlling user interface.  
+
+
+
+
+{\ttfamily \#include $<$view.\+h$>$}
+
+Inheritance diagram for View\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_view}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_view_ae947cd6d87306563e8827d80448c1f28}{}\label{class_view_ae947cd6d87306563e8827d80448c1f28} 
+void {\bfseries draw\+Base\+Chart} (const std\+::vector$<$ double $>$ \&dataX, const std\+::vector$<$ double $>$ \&dataY)
+\item 
+\hypertarget{class_view_ad0df9f601ff799e4555e4662e1b0352c}{}\label{class_view_ad0df9f601ff799e4555e4662e1b0352c} 
+void {\bfseries draw\+Optimized\+Chart} (const std\+::vector$<$ double $>$ \&dataX, const std\+::vector$<$ double $>$ \&dataY)
+\item 
+\hypertarget{class_view_a81a7e65b2a53ad30ce94b42c214dc3ef}{}\label{class_view_a81a7e65b2a53ad30ce94b42c214dc3ef} 
+void {\bfseries draw\+Genetic\+Plot} (const std\+::vector$<$ double $>$ \&dataX, const std\+::vector$<$ double $>$ \&dataY)
+\item 
+\hypertarget{class_view_a717cea2de9e99ba58fe35a574bb56554}{}\label{class_view_a717cea2de9e99ba58fe35a574bb56554} 
+void {\bfseries buttons\+Clicked} (Q\+String name)
+\item 
+\hypertarget{class_view_a2291d8c957e0095b57d76bb247d6a915}{}\label{class_view_a2291d8c957e0095b57d76bb247d6a915} 
+void {\bfseries get\+Fitness\+Parameters\+Label} (\hyperlink{struct_aviation_profile_parameters}{Aviation\+Profile\+Parameters} data)
+\item 
+\hypertarget{class_view_a47d43d8644c74f17993a4ce2754e5be7}{}\label{class_view_a47d43d8644c74f17993a4ce2754e5be7} 
+void {\bfseries get\+Base\+Profile\+Values} (\hyperlink{struct_aviation_profile_parameters}{Aviation\+Profile\+Parameters} data)
+\item 
+\hypertarget{class_view_a2556a1b48f4c638f752b5e22e6044adb}{}\label{class_view_a2556a1b48f4c638f752b5e22e6044adb} 
+void {\bfseries set\+Optimizer\+Settings} ()
+\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_view_a17beef462b991abf311bcaeacfe3b7d8}{}\label{class_view_a17beef462b991abf311bcaeacfe3b7d8} 
+void {\bfseries set\+Target\+Profile\+Values} (\hyperlink{struct_aviation_profile_parameters}{Aviation\+Profile\+Parameters} data)
+\item 
+\hypertarget{class_view_a29594d0b3b97def30b5586ddaf11d288}{}\label{class_view_a29594d0b3b97def30b5586ddaf11d288} 
+void {\bfseries redirect\+Path\+To\+Base\+Profile} (std\+::string path)
+\item 
+\hypertarget{class_view_ae3633aa70a59017a0f3728a9a7e455bd}{}\label{class_view_ae3633aa70a59017a0f3728a9a7e455bd} 
+void {\bfseries stop\+Simulation} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_view_adc973dbae490e2040f813633e00b6e6f}{}\label{class_view_adc973dbae490e2040f813633e00b6e6f} 
+{\bfseries View} (\hyperlink{class_model}{Model} $\ast$model)
+\item 
+\hypertarget{class_view_aea935ceb9d8f3d9b0153c6b9890c903f}{}\label{class_view_aea935ceb9d8f3d9b0153c6b9890c903f} 
+void {\bfseries enable\+Progress\+Bar} ()
+\item 
+\hypertarget{class_view_a211d282520bc0d5373e3a2f57a611ffc}{}\label{class_view_a211d282520bc0d5373e3a2f57a611ffc} 
+void {\bfseries disable\+Progress\+Bar} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class controlling user interface. 
+
+\hyperlink{class_view}{View} consists all components and methods responsible for communication with user and redirect information to model of application. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+gui/\hyperlink{view_8h}{view.\+h}\item 
+gui/view.\+cpp\end{DoxyCompactItemize}

@@ -9,6 +9,14 @@
 #include "model/profile_parameters.h"
 #include "optimizer/genetic/genetic.h"
 
+/**
+*	@file model.h
+*	@brief The class is responsible for management of an application's back-end.
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
+*/
+
+//!  Class controlling application back-end
 class Model : public QObject
 {
     Q_OBJECT
@@ -22,17 +30,19 @@ signals:
     void updateOptimizedChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
     void updateGeneticChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
     void setFitnessParameters(AviationProfileParameters data);
+    void setBasicProfileParameters(AviationProfileParameters data);
 
 public slots:
     void getTargetProfileValues(AviationProfileParameters data);
-    void getBaseProfileValues(AviationProfileParameters data);
+    void calculateBaseProfileParameters(std::string path);
+    void stopSimulation();
+    void startSimulation();
 
 private:
 	void initializeLogger();
     void initializeConfigurationReader();
     void initializeGeneticAlgorithm();
 
-    AviationProfileParameters baseProfileData_;
     AviationProfileParameters targetProfileData_;
     LogWriter *logger_;
     ConfigurationReader configReader_;

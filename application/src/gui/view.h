@@ -9,7 +9,18 @@
 #include "gui/settings_dialog.h"
 #include "gui/plot_dialog.h"
 
+/**
+*	@file view.h
+*	@brief View class maintains user interface.
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
+*/
 
+//!  Class controlling user interface
+/*!
+   View consists all components and methods responsible for communication with user
+   and redirect information to model of application.
+*/
 class View : public QObject
 {
     Q_OBJECT
@@ -20,13 +31,13 @@ public:
     void enableProgressBar();
     void disableProgressBar();
 
-    const QString &getFilePath();
-
 	~View();
 
 signals:
-    void setBaseProfileValues(AviationProfileParameters data);
     void setTargetProfileValues(AviationProfileParameters data);
+    void redirectPathToBaseProfile(std::string path);
+    void stopSimulation();
+    void startSimulation();
 
 public slots:
     void drawBaseChart(const std::vector<double> &dataX, const std::vector<double> &dataY);
@@ -34,6 +45,8 @@ public slots:
     void drawGeneticPlot(const std::vector<double> &dataX, const std::vector<double> &dataY);
     void buttonsClicked(QString name);
     void getFitnessParametersLabel(AviationProfileParameters data);
+    void getBaseProfileValues(AviationProfileParameters data);
+    void setOptimizerSettings();
 
 private:
 	void initializeGuiObjects();
@@ -48,6 +61,7 @@ private:
     void initializePlotDialog();
 
     void initializeModelViewConnection();
+    bool checkIfTargetIsSet();
 
     void setFilePath();
 
@@ -56,9 +70,6 @@ private:
 
     SettingsDialog settingDialog_;
     PlotDialog plotDialog_;
-
-    QString baseFilePath_;
-
 
     Model *model_;
     MainWindowObjects guiObjects_;

@@ -1,0 +1,41 @@
+\hypertarget{config_8h}{}\section{utility/config.h File Reference}
+\label{config_8h}\index{utility/config.\+h@{utility/config.\+h}}
+
+
+Class containing parameters for the whole application.  
+
+
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include $<$boost/variant.\+hpp$>$}\newline
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_config}{Config}
+\begin{DoxyCompactList}\small\item\em Class containing application parameters. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_config_1_1_application_params}{Config\+::\+Application\+Params}
+\item 
+struct \hyperlink{struct_config_1_1_simulation_params}{Config\+::\+Simulation\+Params}
+\item 
+struct \hyperlink{struct_config_1_1_optimizer_params}{Config\+::\+Optimizer\+Params}
+\item 
+struct \hyperlink{struct_config_1_1_optimizer_params_1_1_fitness}{Config\+::\+Optimizer\+Params\+::\+Fitness}
+\item 
+struct \hyperlink{struct_config_1_1_optimizer_params_1_1_genetic_optimizer_params}{Config\+::\+Optimizer\+Params\+::\+Genetic\+Optimizer\+Params}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{config_8h_a97e423ec92a2c79e7526e60e8ccf1cf9}{}\label{config_8h_a97e423ec92a2c79e7526e60e8ccf1cf9} 
+typedef std\+::map$<$ std\+::string, boost\+::variant$<$ double, std\+::string, int $>$ $>$ {\bfseries Parameters}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class containing parameters for the whole application. 
+
+\begin{DoxyAuthor}{Author}
+Jakub Polaczek \& Hubert Buczyński 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+05/06/2017 
+\end{DoxyDate}

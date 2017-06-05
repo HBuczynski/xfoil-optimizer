@@ -1,0 +1,59 @@
+\hypertarget{class_simulation_handler}{}\section{Simulation\+Handler Class Reference}
+\label{class_simulation_handler}\index{Simulation\+Handler@{Simulation\+Handler}}
+
+
+Class controlling execution single simulation tool using proxy interface.  
+
+
+
+
+{\ttfamily \#include $<$simulation.\+h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_simulation_handler_ab8941e6ab3f4e26795276dad882bec9e}{}\label{class_simulation_handler_ab8941e6ab3f4e26795276dad882bec9e} 
+enum {\bfseries Status} \{ \newline
+{\bfseries Idle}, 
+{\bfseries Running}, 
+{\bfseries Finished}, 
+{\bfseries Error}, 
+\newline
+{\bfseries Not\+Existing}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_simulation_handler_af10fc8a2ac5266092b65c8fc0246381b}{}\label{class_simulation_handler_af10fc8a2ac5266092b65c8fc0246381b} 
+{\bfseries Simulation\+Handler} (\hyperlink{class_geometry}{Geometry} \&geom, const \hyperlink{struct_config_1_1_simulation_params}{Config\+::\+Simulation\+Params} \&params)
+\item 
+\hypertarget{class_simulation_handler_a56ca919f342adb4b32b6082683c80c0a}{}\label{class_simulation_handler_a56ca919f342adb4b32b6082683c80c0a} 
+void {\bfseries Run} ()
+\item 
+\hypertarget{class_simulation_handler_a6889a8713f39c76bdb73b1332ee2c12b}{}\label{class_simulation_handler_a6889a8713f39c76bdb73b1332ee2c12b} 
+Status {\bfseries Poll\+Status} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_simulation_handler_ad3a628d847faaeca6170f8eb396848e8}{}\label{class_simulation_handler_ad3a628d847faaeca6170f8eb396848e8} 
+static \hyperlink{class_geometry}{Geometry} {\bfseries Get\+N\+A\+C\+A\+Airfoil} (std\+::string code)
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_simulation_handler_a51e8de548718ddb89b34351f529b40df}{}\label{class_simulation_handler_a51e8de548718ddb89b34351f529b40df} 
+class {\bfseries Simulation\+Handler\+\_\+tests}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class controlling execution single simulation tool using proxy interface. 
+
+Controls single instance of xfoil optimizer 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+xfoil/\hyperlink{simulation_8h}{simulation.\+h}\item 
+xfoil/simulation.\+cpp\end{DoxyCompactItemize}

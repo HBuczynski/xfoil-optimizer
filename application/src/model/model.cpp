@@ -20,9 +20,31 @@ void Model::getTargetProfileValues(AviationProfileParameters data)
     targetProfileData_  = data;
 }
 
-void Model::getBaseProfileValues(AviationProfileParameters data)
+void Model::calculateBaseProfileParameters(std::string path)
 {
-    baseProfileData_ = data;
+
+#if defined(WIN64) || defined(_WIN64) || defined(__WIN64) && !defined(__CYGWIN__)
+    std::string separator = "\\\\";
+#else
+    std::string separator ="/";
+#endif
+
+
+    while(path.find('/') != std::string::npos)
+        path.replace(path.find('/'),1, separator.c_str());
+
+    qDebug() << path.c_str();
+
+}
+
+void Model::stopSimulation()
+{
+    qDebug() << "stop";
+}
+
+void Model::startSimulation()
+{
+    qDebug() << "start simulation";
 }
 
 void Model::initializeLogger()

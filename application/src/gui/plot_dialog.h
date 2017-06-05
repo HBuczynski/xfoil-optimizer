@@ -8,6 +8,14 @@
 
 #include "gui/gui_objects.h"
 
+/**
+*	@file plot_dialog.h
+*	@brief This header file contains all required functions to draw progress plot of genethic algorithm.
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
+*/
+
+//!  Class provides drawing chart in external dialog
 class PlotDialog :QObject
 {
     Q_OBJECT

@@ -7,7 +7,17 @@
 #include "log_writer.h"
 #include "config.h"
 
+/**
+*	@file configuration_reader.h
+*	@brief Class containing methods to generate and load parameters from xml file.
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
+*/
 
+//!  Class containing methods to generate and load parameters from xml file.
+/*!
+  This class uses TinyXml library to write and read data to xml files.
+*/
 class ConfigurationReader
 {
 public:
@@ -18,6 +28,7 @@ public:
 
     static std::string getProjectPath();
     static std::string getParameterFilePath();
+    static std::string getSeparator();
 
     Config::ApplicationParams getApplicationParameters();
     Config::OptimizerParams getOptimizerParameters();
@@ -51,6 +62,7 @@ private:
     static const std::string projectPath_;
     static const std::string folderConfigName_;
     static const std::string fileConfigName_;
+    const static std::string separator;
 
     std::string fileParametersPath_;
 };

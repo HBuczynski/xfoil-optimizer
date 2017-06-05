@@ -4,6 +4,14 @@
 #include <QDialog>
 #include <vector>
 
+
+/**
+*	@file gui_objects.h
+*	@brief This header file contains all required objects represents user interface.
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
+*/
+
 struct Component
 {
     QObject *object;
@@ -25,6 +33,7 @@ struct MainWindowObjects
     QObject* basePlot;
     QObject* optimizedPlot;
     QObject* runButton;
+    QObject* stopButton;
 
     std::vector<QObject*> settingsButtons;
     std::vector<QObject*> baseParameters;
@@ -38,6 +47,7 @@ struct MainWindowObjects
 
     bool SET_TARGET = false;
     bool SET_BASE = false;
+    bool RUN_BUTTON_IS_PRESSED = false;
 };
 
 struct SettingsObjects
@@ -46,6 +56,10 @@ struct SettingsObjects
     QObject* windowFrame;
     QObject* applyButton;
     QObject* cancelButton;
+
+    QObject* generationCount;
+    QObject* populationSize;
+    QObject* muatationRate;
 };
 
 struct Plot

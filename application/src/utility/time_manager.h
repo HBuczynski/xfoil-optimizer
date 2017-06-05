@@ -4,6 +4,18 @@
 #include <chrono>
 #include <string>
 
+/**
+*	@file time_manager.h
+*	@brief Header file consists necessary methods to measure current time in application.
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
+*/
+
+//!  Class containing methods to measure time.
+/*!
+    Time manager allows to obtain information about current time and date of working application, time and date since application
+    start in integer and string format.
+*/
 class TimeManager
 {
 

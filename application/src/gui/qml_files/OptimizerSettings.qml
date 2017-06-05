@@ -1,5 +1,6 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.2
+import QtQuick.Controls.Styles 1.2
 import QtQuick.Dialogs 1.2
 
 Dialog {
@@ -69,6 +70,100 @@ Dialog {
                 font.pointSize: 8
             }
 
+        }
+
+        Text {
+            id: text1
+            height: 24
+            text: qsTr("Generation Count: ")
+            transformOrigin: Item.Center
+            anchors.left: parent.left
+            anchors.leftMargin: 40
+            anchors.top: parent.top
+            anchors.topMargin: 32
+            font.pixelSize: 16
+        }
+
+        TextField {
+            id: textField1
+            objectName: "generationCount"
+            transformOrigin: Item.Center
+            anchors.right: parent.right
+            anchors.rightMargin: 40
+            anchors.top: parent.top
+            anchors.topMargin: 32
+            font.pixelSize: 16
+            width: 65
+            text: "20"
+
+            style: TextFieldStyle {
+                                textColor: "black"
+                                }
+        }
+
+
+        Text {
+            id: text2
+            x: -6
+            y: -5
+            height: 24
+            text: qsTr("Population Size: ")
+            anchors.left: parent.left
+            anchors.topMargin: 71
+            anchors.top: parent.top
+            anchors.leftMargin: 40
+            font.pixelSize: 16
+            anchors.rightMargin: 107
+            anchors.right: parent.right
+        }
+
+        TextField {
+            id: textField2
+            objectName: "populationSize"
+            transformOrigin: Item.Center
+            anchors.right: parent.right
+            anchors.rightMargin: 40
+            anchors.top: parent.top
+            anchors.topMargin: 71
+            font.pixelSize: 16
+            width: 65
+            text: "100"
+
+            style: TextFieldStyle {
+                                textColor: "black"
+                                }
+        }
+
+        Text {
+            id: text3
+            x: -6
+            y: -5
+            height: 24
+            text: qsTr("Mutation Rate: ")
+            anchors.left: parent.left
+            anchors.topMargin: 110
+            anchors.top: parent.top
+            anchors.leftMargin: 40
+            font.pixelSize: 16
+            anchors.rightMargin: 107
+            anchors.right: parent.right
+        }
+
+        TextField {
+            id: textField3
+            objectName: "mutationRate"
+            transformOrigin: Item.Center
+            anchors.right: parent.right
+            anchors.rightMargin: 40
+            anchors.top: parent.top
+            anchors.topMargin: 110
+            font.pixelSize: 16
+            width: 65
+            text: "0.05"
+
+            style: TextFieldStyle {
+                                textColor: "black"
+                                }
         }
 
         GroupBox {

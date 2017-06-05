@@ -1,10 +1,14 @@
 #pragma once
 #include "optimizer/geometry.h"
 #include <QObject>
-//!  Interface class for various optimizers
-/*!
-  Provides an interface for model to control and display results of the optimization
+
+/**
+*	@file airfoil_optimizer.h
+*	@brief Interface class for various optimizers.
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
 */
+
 class AirfoilOptimizer: public QObject
 {
     Q_OBJECT

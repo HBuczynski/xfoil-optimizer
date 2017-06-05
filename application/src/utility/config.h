@@ -2,9 +2,19 @@
 #include <map>
 #include <boost/variant.hpp>
 
+/**
+*	@file config.h
+*	@brief Class containing parameters for the whole application.
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
+*/
+
 typedef std::map<std::string, boost::variant<double, std::string, int> > Parameters;
 
-
+//!  Class containing application parameters
+/*!
+  This class consists basic structures use in the whole application.
+*/
 class Config
 {
 public:
@@ -16,7 +26,7 @@ public:
     {
         int parallelSimulations = 4;
         int iterationLimit = 30;
-        std::string xfoilExecutablePath =  "C:\\Users\\Kub\\Documents\\workspace\\xfoil-optimizer\\xfoil\\win32";
+        std::string xfoilExecutablePath =  "C:\\Users\\Hubert\\Documents\\Projekt\\xfoil-optimizer\\xfoil\\win32";
         bool viscousEnable = true;
         int reynoldsNo = 10000000;
         int xfoilTimeout = 40;

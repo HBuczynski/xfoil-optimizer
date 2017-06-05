@@ -1,0 +1,59 @@
+\hypertarget{class_q_simulation_proxy}{}\section{Q\+Simulation\+Proxy Class Reference}
+\label{class_q_simulation_proxy}\index{Q\+Simulation\+Proxy@{Q\+Simulation\+Proxy}}
+
+
+IO stream interface using QT Qprocess A\+PI.  
+
+
+
+
+{\ttfamily \#include $<$qsimulation.\+h$>$}
+
+Inheritance diagram for Q\+Simulation\+Proxy\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_q_simulation_proxy}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_q_simulation_proxy_a85e46e407b5003b30885178dbf01edfb}{}\label{class_q_simulation_proxy_a85e46e407b5003b30885178dbf01edfb} 
+typedef std\+::chrono\+::steady\+\_\+clock\+::time\+\_\+point {\bfseries Time\+Point}
+\item 
+\hypertarget{class_q_simulation_proxy_a4dc47dcbf523e98cb6290707e88297dc}{}\label{class_q_simulation_proxy_a4dc47dcbf523e98cb6290707e88297dc} 
+typedef std\+::chrono\+::steady\+\_\+clock {\bfseries Clock}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_q_simulation_proxy_a10836d0c32979096e2f717fc52fe9cfe}{}\label{class_q_simulation_proxy_a10836d0c32979096e2f717fc52fe9cfe} 
+{\bfseries Q\+Simulation\+Proxy} (const \hyperlink{struct_config_1_1_simulation_params}{Config\+::\+Simulation\+Params} \&params, Q\+Object $\ast$parent=0)
+\item 
+\hypertarget{class_q_simulation_proxy_ac2ec0d6fcbb367a09215fa74a0e07097}{}\label{class_q_simulation_proxy_ac2ec0d6fcbb367a09215fa74a0e07097} 
+virtual void {\bfseries Add\+Command} (std\+::string command) override
+\item 
+\hypertarget{class_q_simulation_proxy_accbf718d10c3d97bc969d40041079a2e}{}\label{class_q_simulation_proxy_accbf718d10c3d97bc969d40041079a2e} 
+virtual void {\bfseries Run} () override
+\item 
+\hypertarget{class_q_simulation_proxy_aef1ca5b3fa662109c5f45e0b277df2db}{}\label{class_q_simulation_proxy_aef1ca5b3fa662109c5f45e0b277df2db} 
+virtual void {\bfseries Terminate} () override
+\item 
+\hypertarget{class_q_simulation_proxy_aae992d752c79bca078612afb918a0683}{}\label{class_q_simulation_proxy_aae992d752c79bca078612afb918a0683} 
+virtual Status {\bfseries Poll\+Status} () override
+\item 
+\hypertarget{class_q_simulation_proxy_ab8be04fedafdc3f9924703dafb68611b}{}\label{class_q_simulation_proxy_ab8be04fedafdc3f9924703dafb68611b} 
+virtual std\+::string const {\bfseries Get\+Program\+Output} () override
+\item 
+\hypertarget{class_q_simulation_proxy_a51336e36115ed18a9b78aba8fdabe4db}{}\label{class_q_simulation_proxy_a51336e36115ed18a9b78aba8fdabe4db} 
+virtual std\+::string const {\bfseries Get\+Exe\+Path} () override
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+IO stream interface using QT Qprocess A\+PI. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+xfoil/\hyperlink{qsimulation_8h}{qsimulation.\+h}\item 
+xfoil/qsimulation.\+cpp\end{DoxyCompactItemize}

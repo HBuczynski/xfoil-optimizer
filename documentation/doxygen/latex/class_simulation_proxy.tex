@@ -1,0 +1,58 @@
+\hypertarget{class_simulation_proxy}{}\section{Simulation\+Proxy Class Reference}
+\label{class_simulation_proxy}\index{Simulation\+Proxy@{Simulation\+Proxy}}
+
+
+IO stream interface abstraction.  
+
+
+
+
+{\ttfamily \#include $<$simulation\+\_\+proxy.\+h$>$}
+
+Inheritance diagram for Simulation\+Proxy\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_simulation_proxy}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_simulation_proxy_ab558a4c6e83bfa9c30a7f2829aff1c15}{}\label{class_simulation_proxy_ab558a4c6e83bfa9c30a7f2829aff1c15} 
+enum {\bfseries Status} \{ {\bfseries Not\+Running}, 
+{\bfseries Running}, 
+{\bfseries Finished}, 
+{\bfseries Error}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_simulation_proxy_a996ae680b35f1cb0729edc2d85044f93}{}\label{class_simulation_proxy_a996ae680b35f1cb0729edc2d85044f93} 
+virtual void {\bfseries Add\+Command} (std\+::string command)=0
+\item 
+\hypertarget{class_simulation_proxy_a142484662b8eb0dbccfb5c3c7a55b029}{}\label{class_simulation_proxy_a142484662b8eb0dbccfb5c3c7a55b029} 
+virtual void {\bfseries Run} ()=0
+\item 
+\hypertarget{class_simulation_proxy_a1cff9c1db93db2018c827edeecf04430}{}\label{class_simulation_proxy_a1cff9c1db93db2018c827edeecf04430} 
+virtual void {\bfseries Terminate} ()=0
+\item 
+\hypertarget{class_simulation_proxy_a863545371c5e5cbae054e1e55ca64c40}{}\label{class_simulation_proxy_a863545371c5e5cbae054e1e55ca64c40} 
+virtual Status {\bfseries Poll\+Status} ()=0
+\item 
+\hypertarget{class_simulation_proxy_a37831053891d434ac166d29dfcaf8dfe}{}\label{class_simulation_proxy_a37831053891d434ac166d29dfcaf8dfe} 
+virtual std\+::string const {\bfseries Get\+Program\+Output} ()=0
+\item 
+\hypertarget{class_simulation_proxy_a6180f5c6be39903828bd1e89de21ea0c}{}\label{class_simulation_proxy_a6180f5c6be39903828bd1e89de21ea0c} 
+virtual std\+::string const {\bfseries Get\+Exe\+Path} ()=0
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+IO stream interface abstraction. 
+
+Interface class for future use in different environments 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+xfoil/\hyperlink{simulation__proxy_8h}{simulation\+\_\+proxy.\+h}\end{DoxyCompactItemize}

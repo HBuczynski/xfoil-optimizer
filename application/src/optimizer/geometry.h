@@ -8,6 +8,17 @@
 #include "optimizer/simulation_results.h"
 #include "optimizer/geometry_structures.h"
 
+/**
+*	@file geometry.h
+*	@brief File consists representation of airfoil geometry.
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
+*/
+
+//!  Class providing necessary attributes for geometry calculation
+/*!
+  This class provides loading and saving profile to file.
+*/
 class Geometry
 {
     friend class SimulationHandler;//This will write to results file

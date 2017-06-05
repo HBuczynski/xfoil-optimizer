@@ -25,11 +25,28 @@ void SettingsDialog::initialize(QQmlApplicationEngine &engine)
     guiObjects_.applyButton = guiObjects_.windowFrame->findChild<QObject*>("applyButton");
     isSuccess = isSuccess && guiObjects_.applyButton;
 
+    guiObjects_.generationCount = guiObjects_.windowFrame->findChild<QObject*>("generationCount");
+    isSuccess = isSuccess && guiObjects_.generationCount;
+
+    guiObjects_.populationSize = guiObjects_.windowFrame->findChild<QObject*>("populationSize");
+    isSuccess = isSuccess && guiObjects_.populationSize;
+
+    guiObjects_.muatationRate = guiObjects_.windowFrame->findChild<QObject*>("mutationRate");
+    isSuccess = isSuccess && guiObjects_.muatationRate;
+
     if(!isSuccess)
         throw ExceptionHandler("Setting dialog didn't initialize.");
 
     buttonsConnection();
+    setInitialValues();
 
+}
+
+void SettingsDialog::setInitialValues()
+{
+    guiObjects_.populationSize->setProperty("text", 20);
+    guiObjects_.generationCount->setProperty("text", 100);
+    guiObjects_.muatationRate->setProperty("text", 0.05);
 }
 
 void SettingsDialog::showDialog()
@@ -43,11 +60,14 @@ void SettingsDialog::buttonsClicked(QString name)
 
     if(name == "applyButton")
     {
-
+        //TO DO: zapisac do struktury parametry
+        // przekazac ta strukture w sygnale;
+        emit redirectOptimizerParameters();
     }
     else if (name == "cancelButton")
     {
         guiObjects_.settingsWindow->setProperty("visible", "false");
+        setInitialValues();
     }
 }
 

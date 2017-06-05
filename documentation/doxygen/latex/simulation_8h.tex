@@ -1,0 +1,44 @@
+\hypertarget{simulation_8h}{}\section{xfoil/simulation.h File Reference}
+\label{simulation_8h}\index{xfoil/simulation.\+h@{xfoil/simulation.\+h}}
+
+
+This header file contains tools to maintain communication with external program -\/ X\+F\+O\+IL.  
+
+
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$exception$>$}\newline
+{\ttfamily \#include \char`\"{}optimizer/simulation\+\_\+results.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}xfoil/simulation\+\_\+proxy.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}xfoil/qsimulation.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}utility/utility.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}utility/config.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$qthread.\+h$>$}\newline
+{\ttfamily \#include $<$qtimer.\+h$>$}\newline
+{\ttfamily \#include $<$qmutex.\+h$>$}\newline
+{\ttfamily \#include $<$queue$>$}\newline
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_simulation_handler}{Simulation\+Handler}
+\begin{DoxyCompactList}\small\item\em Class controlling execution single simulation tool using proxy interface. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_task}{Task}
+\item 
+class \hyperlink{class_scheduler_worker}{Scheduler\+Worker}
+\begin{DoxyCompactList}\small\item\em Class controlling execution single simulation tool using proxy interface. \end{DoxyCompactList}\item 
+class \hyperlink{class_simulation_scheduler}{Simulation\+Scheduler}
+\begin{DoxyCompactList}\small\item\em Class controlling execution of external simulation tools. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This header file contains tools to maintain communication with external program -\/ X\+F\+O\+IL. 
+
+\begin{DoxyAuthor}{Author}
+Jakub Polaczek \& Hubert Buczyński 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+05/06/2017 
+\end{DoxyDate}

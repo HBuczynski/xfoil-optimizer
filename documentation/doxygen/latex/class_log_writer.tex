@@ -1,0 +1,55 @@
+\hypertarget{class_log_writer}{}\section{Log\+Writer Class Reference}
+\label{class_log_writer}\index{Log\+Writer@{Log\+Writer}}
+
+
+Class containing methods add information about current state of application.  
+
+
+
+
+{\ttfamily \#include $<$log\+\_\+writer.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_log_writer_a1cedcc7f343d59239d4c9f366418d44e}{}\label{class_log_writer_a1cedcc7f343d59239d4c9f366418d44e} 
+bool {\bfseries initialize} (std\+::string directory\+Name)
+\item 
+\hypertarget{class_log_writer_a42c6726ace5a0b60311978edd9303a3f}{}\label{class_log_writer_a42c6726ace5a0b60311978edd9303a3f} 
+void {\bfseries destroy} ()
+\item 
+\hypertarget{class_log_writer_a1ce4389bff086f329383741f066f877a}{}\label{class_log_writer_a1ce4389bff086f329383741f066f877a} 
+void {\bfseries add\+Information\+Message} (std\+::string message)
+\item 
+\hypertarget{class_log_writer_afe4e4ca6202ee9794d78dce5dad3af79}{}\label{class_log_writer_afe4e4ca6202ee9794d78dce5dad3af79} 
+void {\bfseries add\+Information\+Message} (const char $\ast$message)
+\item 
+\hypertarget{class_log_writer_aa4ac503f2f74bd35f5b626f134f9315a}{}\label{class_log_writer_aa4ac503f2f74bd35f5b626f134f9315a} 
+void {\bfseries add\+Error\+Message} (const std\+::string \&message)
+\item 
+\hypertarget{class_log_writer_a42b4eddd43eef58d97b87580fed2b85e}{}\label{class_log_writer_a42b4eddd43eef58d97b87580fed2b85e} 
+void {\bfseries add\+Error\+Message} (const char $\ast$message)
+\item 
+\hypertarget{class_log_writer_a7d23476cc15635eb47f0edd9f9b74a3f}{}\label{class_log_writer_a7d23476cc15635eb47f0edd9f9b74a3f} 
+void {\bfseries add\+Warning\+Message} (const char $\ast$message)
+\item 
+\hypertarget{class_log_writer_a39801f380662e1bb771e1f8ee991beac}{}\label{class_log_writer_a39801f380662e1bb771e1f8ee991beac} 
+void {\bfseries write} (const char $\ast$message)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_log_writer_a112a7c453bb431bd776a1486567a516a}{}\label{class_log_writer_a112a7c453bb431bd776a1486567a516a} 
+static \hyperlink{class_log_writer}{Log\+Writer} \& {\bfseries get\+Instance} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class containing methods add information about current state of application. 
+
+Log writer provides to show the information on the console window and save it to the logger file. User is able to choose kind of message which he wants to show, i.\+e. information, warning or error. This class is essential for supply the data to behavior analysis of the program. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+utility/\hyperlink{log__writer_8h}{log\+\_\+writer.\+h}\item 
+utility/log\+\_\+writer.\+cpp\end{DoxyCompactItemize}
