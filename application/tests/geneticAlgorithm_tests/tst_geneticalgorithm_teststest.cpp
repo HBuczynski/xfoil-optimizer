@@ -26,7 +26,7 @@ void GeneticAlgorithm_testsTest::GenomObjectRandomizesAfterCreation()
 {
     Genome genomeRand;
     Genome genomeConst;
-    genomeConst.Set(BinaryAirfoilCoefficients());
+    genomeConst.set(BinaryAirfoilCoefficients());
     uint8_t *array1 = genomeConst.getCoefficientsArray();
     uint8_t *array2 = genomeRand.getCoefficientsArray();
     for(int i = 0; i < sizeof(BinaryAirfoilCoefficients); ++i)

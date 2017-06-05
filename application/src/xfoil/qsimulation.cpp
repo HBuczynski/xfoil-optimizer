@@ -28,10 +28,24 @@ QSimulationProxy::QSimulationProxy(const Config::SimulationParams &params, QObje
 
 
 }
-void QSimulationProxy::Run()
+
+QSimulationProxy::~QSimulationProxy()
+{
+    if(process_->state() != QProcess::NotRunning)
+    {
+        process_->kill();
+    }
+}
+
+void QSimulationProxy::addCommand(std::string command)
+{
+    commands_.push_back(command);
+}
+
+void QSimulationProxy::run()
 {
     QString programPath = QString::fromStdString(params_.xfoilExecutablePath);
-    #if defined(WIN64) || defined(_WIN64) || defined(__WIN64) && !defined(__CYGWIN__)
+#if defined(WIN64) || defined(_WIN64) || defined(__WIN64) && !defined(__CYGWIN__)
     QString program = "\"" + programPath + "/xfoil.exe" + "\"";
     #else
     QString program = programPath + "/xfoil";
@@ -64,7 +78,7 @@ void QSimulationProxy::Run()
     }
 
 }
-void QSimulationProxy::Terminate()
+void QSimulationProxy::terminate()
 {
     if(status_ == NotRunning || status_ == Finished)
         return;
@@ -75,6 +89,34 @@ void QSimulationProxy::Terminate()
     }
 
 }
+
+SimulationProxy::Status QSimulationProxy::pollStatus()
+{
+    if(status_ == Running)
+    {
+        TimePoint currentTime = Clock::now();
+        process_->waitForReadyRead(TIMEOUT_SHORT);
+        process_->waitForBytesWritten(TIMEOUT_SHORT);
+
+        if(std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - startTime_).count() > params_.xfoilTimeout * 1000)
+        {
+            status_ = Error;
+            terminate();
+        }
+    }
+    return status_;
+}
+
+const std::string QSimulationProxy::getProgramOutput()
+{
+    return programOutput_;
+}
+
+const std::string QSimulationProxy::getExePath()
+{
+    return params_.xfoilExecutablePath;
+}
+
 void QSimulationProxy::error(QProcess::ProcessError error)
 {
     /* just feedback some text about the error */
@@ -86,7 +128,7 @@ void QSimulationProxy::finished(int exitCode, QProcess::ExitStatus status)
 {
     status_ = Finished;
     /* feedback some text about finished */
-   // std::cout<<"PROCESS FINSHED"<<std::endl;
+    // std::cout<<"PROCESS FINSHED"<<std::endl;
 } // end_slot (SimulationProxy::finished)
 
 void QSimulationProxy::stateChanged(QProcess::ProcessState state)

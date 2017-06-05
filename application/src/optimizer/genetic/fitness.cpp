@@ -1,17 +1,17 @@
 #include "optimizer/genetic/fitness.h"
 
 #include <random>
-double FitnessModel::Calculate(const SimResults &results)
+double FitnessModel::calculate(const SimResults &results)
 {
     //TODO check somehow if results range is viable//
-    if(!results.IsCalculated() || results.GetPolarPointCount() < 10)
+    if(!results.isCalculated() || results.getPolarPointCount() < 10)
         return 0.0;
     SimResults::PolarPoint maxCl, minCd, maxGlide;
     double avgTorq;
-    maxCl = results.CalcMaxCl();
-    maxGlide = results.CalcMaxGlideRatio();
-    minCd =results.CalcMinCd();
-    avgTorq = results.CalcAvgTorque();
+    maxCl = results.calcMaxCl();
+    maxGlide = results.calcMaxGlideRatio();
+    minCd =results.calcMinCd();
+    avgTorq = results.calcAvgTorque();
     //Fitness calcilation//
     double fitness = 0.0;
 

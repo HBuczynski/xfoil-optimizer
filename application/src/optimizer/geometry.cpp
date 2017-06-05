@@ -9,23 +9,23 @@ using std::getline;
 
 Geometry::Geometry()
 {
-    CalculateCoefficients();
+    calculateCoefficients();
 }
 
 Geometry::Geometry(AirfoilCoefficients coeff)
 {
     coefficients_ = coeff;
     this->calculateCordinateOfX();
-    this->Transform();
+    this->transform();
 }
 
 Geometry::Geometry(std::string filename)
 {
-    Load(filename);
-    CalculateCoefficients();
+    load(filename);
+    calculateCoefficients();
 }
 
-void Geometry::Load(std::string filename)
+void Geometry::load(std::string filename)
 {
     ifstream file;
     file.open(filename,std::ios::in);
@@ -53,7 +53,7 @@ void Geometry::Load(std::string filename)
                 lowerPoints_.push_back(Point(x,y));
         }
         file.close();
-        this->CalculateCoefficients();
+        this->calculateCoefficients();
     }
     else
     {
@@ -62,7 +62,7 @@ void Geometry::Load(std::string filename)
 }
 
 //TODO make regression methods
-void Geometry::CalculateCoefficients()
+void Geometry::calculateCoefficients()
 {
     coefficients_.p_u = 0.2;
     coefficients_.q_u = 0.295;
@@ -79,7 +79,7 @@ void Geometry::CalculateCoefficients()
     coefficients_.d_l = 1.6;
 //    this->SaveCoefficients();
     this->calculateCordinateOfX();
-    this->Transform();
+    this->transform();
 }
 
 void Geometry::createNewGeometry(AirfoilCoefficients coeff)
@@ -88,7 +88,7 @@ void Geometry::createNewGeometry(AirfoilCoefficients coeff)
     //To do: calculateX and transform y
 }
 
-void Geometry::SaveCoefficients(std::string filename)
+void Geometry::saveCoefficients(std::string filename)
 {
     ofstream file;
     file.open(filename,std::ios::out | std::ios::trunc);
@@ -114,7 +114,7 @@ void Geometry::SaveCoefficients(std::string filename)
     }
 }
 
-void Geometry::LoadFromCoefficients(std::string filename)
+void Geometry::loadFromCoefficients(std::string filename)
 {
     ifstream file;
     file.open(filename,std::ios::in);
@@ -195,7 +195,12 @@ bool Geometry::isProfileCrossed()
     }
     return false;
 }
-void Geometry::Save(std::string filename)
+
+const SimResults &Geometry::getResults()
+{
+    return simResults_;
+}
+void Geometry::save(std::string filename)
 {
     ofstream file;
     file.open(filename,std::ios::out | std::ios::trunc);
@@ -219,7 +224,7 @@ void Geometry::Save(std::string filename)
     }
 }
 
-void Geometry::Transform()
+void Geometry::transform()
 {
     upperPoints_.clear();
     lowerPoints_.clear();
@@ -255,7 +260,7 @@ const AirfoilCoefficients &Geometry::getAifroilCoefficients()
     return this->coefficients_;
 }
 
-std::vector<Point> Geometry::GetPoints()
+std::vector<Point> Geometry::getPoints()
 {
     std::vector<Point> points;
 

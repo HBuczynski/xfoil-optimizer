@@ -20,11 +20,11 @@ public:
 
     virtual ~SimulationProxy()
     {}
-    virtual void AddCommand(std::string command) = 0;
-    virtual void Run() = 0;
-    virtual void Terminate() = 0;
-    virtual Status PollStatus() = 0;
-    virtual std::string const GetProgramOutput() = 0;
-    virtual std::string const GetExePath() = 0;
+    virtual void addCommand(std::string command) = 0;
+    virtual void run() = 0;
+    virtual void terminate() = 0;
+    virtual Status pollStatus() = 0;
+    virtual std::string const getProgramOutput() = 0;
+    virtual std::string const getExePath() = 0;
     //virtual void Configure() = 0;
 };

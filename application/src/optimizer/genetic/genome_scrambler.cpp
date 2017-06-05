@@ -29,7 +29,7 @@ bool SingleCrossoverMultiMutationScrambler::getBit(uint8_t *genome,int bit)
     return (genome[bit/8] & 1);
     //return (genome[bit/8] & (1<<(bit%8))) > 0;
 }
-Genome *SingleCrossoverMultiMutationScrambler::Mutate(Genome *genome)
+Genome *SingleCrossoverMultiMutationScrambler::mutate(Genome *genome)
 {
     for(int i = 0; i < sizeof(BinaryAirfoilCoefficients) * 8; ++i)
         if(ddist(rng) < params_.mutationRate)
@@ -42,7 +42,7 @@ Genome *SingleCrossoverMultiMutationScrambler::Mutate(Genome *genome)
     }
     return genome;
 }
-Genome *SingleCrossoverMultiMutationScrambler::Crossover(Genome *g1, Genome *g2)
+Genome *SingleCrossoverMultiMutationScrambler::crossover(Genome *g1, Genome *g2)
 {
     BinaryAirfoilCoefficients child;
     uint8_t *cbuf = reinterpret_cast<uint8_t*>(&child);
@@ -70,12 +70,12 @@ Genome *SingleCrossoverMultiMutationScrambler::Crossover(Genome *g1, Genome *g2)
     return childGen;
 
 }
-Genome * DudScrambler::Mutate(Genome *genome)
+Genome * DudScrambler::mutate(Genome *genome)
 {
     return genome;
 }
 
-Genome* DudScrambler::Crossover(Genome *g1, Genome *g2)
+Genome* DudScrambler::crossover(Genome *g1, Genome *g2)
 {
     return nullptr;
 }

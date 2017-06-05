@@ -1,9 +1,9 @@
 #include "optimizer/simulation_results.h"
 
 #include <iostream>
-SimResults::PolarPoint SimResults::CalcMaxCl() const
+SimResults::PolarPoint SimResults::calcMaxCl() const
 {
-    if(!IsCalculated() || results_.size() == 0)
+    if(!isCalculated() || results_.size() == 0)
         throw std::out_of_range("No result datapoints");
     PolarPoint maxCl;
     maxCl.alfa = results_.front().alfa;
@@ -20,9 +20,9 @@ SimResults::PolarPoint SimResults::CalcMaxCl() const
     return maxCl;
 }
 
-SimResults::PolarPoint SimResults::CalcMinCd() const
+SimResults::PolarPoint SimResults::calcMinCd() const
 {
-    if(!IsCalculated() || results_.size() == 0)
+    if(!isCalculated() || results_.size() == 0)
         throw std::out_of_range("No result datapoints");
     PolarPoint minCd;
     minCd.alfa = results_.front().alfa;
@@ -38,9 +38,9 @@ SimResults::PolarPoint SimResults::CalcMinCd() const
 
     return minCd;
 }
-SimResults::PolarPoint SimResults::CalcMaxGlideRatio() const
+SimResults::PolarPoint SimResults::calcMaxGlideRatio() const
 {
-    if(!IsCalculated() || results_.size() == 0)
+    if(!isCalculated() || results_.size() == 0)
         throw std::out_of_range("No result datapoints");
 
     PolarPoint ratio;
@@ -58,9 +58,19 @@ SimResults::PolarPoint SimResults::CalcMaxGlideRatio() const
 
     return ratio;
 }
-double SimResults::CalcAvgTorque() const
+double SimResults::calcAvgTorque() const
 {
-    if(!IsCalculated() || results_.size() == 0)
+    if(!isCalculated() || results_.size() == 0)
         throw std::out_of_range("No result datapoints");
 
+}
+
+std::vector<SimResults::ResultEntry>::size_type SimResults::getPolarPointCount() const
+{
+    return results_.size();
+}
+
+bool SimResults::isCalculated() const
+{
+    return calculated_;
 }
