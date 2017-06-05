@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <algorithm>
 #include <QObject>
 #include "optimizer/airfoil_optimizer.h"
 #include "xfoil/simulation.h"
@@ -72,7 +73,7 @@ public:
     }
     bool isRunning()
     {
-        return simRunning_;
+        return simRunning_ || continueOptimization_;
         //return !simulationScheduler_->IsTasksFinished();
     }
 

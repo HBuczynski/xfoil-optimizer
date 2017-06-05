@@ -1,5 +1,6 @@
 #include "optimizer/genetic/fitness.h"
 
+#include <random>
 double FitnessModel::Calculate(const SimResults &results)
 {
     //TODO check somehow if results range is viable//
@@ -36,6 +37,6 @@ double FitnessModel::Calculate(const SimResults &results)
     }
     if(fitness <0.0)
         fitness = 0.0;
-    return 1.0;
+    return (double)rand() / RAND_MAX *1024.0;
     return fitness;
 }

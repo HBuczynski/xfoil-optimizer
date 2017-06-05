@@ -7,20 +7,20 @@
 class GenomeScrambler //This might need rethinking - maybe move to genome as it is genome specific...
 {
 public:
-    virtual void Mutate(Genome *genome) = 0;
+    virtual Genome * Mutate(Genome *genome) = 0;
     virtual Genome* Crossover( Genome *g1,  Genome *g2) = 0;
 };
 class DudScrambler: public GenomeScrambler
 {
 public:
-   virtual void Mutate(Genome *genome) override;
+   virtual Genome * Mutate(Genome *genome) override;
    virtual Genome* Crossover( Genome *g1, Genome *g2) override;
 };
 class SingleCrossoverMultiMutationScrambler : public GenomeScrambler
 {
 public:
     SingleCrossoverMultiMutationScrambler(const Config::OptimizerParams::GeneticOptimizerParams &params);
-    virtual void Mutate(Genome *genome) override;
+    virtual Genome* Mutate(Genome *genome) override;
     virtual Genome* Crossover(Genome *g1, Genome *g2) override;
 private:
     void setBit(uint8_t *genome,int bit, bool val);

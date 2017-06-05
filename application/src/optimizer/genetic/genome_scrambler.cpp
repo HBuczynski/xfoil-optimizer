@@ -20,16 +20,16 @@ void SingleCrossoverMultiMutationScrambler::setBit(uint8_t *genome,int bit, bool
 }
 void SingleCrossoverMultiMutationScrambler::toggleBit(uint8_t *genome, int bit)
 {
-     genome[bit/8] = genome[bit/8] ^ (1<<(bit%8));
+     genome[bit/8] = genome[bit/8] ^ (1<<((uint8_t)bit%8));
 }
 bool SingleCrossoverMultiMutationScrambler::getBit(uint8_t *genome,int bit)
 {
     //return true;
-    std::cout<<(int)genome[0]<<std::endl;
+    //std::cout<<(int)genome[0]<<std::endl;
     return (genome[bit/8] & 1);
     //return (genome[bit/8] & (1<<(bit%8))) > 0;
 }
-void SingleCrossoverMultiMutationScrambler::Mutate(Genome *genome)
+Genome *SingleCrossoverMultiMutationScrambler::Mutate(Genome *genome)
 {
     for(int i = 0; i < sizeof(BinaryAirfoilCoefficients) * 8; ++i)
         if(ddist(rng) < params_.mutationRate)
@@ -40,26 +40,25 @@ void SingleCrossoverMultiMutationScrambler::Mutate(Genome *genome)
         delete genome;
         genome = nullptr;
     }
+    return genome;
 }
 Genome *SingleCrossoverMultiMutationScrambler::Crossover(Genome *g1, Genome *g2)
 {
     BinaryAirfoilCoefficients child;
     uint8_t *cbuf = reinterpret_cast<uint8_t*>(&child);
-    std::cout<<g1->getFitness()<<std::endl;
-    std::cout<<g2->getFitness()<<std::endl;
+   // std::cout<<"Fitness1 - "<<g1->getFitness()<<std::endl;
+   // std::cout<<"Fitness2 - "<<g2->getFitness()<<std::endl;
     BinaryAirfoilCoefficients p1 = g1->getBinaryCoefficients(), p2 = g2->getBinaryCoefficients();
     uint8_t *p1buf = reinterpret_cast<uint8_t*>(&p1);
     uint8_t *p2buf = reinterpret_cast<uint8_t*>(&p2);
     int split_pos = posdist(rng);
     for(int i = 0; i < split_pos; ++i)
     {
-        //std::cout<<getBit(g1->getCoefficientsArray(),i)<<std::flush;
-        std::cout<<"ITSNOTGETBIT"<<std::endl;
         setBit(cbuf,i,getBit(p1buf,i));
     }
+    //std::cout<<split_pos<<std::endl;
     for(int i = split_pos; i < sizeof(BinaryAirfoilCoefficients) * 8; ++i)
     {
-         std::cout<<i<<std::flush;
         setBit(cbuf,i,getBit(p2buf,i));
     }
     Genome *childGen = new Genome(cbuf);
@@ -71,10 +70,9 @@ Genome *SingleCrossoverMultiMutationScrambler::Crossover(Genome *g1, Genome *g2)
     return childGen;
 
 }
-
-void DudScrambler::Mutate(Genome *genome)
+Genome * DudScrambler::Mutate(Genome *genome)
 {
-
+    return genome;
 }
 
 Genome* DudScrambler::Crossover(Genome *g1, Genome *g2)
