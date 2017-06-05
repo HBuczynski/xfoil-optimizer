@@ -14,6 +14,7 @@ public:
 private Q_SLOTS:
     void GenomObjectRandomizesAfterCreation();
     void PerformSingleOptimizationStepOnSmallPopulation();
+    void PerformMultipleOptimizationStepOnSmallPopulation();
 };
 
 GeneticAlgorithm_testsTest::GeneticAlgorithm_testsTest()
@@ -23,21 +24,51 @@ GeneticAlgorithm_testsTest::GeneticAlgorithm_testsTest()
 }
 void GeneticAlgorithm_testsTest::GenomObjectRandomizesAfterCreation()
 {
-    Genome *genome = new Genome(AirfoilCoefficients());
-    genome->Randomize();
-    AirfoilCoefficients coeff = genome->getCoefficients();
-    std::cout<<coeff.a_l<<" "<< coeff.q_u<<std::endl;
-    delete genome;
+    Genome genomeRand;
+    Genome genomeConst;
+    genomeConst.set(BinaryAirfoilCoefficients());
+    uint8_t *array1 = genomeConst.getCoefficientsArray();
+    uint8_t *array2 = genomeRand.getCoefficientsArray();
+    for(int i = 0; i < sizeof(BinaryAirfoilCoefficients); ++i)
+    {
+        QVERIFY(array1[i] == 0);
+    }
 }
 
 void GeneticAlgorithm_testsTest::PerformSingleOptimizationStepOnSmallPopulation()
 {
-    //Config::OptimizerParams paramsOpt;
-    //Config::SimulationParams paramsSim;
-    //GeneticOptimizer *optimizer = new GeneticOptimizer(paramsSim,paramsOpt.fitness);
-    //optimizer->initialize();
-    //optimizer->runGeneticAlgorithm();
-    //delete optimizer;
+    Config::OptimizerParams paramsOpt;
+    Config::SimulationParams paramsSim;
+    paramsSim.viscousEnable = false;
+    paramsOpt.geneticOptimizer.populationSize = 20;
+    paramsOpt.geneticOptimizer.generationCount = 1;
+    GeneticOptimizer *optimizer = new GeneticOptimizer(paramsSim,paramsOpt);
+    optimizer->initialize();
+    optimizer->runGeneticAlgorithm();
+    optimizer->requestStop();
+    while(optimizer->isRunning())
+    {
+        QThread::msleep(10);
+    }
+
+    delete optimizer;
+}
+void GeneticAlgorithm_testsTest::PerformMultipleOptimizationStepOnSmallPopulation()
+{
+    Config::OptimizerParams paramsOpt;
+    Config::SimulationParams paramsSim;
+    paramsSim.viscousEnable = false;
+    paramsOpt.geneticOptimizer.populationSize = 10;
+    paramsOpt.geneticOptimizer.generationCount = 4;
+    GeneticOptimizer *optimizer = new GeneticOptimizer(paramsSim,paramsOpt);
+    optimizer->initialize();
+    optimizer->runGeneticAlgorithm();
+    while(optimizer->isRunning())
+    {
+        QThread::msleep(10);
+    }
+
+    delete optimizer;
 }
 
 QTEST_MAIN(GeneticAlgorithm_testsTest)

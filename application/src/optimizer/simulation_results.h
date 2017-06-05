@@ -36,18 +36,12 @@ public:
         double param;
     };
 
-    SimResults::PolarPoint CalcMaxCl() const;
-    SimResults::PolarPoint CalcMinCd() const;
-    SimResults::PolarPoint CalcMaxGlideRatio() const;
-    double CalcAvgTorque() const;
-    std::vector<ResultEntry>::size_type  GetPolarPointCount() const
-    {
-        return results_.size();
-    }
-    bool IsCalculated() const
-    {
-        return calculated_;
-    }
+    SimResults::PolarPoint calcMaxCl() const;
+    SimResults::PolarPoint calcMinCd() const;
+    SimResults::PolarPoint calcMaxGlideRatio() const;
+    double calcAvgTorque() const;
+    std::vector<ResultEntry>::size_type  getPolarPointCount() const;
+    bool isCalculated() const;
 
 private:
     std::vector<ResultEntry> results_;

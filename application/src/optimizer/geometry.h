@@ -28,26 +28,23 @@ public:
     Geometry(AirfoilCoefficients coeff);
     Geometry(std::string filename);
 
-    void Load(std::string filename);
-    void Save(std::string filename);
+    void load(std::string filename);
+    void save(std::string filename);
 
-    void SaveCoefficients(std::string filename);
-    void LoadFromCoefficients(std::string filename);
-    void CalculateCoefficients();
+    void saveCoefficients(std::string filename);
+    void loadFromCoefficients(std::string filename);
+    void calculateCoefficients();
     void createNewGeometry(AirfoilCoefficients coeff);
 
-    void Normalze();
-    void Transform();
+    void normalize();
+    void transform();
     void regressionAlgorithm();
 
     const AirfoilCoefficients& getAifroilCoefficients();
-    std::vector<Point> GetPoints();
+    std::vector<Point> getPoints();
     const int & getPointsCount();
     bool isProfileCrossed();
-    const SimResults& GetResults()
-    {
-        return simResults_;
-    }
+    const SimResults& getResults();
 
     Geometry &operator =(const Geometry &data)
     {

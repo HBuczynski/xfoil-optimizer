@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <algorithm>
 #include <QObject>
 #include "optimizer/airfoil_optimizer.h"
 #include "xfoil/simulation.h"
@@ -31,55 +32,28 @@ public:
         OptimizationCompleteFinalGeneration
     };
 
-    GeneticOptimizer(Config::SimulationParams &params, Config::OptimizerParams::Fitness &fitness):
-                                                        state_(GAState::NotInitialized),
-                                                        totalFintess(0),
-                                                        maxCoefficientValue_(3),
-                                                        populationCount_(20),
-                                                        elitesCount_(3),
-                                                        continueOptimization_(true),
-                                                        iterationLimit_(20),
-                                                        simulationScheduler_(nullptr),
-                                                        fitnessModel_(nullptr)
-    {
-
-        simulationParams_ = params;
-        fitnessParams_ = fitness;
-        //TO DO: constructor was changed
-        simulationScheduler_ = new SimulationScheduler(simulationParams_);
-        fitnessModel_ = new FitnessModel(fitnessParams_);
-        QObject::connect(simulationScheduler_, SIGNAL(simulationFinished()), this, SLOT(simulationBatchComplete()));
-    }
+    GeneticOptimizer(Config::SimulationParams &params, Config::OptimizerParams &optParams);
 
     ~GeneticOptimizer();
 
     void initialize();
     void runGeneticAlgorithm();
-    GAState GetState();
+    GAState getState();
+
+    virtual void addBaseGeometry(Geometry &geom);
+    virtual void optimizeStep();
+    virtual Geometry const getTopGeometry(int place);
+    virtual double const getProgress();
 
 
-
-    virtual void AddBaseGeometry(Geometry &geom)
-    {
-
-    }
-
-    virtual void OptimizeStep();
-
-    virtual Geometry const GetTopGeometry(int place)
-    {
-        //TODO//
-        return baseGeometry_;
-    }
-
-    virtual double const GetProgress()
-    {
-        return 0.0;
-    }
+    bool isRunning();
 public Q_SLOTS:
     virtual void simulationBatchComplete();
+    void requestStop();
+
 Q_SIGNALS:
     void optimizationFinished();
+
 private:
     void generateInitialPopulation();
     void addGenomeToElite(Genome *genome);
@@ -89,18 +63,17 @@ private:
     void calculateFitness();
 
     Genome *rouletteWheelSelection();
-    AirfoilCoefficients generateRandomCoefficients();
 
 private:
 
     //Members//
     GAState state_;
-    DudScrambler scrambler_;
+    GenomeScrambler *scrambler_;
     SimulationScheduler *simulationScheduler_;
     FitnessModel *fitnessModel_;
     Geometry baseGeometry_;
-    Config::SimulationParams simulationParams_;
-    Config::OptimizerParams::Fitness fitnessParams_;
+    const Config::SimulationParams simulationParams_;
+    const Config::OptimizerParams optParams_;
 
 
     bool continueOptimization_;
@@ -109,9 +82,8 @@ private:
     std::vector<Genome*> tempPopulation;
     double totalFintess;
 
-    const int populationCount_;
     const int elitesCount_;
     const int maxCoefficientValue_;
-    const int iterationLimit_;
     int currentIterationNumber_ = 0;
+    bool simRunning_;
 };

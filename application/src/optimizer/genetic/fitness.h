@@ -19,7 +19,7 @@ public:
     FitnessModel(Config::OptimizerParams::Fitness params):
         params_(params)
     {}
-    double Calculate(const SimResults &results);
+    double calculate(const SimResults &results);
 private:
     const Config::OptimizerParams::Fitness params_;
 };

@@ -39,49 +39,49 @@ SimulationHandler_tests::SimulationHandler_tests()
 
 void SimulationHandler_tests::LoadNACAProfileWithHandlerObject()
 {
-    Geometry profile = SimulationHandler::GetNACAAirfoil("0012");
-    QVERIFY(profile.GetPoints().size() > 0);
+    Geometry profile = SimulationHandler::getNACAAirfoil("0012");
+    QVERIFY(profile.getPoints().size() > 0);
 }
 
 void SimulationHandler_tests::CreateHandlerObjectSavesGeometry()
 {
-    Geometry geom = SimulationHandler::GetNACAAirfoil("0012");
+    Geometry geom = SimulationHandler::getNACAAirfoil("0012");
     SimulationHandler handler(geom,params);
-    QVERIFY(utility::fileExists((handler.proxy_->GetExePath() + "/" + handler.InstantiateFilename("geometry.dat")).c_str()));
+    QVERIFY(utility::fileExists((handler.proxy_->getExePath() + "/" + handler.instantiateFilename("geometry.dat")).c_str()));
 }
 
 void SimulationHandler_tests::RunSimulationTestResultsFile()
 {
-    Geometry geom = SimulationHandler::GetNACAAirfoil("0012");
+    Geometry geom = SimulationHandler::getNACAAirfoil("0012");
     SimulationHandler *handler = new SimulationHandler(geom, params);
-    handler->Run();
-    while(handler->PollStatus() == SimulationHandler::Running);
-    std::string resultPath = handler->proxy_->GetExePath() + "/" + handler->InstantiateFilename("result.txt");
+    handler->run();
+    while(handler->pollStatus() == SimulationHandler::Running);
+    std::string resultPath = handler->proxy_->getExePath() + "/" + handler->instantiateFilename("result.txt");
     QVERIFY(utility::fileExists(resultPath));
     delete handler;
     QVERIFY(!utility::fileExists(resultPath));
 }
 void SimulationHandler_tests::RunSimulationResultsAreLoaded()
 {
-    Geometry testGeom = SimulationHandler::GetNACAAirfoil("0012");
+    Geometry testGeom = SimulationHandler::getNACAAirfoil("0012");
     SimulationHandler *handler = new SimulationHandler(testGeom, params);
-    handler->Run();
-    while(handler->PollStatus() == SimulationHandler::Running);
-    QVERIFY(testGeom.GetResults().GetPolarPointCount() != 0);
+    handler->run();
+    while(handler->pollStatus() == SimulationHandler::Running);
+    QVERIFY(testGeom.getResults().getPolarPointCount() != 0);
     delete handler;
 }
 
 void SimulationHandler_tests::NotRunningSimulationThrows()
 {
-    Geometry geom = SimulationHandler::GetNACAAirfoil("0012");
+    Geometry geom = SimulationHandler::getNACAAirfoil("0012");
     SimulationHandler handler(geom,params);
 }
 void SimulationHandler_tests::DeleteHandlerObectCleansTemporaryFiles()
 {
     //Todo test also results file//
-    Geometry geom = SimulationHandler::GetNACAAirfoil("0012");
+    Geometry geom = SimulationHandler::getNACAAirfoil("0012");
     SimulationHandler *handler = new SimulationHandler(geom, params);
-    std::string path = handler->proxy_->GetExePath() + "/" + handler->InstantiateFilename("geometry.dat");
+    std::string path = handler->proxy_->getExePath() + "/" + handler->instantiateFilename("geometry.dat");
     QVERIFY(utility::fileExists(path));
     delete handler;
     QVERIFY(!utility::fileExists(path));
@@ -90,9 +90,9 @@ void SimulationHandler_tests::DeleteHandlerObectCleansTemporaryFiles()
 void SimulationHandler_tests::CreateSimulationSchedulerSpawnsNewProcess()
 {
     SimulationScheduler *sched = new SimulationScheduler(params);
-    Geometry testGeom = SimulationHandler::GetNACAAirfoil("0012");
-    sched->AddTask(Task(&testGeom));
-    sched->WaitForFinished();
+    Geometry testGeom = SimulationHandler::getNACAAirfoil("0012");
+    sched->addTask(Task(&testGeom));
+    sched->waitForFinished();
     delete sched;
 
 }
@@ -100,14 +100,14 @@ void SimulationHandler_tests::CreateSimulationSchedulerSpawnsNewProcess()
 void SimulationHandler_tests::CalculatingTheSameGeometryObjectTwiceDoesNotDoubleDataPoints()
 {
     SimulationScheduler *sched = new SimulationScheduler(params);
-    Geometry testGeom = SimulationHandler::GetNACAAirfoil("0012");
-    sched->AddTask(Task(&testGeom));
-    sched->WaitForFinished();
-    int points = testGeom.GetResults().GetPolarPointCount();
-    sched->AddTask(Task(&testGeom));
-    sched->WaitForFinished();
+    Geometry testGeom = SimulationHandler::getNACAAirfoil("0012");
+    sched->addTask(Task(&testGeom));
+    sched->waitForFinished();
+    int points = testGeom.getResults().getPolarPointCount();
+    sched->addTask(Task(&testGeom));
+    sched->waitForFinished();
     delete sched;
-    QVERIFY(points == testGeom.GetResults().GetPolarPointCount());
+    QVERIFY(points == testGeom.getResults().getPolarPointCount());
 }
 
 void SimulationHandler_tests::HandleMultipleParallelSimulations()
@@ -119,7 +119,7 @@ void SimulationHandler_tests::HandleMultipleParallelSimulations()
     for(int i = 2; i < 12; ++i)
     {
         ss<<std::setfill('0') << std::setw(4) << i;
-        testGeom[i-2] = SimulationHandler::GetNACAAirfoil(ss.str());
+        testGeom[i-2] = SimulationHandler::getNACAAirfoil(ss.str());
         ss.str("");
         ss.clear();
     }
@@ -128,13 +128,13 @@ void SimulationHandler_tests::HandleMultipleParallelSimulations()
     {
         inputPopulation.push_back(Task(&(testGeom[i])));
     }
-    sched->AddBatchTask(inputPopulation);
-    sched->WaitForFinished();
+    sched->addBatchTask(inputPopulation);
+    sched->waitForFinished();
     delete sched;
     for(int i = 0; i < 10; ++i)
     {
         //std::cout<<testGeom[i].GetResults().IsCalculated();
-        QVERIFY(testGeom[i].GetResults().IsCalculated());
+        QVERIFY(testGeom[i].getResults().isCalculated());
     }
 }
 

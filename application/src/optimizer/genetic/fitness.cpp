@@ -1,14 +1,17 @@
 #include "optimizer/genetic/fitness.h"
 
-double FitnessModel::Calculate(const SimResults &results)
+#include <random>
+double FitnessModel::calculate(const SimResults &results)
 {
     //TODO check somehow if results range is viable//
+    if(!results.isCalculated() || results.getPolarPointCount() < 10)
+        return 0.0;
     SimResults::PolarPoint maxCl, minCd, maxGlide;
     double avgTorq;
-    maxCl = results.CalcMaxCl();
-    maxGlide = results.CalcMaxGlideRatio();
-    minCd =results.CalcMinCd();
-    avgTorq = results.CalcAvgTorque();
+    maxCl = results.calcMaxCl();
+    maxGlide = results.calcMaxGlideRatio();
+    minCd =results.calcMinCd();
+    avgTorq = results.calcAvgTorque();
     //Fitness calcilation//
     double fitness = 0.0;
 
@@ -32,5 +35,8 @@ double FitnessModel::Calculate(const SimResults &results)
     {
         fitness += params_.optimizeMoment * (0.5 - abs(params_.targetMoment - avgTorq)); // Aim for target torque
     }
+    if(fitness <0.0)
+        fitness = 0.0;
+    return (double)rand() / RAND_MAX *1024.0;
     return fitness;
 }
