@@ -3,7 +3,7 @@ Genome::Genome(AirfoilCoefficients coeff) :
                                                     rng(std::random_device()()),
                                                     bytedist(0,255),
                                                     minCoeffRange_(0.0),
-                                                    maxCoeffRange_(5.0),
+                                                    maxCoeffRange_(2.5),
                                                     geom_(nullptr)
 {
     set(coeff);
@@ -18,7 +18,7 @@ Genome::Genome(unsigned char *array) :
                                                     rng(std::random_device()()),
                                                     bytedist(0,255),
                                                     minCoeffRange_(0.0),
-                                                    maxCoeffRange_(5.0),
+                                                    maxCoeffRange_(2.5),
                                                     geom_(nullptr)
 {
 
@@ -28,7 +28,7 @@ Genome::Genome() :
                                                     rng(std::random_device()()),
                                                     bytedist(0,255),
                                                     minCoeffRange_(0.0),
-                                                    maxCoeffRange_(5.0),
+                                                    maxCoeffRange_(2.5),
                                                     geom_(nullptr)
 {
     randomize();
@@ -89,6 +89,7 @@ double Genome::convertTodouble(uint8_t val)
     double scale = (maxCoeffRange_ - minCoeffRange_) / 255.0;
     double vald = (double) val;
     vald *= scale;
+    vald += minCoeffRange_;
     return vald;
 }
 void Genome::randomize()

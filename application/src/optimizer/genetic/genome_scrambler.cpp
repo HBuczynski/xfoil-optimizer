@@ -14,13 +14,13 @@ SingleCrossoverMultiMutationScrambler::SingleCrossoverMultiMutationScrambler(con
 void SingleCrossoverMultiMutationScrambler::setBit(uint8_t *genome,int bit, bool val)
 {
     if(val)
-        genome[bit/8] = genome[bit/8] | (1<<(bit%8));
+        genome[bit/8] = genome[bit/8] | ((uint8_t)1<<(bit%8));
     else
-        genome[bit/8] = genome[bit/8] & (~(1<<(bit%8)));
+        genome[bit/8] = genome[bit/8] & (~((uint8_t)1<<(bit%8)));
 }
 void SingleCrossoverMultiMutationScrambler::toggleBit(uint8_t *genome, int bit)
 {
-     genome[bit/8] = genome[bit/8] ^ (1<<((uint8_t)bit%8));
+     genome[bit/8] = genome[bit/8] ^ ((uint8_t)1<<(bit%8));
 }
 bool SingleCrossoverMultiMutationScrambler::getBit(uint8_t *genome,int bit)
 {
@@ -64,11 +64,11 @@ Genome *SingleCrossoverMultiMutationScrambler::crossover(Genome *g1, Genome *g2)
         setBit(cbuf,i,getBit(p2buf,i));
     }
     Genome *childGen = new Genome(cbuf);
-    if(childGen->getGeometry()->isProfileCrossed())
-    {
-        delete childGen;
-        return nullptr;
-    }
+   // if(childGen->getGeometry()->isProfileCrossed())
+   // {
+   //     delete childGen;
+   //     return nullptr;
+   // }
     return childGen;
 
 }

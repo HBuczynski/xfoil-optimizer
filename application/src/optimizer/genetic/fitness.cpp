@@ -35,7 +35,7 @@ double FitnessModel::calculate(const SimResults &results)
     {
         fitness += params_.optimizeMoment * (0.5 - abs(params_.targetMoment - avgTorq)); // Aim for target torque
     }
-    std::cout<<fitness<<std::endl;
+    //std::cout<<fitness<<std::endl;
     if(fitness <0.0)
         fitness = 0.0;
 

@@ -57,7 +57,7 @@ void GeneticAlgorithm_testsTest::PerformMultipleOptimizationStepOnSmallPopulatio
 {
     Config::OptimizerParams paramsOpt;
     Config::SimulationParams paramsSim;
-    paramsSim.viscousEnable = true;
+    paramsSim.viscousEnable = false;
     paramsSim.reynoldsNo = 1000000;
     paramsSim.xfoilTimeout = 50;
     paramsOpt.geneticOptimizer.populationSize = 6;

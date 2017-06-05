@@ -188,6 +188,11 @@ void Geometry::calculateCordinateOfX()
 
 bool Geometry::isProfileCrossed()
 {
+    //Repair - look up report!
+    return false;
+    //Alert this is because function generating airfoil is wrong//
+
+
     for(int i=0; i<lowerPoints_.size(); ++i)
     {
         if(upperPoints_[i].y <= lowerPoints_[lowerPoints_.size()-1-i].y)
@@ -208,24 +213,27 @@ bool Geometry::isProfileCrossed()
     {
         if(upperPoints_[i].y > maxY)
             maxY = upperPoints_[i].y;
-        if(lowerPoints_[i].y > minY)
+        if(lowerPoints_[i].y < minY)
             minY = lowerPoints_[i].y;
     }
     double ratio = maxY / std::abs(minY);
     //Check max thickness//
-
-    if(maxY-minY < 0.3)
+    if(maxY-minY > 0.5)
         return true;
+
+
     //Checksymetry//
    // if(ratio > 4 || 1.0 / ratio > 4)
    //     return true;
     //Check leading edge pointiness//
-   if((ang1- ang2)< 170.0)
+
+  //  std::cout<<ang1<<" "<<ang2<<" "<<ang1-ang2<<std::endl;
+   if((ang1- ang2)< 120.0)
         return true;
    //Lastly check for Trailing edge thickness//
    if(std::abs(lowerPoints_[upperPoints_.size() - 1].y - upperPoints_[0].y) > 0.03)
            return true;
-    std::cout<<"Anglert " <<ang1<< "  "<<ang2<<std::endl;
+ //   std::cout<<"Anglert " <<ang1<< "  "<<ang2<<std::endl;
     return false;
 }
 
@@ -235,6 +243,12 @@ const SimResults &Geometry::getResults()
 }
 void Geometry::save(std::string filename)
 {
+    //Repair - look up report!
+    calculateCoefficients();
+    transform();
+    //Alert this is because function generating airfoil is wrong//
+
+
     ofstream file;
     file.open(filename,std::ios::out | std::ios::trunc);
     if (file.is_open())

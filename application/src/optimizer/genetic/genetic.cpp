@@ -104,16 +104,15 @@ void GeneticOptimizer::optimizeStep()
         {
            // std::cout<<"next iteration bef cross"<<currentIterationNumber_<<std::endl;
             Genome *newGenome = scrambler_->crossover(rouletteWheelSelection(), rouletteWheelSelection());
+            newGenome = scrambler_->mutate(newGenome);
+            //std::cout<<newGenome->getCoefficients().a_l<<std::endl;
            // std::cout<<"next iteration afterbef cross"<<newGenomeNumber<<std::endl;
             if(newGenome != nullptr)
             {
-                newGenome = scrambler_->mutate(newGenome);
-                if(newGenome != nullptr)
-                {
                     tempPopulation.push_back(newGenome);
                     newGenome = nullptr;
                     ++newGenomeNumber;
-                }
+
             }
         }
 

@@ -107,7 +107,7 @@ void Geometry_Tests::SavingCoefficientsObjectsToFile()
 
 void Geometry_Tests::CheckIfBasicProfileIsNotCrossed()
 {
-    Geometry geom1;
+    Geometry geom1();
     QVERIFY(geom1.isProfileCrossed() == false);
 }
 void Geometry_Tests::CheckBasicAirfoilSimResultsMethodAccess()
