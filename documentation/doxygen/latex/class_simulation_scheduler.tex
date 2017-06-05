@@ -1,0 +1,66 @@
+\hypertarget{class_simulation_scheduler}{}\section{Simulation\+Scheduler Class Reference}
+\label{class_simulation_scheduler}\index{Simulation\+Scheduler@{Simulation\+Scheduler}}
+
+
+Class controlling execution of external simulation tools.  
+
+
+
+
+{\ttfamily \#include $<$simulation.\+h$>$}
+
+Inheritance diagram for Simulation\+Scheduler\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_simulation_scheduler}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_simulation_scheduler_ae48b5f2f68304c077d890c4dbe882e4f}{}\label{class_simulation_scheduler_ae48b5f2f68304c077d890c4dbe882e4f} 
+void {\bfseries update\+State} (bool state)
+\item 
+\hypertarget{class_simulation_scheduler_a060a51e44f3f6e51b1631fc3a41194d0}{}\label{class_simulation_scheduler_a060a51e44f3f6e51b1631fc3a41194d0} 
+void {\bfseries worker\+Finished} ()
+\item 
+\hypertarget{class_simulation_scheduler_a27ad04f596b98dcf32e02fe0104a062b}{}\label{class_simulation_scheduler_a27ad04f596b98dcf32e02fe0104a062b} 
+void {\bfseries error\+String} (Q\+String str)
+\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_simulation_scheduler_a0984b261f42cb46e75c4042349922e19}{}\label{class_simulation_scheduler_a0984b261f42cb46e75c4042349922e19} 
+void {\bfseries stop\+Worker} ()
+\item 
+\hypertarget{class_simulation_scheduler_a1b99e3a87e300443f93c9e5a37f81530}{}\label{class_simulation_scheduler_a1b99e3a87e300443f93c9e5a37f81530} 
+void {\bfseries simulation\+Finished} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_simulation_scheduler_aa0e08acf06360d47589272e592d031b7}{}\label{class_simulation_scheduler_aa0e08acf06360d47589272e592d031b7} 
+{\bfseries Simulation\+Scheduler} (\hyperlink{struct_config_1_1_simulation_params}{Config\+::\+Simulation\+Params} params, Q\+Object $\ast$parent=0)
+\item 
+\hypertarget{class_simulation_scheduler_a2090cc903dea412d1c49dbc6c2bac8c5}{}\label{class_simulation_scheduler_a2090cc903dea412d1c49dbc6c2bac8c5} 
+void {\bfseries Add\+Task} (\hyperlink{struct_task}{Task} task)
+\item 
+\hypertarget{class_simulation_scheduler_afb3ac15bf8920c5cf02da1987c48736a}{}\label{class_simulation_scheduler_afb3ac15bf8920c5cf02da1987c48736a} 
+void {\bfseries Add\+Batch\+Task} (std\+::vector$<$ \hyperlink{struct_task}{Task} $>$ \&input)
+\item 
+\hypertarget{class_simulation_scheduler_aa8bbd350d4174bf069f5466abc33db6e}{}\label{class_simulation_scheduler_aa8bbd350d4174bf069f5466abc33db6e} 
+void {\bfseries Wait\+For\+Finished} ()
+\item 
+\hypertarget{class_simulation_scheduler_a21b6811560eafda46f85ffdee02bcbb2}{}\label{class_simulation_scheduler_a21b6811560eafda46f85ffdee02bcbb2} 
+bool {\bfseries Is\+Tasks\+Finished} () const
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class controlling execution of external simulation tools. 
+
+Controls multiple instances of xfoil optimizer running in parallel Runs a thread that polls and initiates all xfoil proxy instances Has an internal queue for requests 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+xfoil/\hyperlink{simulation_8h}{simulation.\+h}\end{DoxyCompactItemize}

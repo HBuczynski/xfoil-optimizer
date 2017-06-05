@@ -3,10 +3,18 @@
 
 #include <QQmlApplicationEngine>
 #include <QQmlComponent>
-//#include <QObject>
 
 #include "gui/gui_objects.h"
 
+
+/**
+*	@file settings_dialog.h
+*	@brief This header file consists settings dialog class.
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
+*/
+
+//!  The class takes care of genetic algorithm's settings obtain from user
 class SettingsDialog : public QObject
 {
     Q_OBJECT

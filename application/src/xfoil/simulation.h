@@ -23,6 +23,14 @@
 #include <queue>
 //#include <mutex>
 
+/**
+*	@file simulation.h
+*	@brief This header file contains tools to maintain communication with external program - XFOIL.
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
+*/
+
+
 //!  Class controlling execution single simulation tool using proxy interface
 /*!
   Controls single instance of xfoil optimizer
@@ -109,6 +117,11 @@ struct Task
     Geometry * geometry;
     int handlerAssigned = -1;
 };
+
+//!  Class controlling execution single simulation tool using proxy interface
+/*!
+  Controls single instance of xfoil optimizer
+*/
 class SchedulerWorker : public QObject
 {
     Q_OBJECT
@@ -192,6 +205,7 @@ private:
     SimulationHandler::Status *handlerStatus_;
     SimulationHandler **handlers;
 };
+
 //!  Class controlling execution of external simulation tools
 /*!
   Controls multiple instances of xfoil optimizer running in parallel

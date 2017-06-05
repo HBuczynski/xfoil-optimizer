@@ -3,6 +3,13 @@
 #include "optimizer/geometry.h"
 #include <string>
 
+/**
+*	@file simulation_proxy.h
+*	@brief IO stream interface abstraction.
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
+*/
+
 //!  IO stream interface abstraction
 /*!
   Interface class for future use in different environments

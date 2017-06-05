@@ -7,13 +7,17 @@
 #include "optimizer/genetic/genome_scrambler.h"
 #include "utility/config.h"
 
-
-
-//!  Class implementing genetic algorithm for optimization
-/*!
-  A more elaborate class description. [TODO]
+/**
+*	@file genetic.h
+*	@brief File consists header for genetic algorithm.
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
 */
 
+//!  Class contains implementation of the genetic algorithm
+/*!
+*  Genetic Optimizer provides necessary objects and methods to use genetic algorithm.
+*/
 class GeneticOptimizer : public AirfoilOptimizer
 {
     Q_OBJECT

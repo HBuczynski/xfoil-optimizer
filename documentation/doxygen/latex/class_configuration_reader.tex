@@ -1,0 +1,49 @@
+\hypertarget{class_configuration_reader}{}\section{Configuration\+Reader Class Reference}
+\label{class_configuration_reader}\index{Configuration\+Reader@{Configuration\+Reader}}
+
+
+Class containing methods to generate and load parameters from xml file.  
+
+
+
+
+{\ttfamily \#include $<$configuration\+\_\+reader.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_configuration_reader_a48396fe5ae72fe84728917c4d3c1d873}{}\label{class_configuration_reader_a48396fe5ae72fe84728917c4d3c1d873} 
+bool {\bfseries initialize} ()
+\item 
+\hypertarget{class_configuration_reader_a8a9b59775e830c242e3a11ac7b1e60c4}{}\label{class_configuration_reader_a8a9b59775e830c242e3a11ac7b1e60c4} 
+\hyperlink{struct_config_1_1_application_params}{Config\+::\+Application\+Params} {\bfseries get\+Application\+Parameters} ()
+\item 
+\hypertarget{class_configuration_reader_a26229de2dab15c900a09c8b3a2587a90}{}\label{class_configuration_reader_a26229de2dab15c900a09c8b3a2587a90} 
+\hyperlink{struct_config_1_1_optimizer_params}{Config\+::\+Optimizer\+Params} {\bfseries get\+Optimizer\+Parameters} ()
+\item 
+\hypertarget{class_configuration_reader_a9a8d35884446e5d4c5beb769445f3b49}{}\label{class_configuration_reader_a9a8d35884446e5d4c5beb769445f3b49} 
+\hyperlink{struct_config_1_1_simulation_params}{Config\+::\+Simulation\+Params} {\bfseries get\+Simulator\+Parameters} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_configuration_reader_a48d64d4b30e6b952848f95295cc6aae8}{}\label{class_configuration_reader_a48d64d4b30e6b952848f95295cc6aae8} 
+static std\+::string {\bfseries get\+Project\+Path} ()
+\item 
+\hypertarget{class_configuration_reader_a8dd351a562599f9017911c9564b06716}{}\label{class_configuration_reader_a8dd351a562599f9017911c9564b06716} 
+static std\+::string {\bfseries get\+Parameter\+File\+Path} ()
+\item 
+\hypertarget{class_configuration_reader_a2744da82a66457674996be080d2f37d8}{}\label{class_configuration_reader_a2744da82a66457674996be080d2f37d8} 
+static std\+::string {\bfseries get\+Separator} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class containing methods to generate and load parameters from xml file. 
+
+This class uses Tiny\+Xml library to write and read data to xml files. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+utility/\hyperlink{configuration__reader_8h}{configuration\+\_\+reader.\+h}\item 
+utility/configuration\+\_\+reader.\+cpp\end{DoxyCompactItemize}

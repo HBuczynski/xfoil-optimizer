@@ -1,0 +1,56 @@
+\hypertarget{class_sim_results}{}\section{Sim\+Results Class Reference}
+\label{class_sim_results}\index{Sim\+Results@{Sim\+Results}}
+
+
+Class containing simulation results from xfoil.  
+
+
+
+
+{\ttfamily \#include $<$simulation\+\_\+results.\+h$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_sim_results_1_1_polar_point}{Polar\+Point}
+\item 
+struct \hyperlink{struct_sim_results_1_1_result_entry}{Result\+Entry}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_sim_results_a142ac7f12e1ba9e8980bcc58072f38bf}{}\label{class_sim_results_a142ac7f12e1ba9e8980bcc58072f38bf} 
+\hyperlink{struct_sim_results_1_1_polar_point}{Sim\+Results\+::\+Polar\+Point} {\bfseries Calc\+Max\+Cl} () const
+\item 
+\hypertarget{class_sim_results_ad7296411c1465f6c88996c24d492099d}{}\label{class_sim_results_ad7296411c1465f6c88996c24d492099d} 
+\hyperlink{struct_sim_results_1_1_polar_point}{Sim\+Results\+::\+Polar\+Point} {\bfseries Calc\+Min\+Cd} () const
+\item 
+\hypertarget{class_sim_results_ae3e5c526d3fd0a98a3fd532485a0a849}{}\label{class_sim_results_ae3e5c526d3fd0a98a3fd532485a0a849} 
+\hyperlink{struct_sim_results_1_1_polar_point}{Sim\+Results\+::\+Polar\+Point} {\bfseries Calc\+Max\+Glide\+Ratio} () const
+\item 
+\hypertarget{class_sim_results_a1937f20a3e1e61089d72153f594b62ae}{}\label{class_sim_results_a1937f20a3e1e61089d72153f594b62ae} 
+double {\bfseries Calc\+Avg\+Torque} () const
+\item 
+\hypertarget{class_sim_results_a7ddcffa0f2a611b8cf0944e583bacaf4}{}\label{class_sim_results_a7ddcffa0f2a611b8cf0944e583bacaf4} 
+std\+::vector$<$ \hyperlink{struct_sim_results_1_1_result_entry}{Result\+Entry} $>$\+::size\+\_\+type {\bfseries Get\+Polar\+Point\+Count} () const
+\item 
+\hypertarget{class_sim_results_a6614bf944d25e327b28c1574f2123f15}{}\label{class_sim_results_a6614bf944d25e327b28c1574f2123f15} 
+bool {\bfseries Is\+Calculated} () const
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_sim_results_a88881bfc7b707b9bf91fd177fefa2e04}{}\label{class_sim_results_a88881bfc7b707b9bf91fd177fefa2e04} 
+class {\bfseries Simulation\+Handler}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class containing simulation results from xfoil. 
+
+This class calculate airfoil\textquotesingle{}s parameters based on the outputs from xfoil simulation. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+optimizer/\hyperlink{simulation__results_8h}{simulation\+\_\+results.\+h}\item 
+optimizer/simulation\+\_\+results.\+cpp\end{DoxyCompactItemize}

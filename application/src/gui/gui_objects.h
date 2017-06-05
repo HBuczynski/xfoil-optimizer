@@ -4,6 +4,14 @@
 #include <QDialog>
 #include <vector>
 
+
+/**
+*	@file gui_objects.h
+*	@brief This header file contains all required objects represents user interface.
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
+*/
+
 struct Component
 {
     QObject *object;

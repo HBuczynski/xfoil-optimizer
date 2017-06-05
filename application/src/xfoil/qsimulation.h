@@ -5,9 +5,16 @@
 #include "simulation_proxy.h"
 #include "utility/config.h"
 
+/**
+*	@file qsimulation.h
+*	@brief  QT based implementation for handling process command inputs
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
+*/
+
 //!  IO stream interface using QT Qprocess API
 /*!
-  QT based implementation for handling process command inputs
+
 */
 class QSimulationProxy : public QObject, public SimulationProxy
 {
@@ -58,7 +65,7 @@ public:
     {
         return params_.xfoilExecutablePath;
     }
-private:
+
 private Q_SLOTS:
     void error(QProcess::ProcessError error);
     void finished(int exitCode, QProcess::ExitStatus status);

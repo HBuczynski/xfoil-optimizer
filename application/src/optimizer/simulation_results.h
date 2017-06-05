@@ -1,8 +1,16 @@
 #pragma once
 #include <vector>
+
+/**
+*	@file simulation_results.h
+*	@brief Class containing simulation results from xfoil
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
+*/
+
 //!  Class containing simulation results from xfoil
 /*!
-  A more elaborate class description. [TODO]
+  This class calculate airfoil's parameters based on the outputs from xfoil simulation.
 */
 class SimResults
 {

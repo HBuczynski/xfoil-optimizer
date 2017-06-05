@@ -4,33 +4,70 @@
 typedef std::uint8_t byte;
 #include <cmath>
 
+/**
+*	@file geometry_structures.h
+*	@brief This header file contains all required structures to represent geometry's coefficients.
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
+*/
+
+/**
+*	@struct AirfoilCoefficients
+*   Param become larger: Overall shape becomeshigher
+*   Param become smaller: Overall shape becomes lower
+*   @var AirfoilCoefficients::p_u
+*   Param become larger: Overall shape becomeshigher
+*   Param become smaller: Overall shape becomes lower
+*   @var AirfoilCoefficients::p_l
+*   Param become larger: Forepart becomes lower significantly; Back part becomes lower slightly
+*   Param become smaller: Forepart becomes higher significantly; Back part becomes higher slightly
+*   @var AirfoilCoefficients::a_u
+*   Param become larger: Forepart becomes lower significantly; Back part becomes lower slightly
+*   Param become smaller: Forepart becomes higher significantly; Back part becomes higher slightly
+*   @var AirfoilCoefficients::a_l
+*   Param become larger: Back part becomes lower significantly; Forepart part becomes lower slightly
+*   Param become smaller: Back part becomes higher significantly; Forepart becomes higher slightly
+*   @var AirfoilCoefficients::b_u
+*   Param become larger: Back part becomes lower significantly; Forepart part becomes lower slightly
+*   Param become smaller: Back part becomes higher significantly; Forepart becomes higher slightly
+*   @var AirfoilCoefficients::b_l
+*   Param become larger: Overall shape becomes thicker
+*   Param become smaller: Overall shape becomes thinner
+*   @var AirfoilCoefficients::q_u
+*   Param become larger: Overall shape becomes thicker
+*   Param become smaller: Overall shape becomes thinner
+*   @var AirfoilCoefficients::q_l
+*   Param become larger: Forepart becomes thinner significantly; Back part becomes thinner slightly
+*   Param become smaller: Forepart becomes thicker significantly; Back part becomes thicker slightly
+*   @var AirfoilCoefficients::c_u
+*   Param become larger: Forepart becomes thinner significantly; Back part becomes thinner slightly
+*   Param become smaller: Forepart becomes thicker significantly; Back part becomes thicker slightly
+*   @var AirfoilCoefficients::c_l
+*   Param become larger: Back part becomes thinner significantly; Forepart becomes thinner slightly
+*   Param become smaller: Back part becomes thicker significantly; Forepart becomes thicker slightly
+*   @var AirfoilCoefficients::d_u
+*   Param become larger: Back part becomes thinner significantly; Forepart becomes thinner slightly
+*   Param become smaller: Back part becomes thicker significantly; Forepart becomes thicker slightly
+*   @var AirfoilCoefficients::d_l
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
+*/
+
 struct AirfoilCoefficients
 {
     /** Parameters of medial-camber line function */
-    //Param become larger: Overall shape becomeshigher
-    //Param become smaller: Overall shape becomes lower
     double p_u;
     double p_l;
-    //Param become larger: Forepart becomes lower significantly; Back part becomes lower slightly
-    //Param become smaller: Forepart becomes higher significantly; Back part becomes higher slightly
     double a_u;
     double a_l;
-    //Param become larger: Back part becomes lower significantly; Forepart part becomes lower slightly
-    //Param become smaller: Back part becomes higher significantly; Forepart becomes higher slightly
     double b_u;
     double b_l;
 
     /** Parameters of thickness function */
-    //Param become larger: Overall shape becomes thicker
-    //Param become smaller: Overall shape becomes thinner
     double q_u;
     double q_l;
-    //Param become larger: Forepart becomes thinner significantly; Back part becomes thinner slightly
-    //Param become smaller: Forepart becomes thicker significantly; Back part becomes thicker slightly
     double c_u;
     double c_l;
-    //Param become larger: Back part becomes thinner significantly; Forepart becomes thinner slightly
-    //Param become smaller: Back part becomes thicker significantly; Forepart becomes thicker slightly
     double d_u;
     double d_l;
 
@@ -69,6 +106,47 @@ struct AirfoilCoefficients
     }
 };
 
+/**
+*	@struct BinaryAirfoilCoefficients
+*   Param become larger: Overall shape becomeshigher
+*   Param become smaller: Overall shape becomes lower
+*   @var BinaryAirfoilCoefficients::p_u
+*   Param become larger: Overall shape becomeshigher
+*   Param become smaller: Overall shape becomes lower
+*   @var BinaryAirfoilCoefficients::p_l
+*   Param become larger: Forepart becomes lower significantly; Back part becomes lower slightly
+*   Param become smaller: Forepart becomes higher significantly; Back part becomes higher slightly
+*   @var BinaryAirfoilCoefficients::a_u
+*   Param become larger: Forepart becomes lower significantly; Back part becomes lower slightly
+*   Param become smaller: Forepart becomes higher significantly; Back part becomes higher slightly
+*   @var BinaryAirfoilCoefficients::a_l
+*   Param become larger: Back part becomes lower significantly; Forepart part becomes lower slightly
+*   Param become smaller: Back part becomes higher significantly; Forepart becomes higher slightly
+*   @var BinaryAirfoilCoefficients::b_u
+*   Param become larger: Back part becomes lower significantly; Forepart part becomes lower slightly
+*   Param become smaller: Back part becomes higher significantly; Forepart becomes higher slightly
+*   @var BinaryAirfoilCoefficients::b_l
+*   Param become larger: Overall shape becomes thicker
+*   Param become smaller: Overall shape becomes thinner
+*   @var BinaryAirfoilCoefficients::q_u
+*   Param become larger: Overall shape becomes thicker
+*   Param become smaller: Overall shape becomes thinner
+*   @var BinaryAirfoilCoefficients::q_l
+*   Param become larger: Forepart becomes thinner significantly; Back part becomes thinner slightly
+*   Param become smaller: Forepart becomes thicker significantly; Back part becomes thicker slightly
+*   @var BinaryAirfoilCoefficients::c_u
+*   Param become larger: Forepart becomes thinner significantly; Back part becomes thinner slightly
+*   Param become smaller: Forepart becomes thicker significantly; Back part becomes thicker slightly
+*   @var BinaryAirfoilCoefficients::c_l
+*   Param become larger: Back part becomes thinner significantly; Forepart becomes thinner slightly
+*   Param become smaller: Back part becomes thicker significantly; Forepart becomes thicker slightly
+*   @var BinaryAirfoilCoefficients::d_u
+*   Param become larger: Back part becomes thinner significantly; Forepart becomes thinner slightly
+*   Param become smaller: Back part becomes thicker significantly; Forepart becomes thicker slightly
+*   @var BinaryAirfoilCoefficients::d_l
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
+*/
 #pragma pack(push,1)
 struct BinaryAirfoilCoefficients
 {

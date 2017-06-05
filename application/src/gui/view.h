@@ -9,7 +9,18 @@
 #include "gui/settings_dialog.h"
 #include "gui/plot_dialog.h"
 
+/**
+*	@file view.h
+*	@brief View class maintains user interface.
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
+*/
 
+//!  Class controlling user interface
+/*!
+   View consists all components and methods responsible for communication with user
+   and redirect information to model of application.
+*/
 class View : public QObject
 {
     Q_OBJECT

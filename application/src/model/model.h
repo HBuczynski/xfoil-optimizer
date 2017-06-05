@@ -9,6 +9,14 @@
 #include "model/profile_parameters.h"
 #include "optimizer/genetic/genetic.h"
 
+/**
+*	@file model.h
+*	@brief The class is responsible for management of an application's back-end.
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
+*/
+
+//!  Class controlling application back-end
 class Model : public QObject
 {
     Q_OBJECT

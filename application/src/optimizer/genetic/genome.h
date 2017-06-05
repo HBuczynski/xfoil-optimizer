@@ -4,11 +4,17 @@
 #include "optimizer/genetic/fitness.h"
 #include <random>
 
-//!  Class providing basic 2D airfoil geometry representation
-/*!
-  A more elaborate class description. [TODO]
+/**
+*	@file genome.h
+*	@brief Class providing basic 2D airfoil geometry representation.
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
 */
 
+//!  Class contains implementation of the genome
+/*!
+*  Genome is a representation of one instance of population.
+*/
 class Genome
 {
 public:

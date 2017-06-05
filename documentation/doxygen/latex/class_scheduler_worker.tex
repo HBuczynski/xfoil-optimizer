@@ -1,0 +1,64 @@
+\hypertarget{class_scheduler_worker}{}\section{Scheduler\+Worker Class Reference}
+\label{class_scheduler_worker}\index{Scheduler\+Worker@{Scheduler\+Worker}}
+
+
+Class controlling execution single simulation tool using proxy interface.  
+
+
+
+
+{\ttfamily \#include $<$simulation.\+h$>$}
+
+Inheritance diagram for Scheduler\+Worker\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_scheduler_worker}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_scheduler_worker_ac5b2e3ffa0470416221e3ec07956a628}{}\label{class_scheduler_worker_ac5b2e3ffa0470416221e3ec07956a628} 
+void {\bfseries stop} ()
+\item 
+\hypertarget{class_scheduler_worker_ae17d3b4fd5068714a32b8be97a7ecac1}{}\label{class_scheduler_worker_ae17d3b4fd5068714a32b8be97a7ecac1} 
+void {\bfseries start} ()
+\item 
+\hypertarget{class_scheduler_worker_a15b321a2369b6ccfe7af4351ed4d1960}{}\label{class_scheduler_worker_a15b321a2369b6ccfe7af4351ed4d1960} 
+void {\bfseries add\+Task} (\hyperlink{struct_task}{Task} task)
+\item 
+\hypertarget{class_scheduler_worker_a35a536a33b478e22f28dd508d6eb3242}{}\label{class_scheduler_worker_a35a536a33b478e22f28dd508d6eb3242} 
+void {\bfseries process} ()
+\item 
+\hypertarget{class_scheduler_worker_a93bcfd25dea100ac89372fc14710c86e}{}\label{class_scheduler_worker_a93bcfd25dea100ac89372fc14710c86e} 
+bool {\bfseries Is\+Tasks\+Finished} ()
+\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_scheduler_worker_a2fd120b582cb00372117bbd5b1f2238d}{}\label{class_scheduler_worker_a2fd120b582cb00372117bbd5b1f2238d} 
+void {\bfseries finished\+Work} ()
+\item 
+\hypertarget{class_scheduler_worker_a6258fd2861a3ce7798436f017b5de36a}{}\label{class_scheduler_worker_a6258fd2861a3ce7798436f017b5de36a} 
+void {\bfseries update\+Idle\+State} (bool state)
+\item 
+\hypertarget{class_scheduler_worker_a12e2df7be830c191c58afe3aead3b942}{}\label{class_scheduler_worker_a12e2df7be830c191c58afe3aead3b942} 
+void {\bfseries error} (Q\+String str)
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_scheduler_worker_abbce89dd767e79876256848966f38dda}{}\label{class_scheduler_worker_abbce89dd767e79876256848966f38dda} 
+{\bfseries Scheduler\+Worker} (std\+::queue$<$ \hyperlink{struct_task}{Task} $>$ \&task\+Queue, Q\+Mutex \&mutex, \hyperlink{struct_config_1_1_simulation_params}{Config\+::\+Simulation\+Params} params, Q\+Object $\ast$parent=0)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class controlling execution single simulation tool using proxy interface. 
+
+Controls single instance of xfoil optimizer 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+xfoil/\hyperlink{simulation_8h}{simulation.\+h}\item 
+xfoil/simulation.\+cpp\end{DoxyCompactItemize}
