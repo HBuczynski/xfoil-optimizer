@@ -36,6 +36,7 @@ public slots:
     void getTargetProfileValues(AviationProfileParameters data);
     void calculateBaseProfileParameters(std::string path);
     void stopSimulation();
+    void startSimulation();
 
 private:
 	void initializeLogger();

@@ -42,6 +42,11 @@ void Model::stopSimulation()
     qDebug() << "stop";
 }
 
+void Model::startSimulation()
+{
+    qDebug() << "start simulation";
+}
+
 void Model::initializeLogger()
 {
     logger_ = &LogWriter::getInstance();

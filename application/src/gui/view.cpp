@@ -108,9 +108,9 @@ void View::buttonsClicked(QString name)
             guiObjects_.RUN_BUTTON_IS_PRESSED = true;
 
             enableProgressBar();
-            //TO DO
-            //run optimization
-        }        
+            emit startSimulation();
+        }
+
     }
     else if(name == "stopButton")
     {
@@ -364,6 +364,7 @@ void View::initializeModelViewConnection()
     QObject::connect(this, SIGNAL(setTargetProfileValues(AviationProfileParameters)), model_, SLOT(getTargetProfileValues(AviationProfileParameters)));
     QObject::connect(this, SIGNAL(redirectPathToBaseProfile(std::string)), model_, SLOT(calculateBaseProfileParameters(std::string)));
     QObject::connect(this, SIGNAL(stopSimulation()), model_, SLOT(stopSimulation()));
+    QObject::connect(this, SIGNAL(startSimulation()), model_, SLOT(startSimulation()));
 
     QObject::connect(&settingDialog_, SIGNAL(redirectOptimizerParameters()), this, SLOT(setOptimizerSettings()));
     //initialize connection with buttons
