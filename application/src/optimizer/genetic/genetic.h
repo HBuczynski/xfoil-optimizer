@@ -22,6 +22,7 @@ public:
     enum GAState
     {
         NotInitialized,
+        Initialized,
         SimulationInProgress,
         GenerationComplete,
         OptimizationCompleteTargetReached,
@@ -32,11 +33,10 @@ public:
 
     ~GeneticOptimizer();
 
-    void initialize();
+    virtual void initialize(Geometry &geom);
     void runGeneticAlgorithm();
     GAState getState();
 
-    virtual void addBaseGeometry(Geometry &geom);
     virtual void optimizeStep();
     virtual Geometry const getTopGeometry(int place);
     virtual double const getProgress();

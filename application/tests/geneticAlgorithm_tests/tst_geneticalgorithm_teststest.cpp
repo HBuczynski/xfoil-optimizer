@@ -40,10 +40,10 @@ void GeneticAlgorithm_testsTest::PerformSingleOptimizationStepOnSmallPopulation(
     Config::OptimizerParams paramsOpt;
     Config::SimulationParams paramsSim;
     paramsSim.viscousEnable = false;
-    paramsOpt.geneticOptimizer.populationSize = 20;
+    paramsOpt.geneticOptimizer.populationSize = 5;
     paramsOpt.geneticOptimizer.generationCount = 1;
     GeneticOptimizer *optimizer = new GeneticOptimizer(paramsSim,paramsOpt);
-    optimizer->initialize();
+    optimizer->initialize(Geometry());
     optimizer->runGeneticAlgorithm();
     optimizer->requestStop();
     while(optimizer->isRunning())
@@ -57,11 +57,13 @@ void GeneticAlgorithm_testsTest::PerformMultipleOptimizationStepOnSmallPopulatio
 {
     Config::OptimizerParams paramsOpt;
     Config::SimulationParams paramsSim;
-    paramsSim.viscousEnable = false;
-    paramsOpt.geneticOptimizer.populationSize = 10;
+    paramsSim.viscousEnable = true;
+    paramsSim.reynoldsNo = 1000000;
+    paramsSim.xfoilTimeout = 50;
+    paramsOpt.geneticOptimizer.populationSize = 6;
     paramsOpt.geneticOptimizer.generationCount = 4;
     GeneticOptimizer *optimizer = new GeneticOptimizer(paramsSim,paramsOpt);
-    optimizer->initialize();
+    optimizer->initialize(Geometry());
     optimizer->runGeneticAlgorithm();
     while(optimizer->isRunning())
     {

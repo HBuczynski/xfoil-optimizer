@@ -48,7 +48,7 @@ public:
         {
             int generationCount = 20;
             int populationSize = 100;
-            double mutationRate = 0.005;
+            double mutationRate = 0.00;
         };
 
 

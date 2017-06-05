@@ -30,14 +30,37 @@ GeneticOptimizer::~GeneticOptimizer()
     delete scrambler_;
 }
 
-void GeneticOptimizer::initialize()
+void GeneticOptimizer::initialize(Geometry &baseGeometry_)
 {
-
+    for(auto genome: population_)
+        delete genome;
+    population_.clear();
+    AirfoilCoefficients baseCoeff = baseGeometry_.getAifroilCoefficients();
+    int newGenomeNumber = 0;
+    //newGenomeNumber = optParams_.geneticOptimizer.populationSize;
+    while(newGenomeNumber < optParams_.geneticOptimizer.populationSize)
+    {
+       // std::cout<<"next iteration bef cross"<<currentIterationNumber_<<std::endl;
+        Genome *newGenome = new Genome(baseCoeff);
+       // std::cout<<"next iteration afterbef cross"<<newGenomeNumber<<std::endl;
+        if(newGenome != nullptr)
+        {
+            newGenome = scrambler_->mutate(newGenome);
+            if(newGenome != nullptr)
+            {
+                population_.push_back(newGenome);
+                newGenome = nullptr;
+                ++newGenomeNumber;
+            }
+        }
+    }
+    state_ = Initialized;
 }
 
 void GeneticOptimizer::runGeneticAlgorithm()
 {
-    generateInitialPopulation();
+    if(state_ == NotInitialized)
+        generateInitialPopulation();
     totalFintess = 0;
     //start simulation of each genome
     //std::cout<<"Starting to playyy"<<std::endl;
@@ -46,7 +69,7 @@ void GeneticOptimizer::runGeneticAlgorithm()
     for(auto genome: population_)
         tasks.push_back(Task(genome->getGeometry()));
     simulationScheduler_->addBatchTask(tasks);
-
+    state_ = SimulationInProgress;
     simRunning_ = true;
     //std::cout<<"Running"<<std::endl;
 }
@@ -65,6 +88,7 @@ void GeneticOptimizer::optimizeStep()
         totalFintess += genome->getFitness();
         if(checkGenomeFitness(genome))
         {
+            state_ = OptimizationCompleteTargetReached;
             std::cout<<"Optimization Finished - targets reached"<<std::endl;
             continueOptimization_ = false;
             return;
@@ -100,13 +124,14 @@ void GeneticOptimizer::optimizeStep()
         for(auto genome: population_)
             tasks.push_back(Task(genome->getGeometry()));
         simulationScheduler_->addBatchTask(tasks);
-
+        state_ = SimulationInProgress;
         simRunning_ = true;
     }
     else
     {
         Q_EMIT optimizationFinished();
         continueOptimization_ = false;
+        state_ = OptimizationCompleteFinalGeneration;
         std::cout<<"Optimization Finished - population count reached"<<std::endl;
     }
 }
@@ -133,10 +158,6 @@ GeneticOptimizer::GAState GeneticOptimizer::getState()
     return state_;
 }
 
-void GeneticOptimizer::addBaseGeometry(Geometry &geom)
-{
-
-}
 
 void GeneticOptimizer::requestStop()
 {
@@ -268,5 +289,8 @@ void GeneticOptimizer::simulationBatchComplete()
     bool wasRunning = simRunning_;
     simRunning_ = false;
     if(wasRunning)
+    {
+        state_ = GenerationComplete;
         optimizeStep();
+    }
 }

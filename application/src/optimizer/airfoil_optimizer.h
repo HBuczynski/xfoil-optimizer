@@ -9,7 +9,7 @@ class AirfoilOptimizer: public QObject
 {
     Q_OBJECT
 public:
-    virtual void addBaseGeometry(Geometry &geom) = 0;
+    virtual void initialize(Geometry &geom) = 0;
     virtual void optimizeStep() = 0;
     virtual Geometry const getTopGeometry(int place) = 0;
     virtual double const getProgress() = 0;
@@ -27,7 +27,7 @@ public:
     {
 
     }
-    virtual void addBaseGeometry(Geometry &geom) override
+    virtual void initialize(Geometry &geom) override
     {
         baseGeom_ = geom;
     }

@@ -188,11 +188,47 @@ void Geometry::calculateCordinateOfX()
 
 bool Geometry::isProfileCrossed()
 {
-    for(int i=0; i<lowerPoints_.size(); --i)
+    //Check for obvious deformation - crossing//
+    std::cout<<coefficients_.a_l;
+    return false;
+    for(int i=0; i<lowerPoints_.size(); ++i)
     {
         if(upperPoints_[i].y <= lowerPoints_[lowerPoints_.size()-1-i].y)
             return true;
     }
+    //Check for airfoil tip nose angle//
+    double ang1, ang2;
+    //std::cout<<"Anglert " <<lowerPoints_[1].y << "  "<<lowerPoints_[0].y<<std::endl;
+    ang1 = atan2(upperPoints_[upperPoints_.size() - 2].y - upperPoints_[upperPoints_.size() - 1].y,
+            upperPoints_[upperPoints_.size() - 2].x - upperPoints_[upperPoints_.size() - 1].x);
+    ang2 = atan2(lowerPoints_[1].y - lowerPoints_[0].y,lowerPoints_[1].x - lowerPoints_[0].x);
+
+    ang1 *= 180.0 /3.141592;
+    ang2 *= 180.0 /3.141592;
+    //Check for thickness inbalance//
+    double maxY = upperPoints_[0].y, minY = lowerPoints_[0].y;
+    for(int i=0; i<lowerPoints_.size(); ++i)
+    {
+        if(upperPoints_[i].y > maxY)
+            maxY = upperPoints_[i].y;
+        if(lowerPoints_[i].y > minY)
+            minY = lowerPoints_[i].y;
+    }
+    double ratio = maxY / std::abs(minY);
+    //Check max thickness//
+
+    if(maxY-minY < 0.3)
+        return true;
+    //Checksymetry//
+   // if(ratio > 4 || 1.0 / ratio > 4)
+   //     return true;
+    //Check leading edge pointiness//
+   if((ang1- ang2)< 170.0)
+        return true;
+   //Lastly check for Trailing edge thickness//
+   if(std::abs(lowerPoints_[upperPoints_.size() - 1].y - upperPoints_[0].y) > 0.03)
+           return true;
+    std::cout<<"Anglert " <<ang1<< "  "<<ang2<<std::endl;
     return false;
 }
 

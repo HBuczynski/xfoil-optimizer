@@ -33,7 +33,9 @@ Genome *SingleCrossoverMultiMutationScrambler::mutate(Genome *genome)
 {
     for(int i = 0; i < sizeof(BinaryAirfoilCoefficients) * 8; ++i)
         if(ddist(rng) < params_.mutationRate)
+        {
             toggleBit(genome->getCoefficientsArray(),i);
+        }
     genome->reload();
     if(genome->getGeometry()->isProfileCrossed())
     {

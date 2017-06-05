@@ -84,7 +84,8 @@ void QSimulationProxy::terminate()
         return;
     if(!process_->waitForFinished(TIMEOUT_LONG))
     {
-        qDebug() << "QSimulationProxy::Terminate() - process did not finish - forcing...\r\n";
+        //qDebug() << "QSimulationProxy::Terminate() - process did not finish - forcing...\r\n";
+        status_ = Error;
         process_->terminate();
     }
 
@@ -101,6 +102,7 @@ SimulationProxy::Status QSimulationProxy::pollStatus()
         if(std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - startTime_).count() > params_.xfoilTimeout * 1000)
         {
             status_ = Error;
+            //qDebug() << "Timeout of xfoil";
             terminate();
         }
     }

@@ -6,8 +6,6 @@ Genome::Genome(AirfoilCoefficients coeff) :
                                                     maxCoeffRange_(5.0),
                                                     geom_(nullptr)
 {
-
-    std::cout<<"Constructor of genome"<<std::endl<<std::flush;
     set(coeff);
 
 }

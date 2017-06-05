@@ -133,12 +133,10 @@ void SimulationHandler::saveGeometry()
 
 void SimulationHandler::deleteGeometry()
 {
-   // std::cout<< "DELETE GEOM "<< InstantiateFilename("geometry.dat")<<std::endl;
    std::remove((proxy_->getExePath() + "/" + instantiateFilename("geometry.dat")).c_str());
 }
 void SimulationHandler::deleteResults()
 {
-    //std::cout<< "DELETE RES "<<InstantiateFilename("result.dat")<<std::endl;
     std::remove((proxy_->getExePath() + "/" + instantiateFilename("result.txt")).c_str());
 }
 
