@@ -36,6 +36,20 @@ void Model::calculateBaseProfileParameters(std::string path)
     emit updateBaseChart(geneticOptimizer_->getVectorX(), geneticOptimizer_->getVectorY());
 }
 
+void Model::getOptimizedGeometry(Geometry geometry)
+{
+    std::vector<double> vectorX;
+    std::vector<double> vectorY;
+
+    for(auto points: geometry.getPoints())
+    {
+        vectorX.push_back(points.x);
+        vectorY.push_back(points.y);
+    }
+
+    emit updateOptimizedChart(vectorX, vectorY);
+}
+
 void Model::stopSimulation()
 {
     qDebug() << "stop";
@@ -47,6 +61,8 @@ void Model::startSimulation()
     qDebug() << "start simulation";
 
     runGeneticAlgorithm = true;
+
+    geneticOptimizer_->runGeneticAlgorithm();
 }
 
 void Model::initializeLogger()

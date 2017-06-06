@@ -140,7 +140,11 @@ void GeneticOptimizer::optimizeStep()
 const Geometry GeneticOptimizer::getTopGeometry(int place)
 {
     if(population_.size() != 0)
-        return *population_.begin();
+    {
+        Genome *ret = *population_.begin();
+        Geometry *geom = ret->getGeometry();
+        return *geom;
+    }
 
     return baseGeometry_;
 }
