@@ -2,6 +2,7 @@
 
 #include <cstdlib>
 #include <map>
+#include <QDebug>
 
 GeneticOptimizer::GeneticOptimizer(Config::SimulationParams &params, Config::OptimizerParams &optParams):
                                                                                                             simRunning_(false),
@@ -254,6 +255,26 @@ void GeneticOptimizer::calculateFitness()
         genome->setFitness(fitnessModel_->calculate(genome->getGeometry()->getResults()));
 
     }
+}
+
+AviationProfileParameters GeneticOptimizer::calculateBasicProfile(std::string path)
+{
+    qDebug() << path.c_str();
+
+    Geometry geom("C:\\Users\\Hubert\\Desktop\\xfoil-optimizer\\xfoil\\win32\\NACA_0012.dat");
+
+    SimulationScheduler scheduler(simulationParams_);
+    scheduler.addTask(Task(&geom));
+    scheduler.waitForFinished();
+
+    AviationProfileParameters parameters;
+    qDebug() << "policzyło   " << geom.getResults().isCalculated();
+    double lol = geom.getResults().calcMaxCl().param;
+    qDebug() << "parameters.alfa" << lol;
+    parameters.clMax = geom.getResults().calcMaxCl().param;
+    parameters.cdMax = geom.getResults().calcMinCd().param;
+
+    return parameters;
 }
 
 Genome *GeneticOptimizer::rouletteWheelSelection()

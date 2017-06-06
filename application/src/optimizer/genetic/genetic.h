@@ -7,6 +7,7 @@
 #include "optimizer/genetic/genome.h"
 #include "optimizer/genetic/genome_scrambler.h"
 #include "utility/config.h"
+#include "model/profile_parameters.h"
 
 /**
 *	@file genetic.h
@@ -44,6 +45,8 @@ public:
     virtual void optimizeStep();
     virtual Geometry const getTopGeometry(int place);
     virtual double const getProgress();
+    AviationProfileParameters calculateBasicProfile(std::string path);
+
 
 
     bool isRunning();

@@ -12,7 +12,7 @@ Model::Model()
 
 Model::~Model()
 {
-
+    delete geneticOptimizer_;
 }
 
 void Model::getTargetProfileValues(AviationProfileParameters data)
@@ -32,8 +32,7 @@ void Model::calculateBaseProfileParameters(std::string path)
 
     while(path.find('/') != std::string::npos)
         path.replace(path.find('/'),1, separator.c_str());
-
-    qDebug() << path.c_str();
+    emit setBasicProfileParameters(geneticOptimizer_->calculateBasicProfile(path));
 
 }
 
@@ -59,12 +58,12 @@ void Model::initializeConfigurationReader()
     //to do - do smt if initialize return false
 
     applicationParameters_ = configReader_.getApplicationParameters();
-    //simulationParameters_ = configReader_.getSimulatorParameters();
-//    optimizerParameres_ = configReader_.getOptimizerParameters();
+    simulationParameters_ = configReader_.getSimulatorParameters();
+    optimizerParameres_ = configReader_.getOptimizerParameters();
     projectPath_ = configReader_.getProjectPath();
 }
 
 void Model::initializeGeneticAlgorithm()
 {
-   // geneticOptimizer_.initialize(simulationParameters_);
+    geneticOptimizer_ = new GeneticOptimizer(simulationParameters_, optimizerParameres_);
 }

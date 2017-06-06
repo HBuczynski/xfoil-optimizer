@@ -138,6 +138,7 @@ void SimulationHandler_tests::HandleMultipleParallelSimulations()
     }
 }
 
+
 QTEST_MAIN(SimulationHandler_tests)
 
 #include "tst_simulation_handler_tests.moc"

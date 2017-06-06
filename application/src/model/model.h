@@ -51,5 +51,5 @@ private:
     std::string projectPath_;
     Config::ApplicationParams applicationParameters_;
     Config::SimulationParams simulationParameters_;
-//    OptimizerParameters optimizerParameres_;
+    Config::OptimizerParams optimizerParameres_;
 };
