@@ -12,27 +12,6 @@ View::View(Model *model): model_(model),
 {
     initializeGuiObjects();
     initializeModelViewConnection();
-
-    //only for tests
-//    std::vector<double> dataX;
-//    dataX.push_back(0.15);
-//    dataX.push_back(0.3);
-//    dataX.push_back(0.74);
-//    dataX.push_back(0.3);
-//    dataX.push_back(0.15);
-
-//    //only for tests
-//    std::vector<double> dataY;
-//    dataY.push_back(0.45);
-//    dataY.push_back(0.6);
-//    dataY.push_back(0.24);
-//    dataY.push_back(0.3);
-//    dataY.push_back(0.45);
-
-//    //only for tests
-//    model_->updateBaseChart(dataX, dataY);
-//    model_->updateOptimizedChart(dataX, dataY);
-//    model_->updateGeneticChart(dataX, dataY);
 }
 
 void View::enableProgressBar()
@@ -83,9 +62,6 @@ void View::drawGeneticPlot(const std::vector<double> &dataX, const std::vector<d
 
 void View::buttonsClicked(QString name)
 {
-    //only for test
-    qDebug() << name;
-
     if(name == "button1")
     {
         setFilePath();
@@ -133,19 +109,19 @@ bool View::checkIfTargetIsSet()
     {
         targetParameters_.clMax =guiObjects_.targetValues[0]->property("text").toString().toDouble();
         targetParameters_.alfa = guiObjects_.targetValues[1]->property("text").toString().toDouble();
-        targetParameters_.cdMax = guiObjects_.targetValues[2]->property("text").toString().toDouble();
+        targetParameters_.cdMin = guiObjects_.targetValues[2]->property("text").toString().toDouble();
     }
+
+    emit setTargetProfileValues(targetParameters_);
 
     return flag;
 }
 
 void View::getBaseProfileValues(AviationProfileParameters data)
 {
-    qDebug() << "dostalem sygnal" << data.alfa;
-
     guiObjects_.baseParameters.at(0)->setProperty("text", QString("%2").arg(data.clMax));
     guiObjects_.baseParameters.at(1)->setProperty("text", QString("%2").arg(data.alfa));
-    guiObjects_.baseParameters.at(2)->setProperty("text", QString("%2").arg(data.cdMax));
+    guiObjects_.baseParameters.at(2)->setProperty("text", QString("%2").arg(data.cdMin));
 
     guiObjects_.SET_BASE = true;
 }
@@ -159,7 +135,7 @@ void View::getFitnessParametersLabel(AviationProfileParameters data)
 {
    guiObjects_.fitnessValues.at(0)->setProperty("text", data.alfa);
    guiObjects_.fitnessValues.at(1)->setProperty("text", data.clMax);
-   guiObjects_.fitnessValues.at(2)->setProperty("text", data.cdMax);
+   guiObjects_.fitnessValues.at(2)->setProperty("text", data.cdMin);
 }
 
 void View::initializeGuiObjects()
@@ -177,9 +153,8 @@ void View::initializeGuiObjects()
         initializePlotDialog();
     }
     catch(const ExceptionHandler &ex)
-    {
-        //TO DO: save information to logger and end program
-        qDebug() << ex.e.c_str();   //only for tests
+    {   
+        qDebug() << ex.e.c_str();
     }
 }
 

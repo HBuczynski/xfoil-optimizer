@@ -42,6 +42,7 @@ private:
 	void initializeLogger();
     void initializeConfigurationReader();
     void initializeGeneticAlgorithm();
+    void runOptimizer();
 
     AviationProfileParameters targetProfileData_;
     LogWriter *logger_;
@@ -52,4 +53,6 @@ private:
     Config::ApplicationParams applicationParameters_;
     Config::SimulationParams simulationParameters_;
     Config::OptimizerParams optimizerParameres_;
+
+    bool runGeneticAlgorithm;
 };

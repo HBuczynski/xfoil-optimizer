@@ -57,7 +57,7 @@ GroupBox {
         y: -1
         width: 37
         height: 20
-        text: qsTr("Cd max")
+        text: qsTr("Cd min")
         verticalAlignment: Text.AlignVCenter
         anchors.leftMargin: 18
         anchors.top: parent.top
