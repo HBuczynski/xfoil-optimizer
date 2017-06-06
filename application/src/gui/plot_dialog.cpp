@@ -45,3 +45,8 @@ void PlotDialog::drawChart(const std::vector<double> &dataX, const std::vector<d
 
     QMetaObject::invokeMethod(guiObjects_.plot, "addData", Q_ARG(QVariant, x), Q_ARG(QVariant, y));
 }
+
+void PlotDialog::clear()
+{
+    QMetaObject::invokeMethod(guiObjects_.plot,"clear");
+}

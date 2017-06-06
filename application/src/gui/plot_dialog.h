@@ -27,6 +27,7 @@ public:
     void showDialog();
 
     void drawChart(const std::vector<double> &dataX_, const std::vector<double> &dataY_);
+    void clear();
 
 private:
     QQmlComponent *dialogComponent_;

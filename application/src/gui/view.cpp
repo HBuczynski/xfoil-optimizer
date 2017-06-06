@@ -46,12 +46,18 @@ void View::drawOptimizedChart(const std::vector<double> &dataX, const std::vecto
 {
     QVariantList x, y;
 
+    double yMax = *(std::max_element(dataY.begin(), dataY.end()));
+    double yMin = *(std::min_element(dataY.begin(), dataY.end()));
+
     for(int i=0; i<dataX.size(); ++i)
     {
         x << dataX[i];
         y << dataY[i];
     }
 
+    qDebug() << yMax << yMin ;
+    QMetaObject::invokeMethod(guiObjects_.optimizedPlot, "setAxis", Q_ARG(QVariant, yMax), Q_ARG(QVariant, yMin));
+    QMetaObject::invokeMethod(guiObjects_.optimizedPlot, "clear");
     QMetaObject::invokeMethod(guiObjects_.optimizedPlot, "addData", Q_ARG(QVariant, x), Q_ARG(QVariant, y));
 }
 
