@@ -19,7 +19,7 @@ class AirfoilOptimizer: public QObject
 public:
     virtual void initialize(Geometry &geom) = 0;
     virtual void optimizeStep() = 0;
-    virtual Geometry const getTopGeometry(int place) = 0;
+    virtual Geometry const getTopGeometry() = 0;
     virtual double const getProgress() = 0;
 //public Q_SLOTS:
 //    virtual void simulationBatchComplete(){}
@@ -50,7 +50,7 @@ public:
             progress_ += 0.1;
         }
     }
-    virtual Geometry const getTopGeometry(int place) override
+    virtual Geometry const getTopGeometry() override
     {
         return baseGeom_;
     }

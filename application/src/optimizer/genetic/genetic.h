@@ -47,7 +47,7 @@ public:
     GAState getState();
 
     virtual void optimizeStep();
-    virtual Geometry const getTopGeometry(int place);
+    virtual Geometry const getTopGeometry();
     virtual double const getProgress();
     AviationProfileParameters calculateBasicProfile(std::string path);
 

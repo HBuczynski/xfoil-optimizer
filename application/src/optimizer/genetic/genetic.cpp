@@ -137,7 +137,7 @@ void GeneticOptimizer::optimizeStep()
     }
 }
 
-const Geometry GeneticOptimizer::getTopGeometry(int place)
+const Geometry GeneticOptimizer::getTopGeometry()
 {
     if(population_.size() != 0)
     {

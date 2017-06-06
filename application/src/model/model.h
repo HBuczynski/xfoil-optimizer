@@ -35,7 +35,7 @@ signals:
 public slots:
     void getTargetProfileValues(AviationProfileParameters data);
     void calculateBaseProfileParameters(std::string path);
-    void getOptimizedGeometry(Geometry geometry);
+    void getOptimizedGeometry();
     void stopSimulation();
     void startSimulation();
 
@@ -54,6 +54,4 @@ private:
     Config::ApplicationParams applicationParameters_;
     Config::SimulationParams simulationParameters_;
     Config::OptimizerParams optimizerParameres_;
-
-    bool runGeneticAlgorithm;
 };
