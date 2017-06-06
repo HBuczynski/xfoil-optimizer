@@ -36,10 +36,12 @@ void Model::calculateBaseProfileParameters(std::string path)
     emit updateBaseChart(geneticOptimizer_->getVectorX(), geneticOptimizer_->getVectorY());
 }
 
-void Model::getOptimizedGeometry(Geometry geometry)
+void Model::getOptimizedGeometry()
 {
     std::vector<double> vectorX;
     std::vector<double> vectorY;
+
+    Geometry geometry = geneticOptimizer_->getTopGeometry();
 
     for(auto points: geometry.getPoints())
     {
@@ -84,6 +86,7 @@ void Model::initializeConfigurationReader()
 void Model::initializeGeneticAlgorithm()
 {
     geneticOptimizer_ = new GeneticOptimizer(simulationParameters_, optimizerParameres_);
+    QObject::connect(geneticOptimizer_, SIGNAL(newGenerationGenerated()), this, SLOT(getOptimizedGeometry()));
 }
 
 void Model::runOptimizer()
