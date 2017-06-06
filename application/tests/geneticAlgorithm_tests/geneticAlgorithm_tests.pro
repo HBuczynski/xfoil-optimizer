@@ -31,7 +31,12 @@ win32 {
 win64 {
     #INCLUDEPATH += C:/boost_1_55_0
 }
-
+linux { # For Linux
+    QMAKE_CXXFLAGS += -g -Wall -fprofile-arcs -ftest-coverage -O0
+    QMAKE_LFLAGS += -g -Wall -fprofile-arcs -ftest-coverage  -O0
+    LIBS += -lboost_system \
+            -lgcov
+}
 SOURCES += tst_geneticalgorithm_teststest.cpp \
     ../../src/xfoil/qsimulation.cpp \
     ../../src/xfoil/simulation.cpp \

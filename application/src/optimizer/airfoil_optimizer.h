@@ -19,8 +19,8 @@ public:
     virtual double const getProgress() = 0;
 //public Q_SLOTS:
 //    virtual void simulationBatchComplete(){}
-//Q_SIGNALS:
-//    void optimizationFinished();
+Q_SIGNALS:
+    void optimizationFinished();
 };
 
 class DudOptimizer : public AirfoilOptimizer

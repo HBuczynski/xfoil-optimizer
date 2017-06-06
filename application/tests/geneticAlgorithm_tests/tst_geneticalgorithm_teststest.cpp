@@ -26,7 +26,8 @@ void GeneticAlgorithm_testsTest::GenomObjectRandomizesAfterCreation()
 {
     Genome genomeRand;
     Genome genomeConst;
-    genomeConst.set(BinaryAirfoilCoefficients());
+    BinaryAirfoilCoefficients coeff;
+    genomeConst.set(coeff);
     uint8_t *array1 = genomeConst.getCoefficientsArray();
     uint8_t *array2 = genomeRand.getCoefficientsArray();
     for(int i = 0; i < sizeof(BinaryAirfoilCoefficients); ++i)
@@ -43,7 +44,8 @@ void GeneticAlgorithm_testsTest::PerformSingleOptimizationStepOnSmallPopulation(
     paramsOpt.geneticOptimizer.populationSize = 5;
     paramsOpt.geneticOptimizer.generationCount = 1;
     GeneticOptimizer *optimizer = new GeneticOptimizer(paramsSim,paramsOpt);
-    optimizer->initialize(Geometry());
+    Geometry geom;
+    optimizer->initialize(geom);
     optimizer->runGeneticAlgorithm();
     optimizer->requestStop();
     while(optimizer->isRunning())
@@ -63,7 +65,8 @@ void GeneticAlgorithm_testsTest::PerformMultipleOptimizationStepOnSmallPopulatio
     paramsOpt.geneticOptimizer.populationSize = 6;
     paramsOpt.geneticOptimizer.generationCount = 4;
     GeneticOptimizer *optimizer = new GeneticOptimizer(paramsSim,paramsOpt);
-    optimizer->initialize(Geometry());
+    Geometry geom;
+    optimizer->initialize(geom);
     optimizer->runGeneticAlgorithm();
     while(optimizer->isRunning())
     {

@@ -58,7 +58,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void optimizationFinished();
-
+    void newGenerationGenerated();
 private:
     void generateInitialPopulation();
     void addGenomeToElite(Genome *genome);

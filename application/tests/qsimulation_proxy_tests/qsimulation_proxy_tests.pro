@@ -46,7 +46,10 @@ win64 {
     #INCLUDEPATH += C:/boost_1_55_0
 }
 linux { # For Linux
-    LIBS += -lboost_system
+    QMAKE_CXXFLAGS += -g -Wall -fprofile-arcs -ftest-coverage -O0
+    QMAKE_LFLAGS += -g -Wall -fprofile-arcs -ftest-coverage  -O0
+    LIBS += -lboost_system \
+            -lgcov
 }
 INCLUDEPATH += C:/boost_1_55_0
 HEADERS += \

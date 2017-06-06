@@ -34,7 +34,10 @@ win64 {
     #INCLUDEPATH += C:/boost_1_55_0
 }
 linux { # For Linux
-    LIBS += -lboost_system
+    QMAKE_CXXFLAGS += -g -Wall -fprofile-arcs -ftest-coverage -O0
+    QMAKE_LFLAGS += -g -Wall -fprofile-arcs -ftest-coverage  -O0
+    LIBS += -lboost_system \
+            -lgcov
 }
 SOURCES += tst_geometry_tests.cpp \
     ../../src/optimizer/geometry.cpp \

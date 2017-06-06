@@ -119,6 +119,7 @@ void GeneticOptimizer::optimizeStep()
 
         createPopulationAfterReproduction();
         totalFintess = 0;
+        Q_EMIT newGenerationGenerated();
         std::vector<Task> tasks;
 
         for(auto genome: population_)
@@ -138,7 +139,9 @@ void GeneticOptimizer::optimizeStep()
 
 const Geometry GeneticOptimizer::getTopGeometry(int place)
 {
-    //TODO//
+    if(population_.size() != 0)
+        return *population_.begin();
+
     return baseGeometry_;
 }
 
