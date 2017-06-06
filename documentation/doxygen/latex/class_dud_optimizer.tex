@@ -1,5 +1,14 @@
 \hypertarget{class_dud_optimizer}{}\section{Dud\+Optimizer Class Reference}
 \label{class_dud_optimizer}\index{Dud\+Optimizer@{Dud\+Optimizer}}
+
+
+Dud Airfoil optimizer object for testing interfaces.  
+
+
+
+
+{\ttfamily \#include $<$airfoil\+\_\+optimizer.\+h$>$}
+
 Inheritance diagram for Dud\+Optimizer\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -9,22 +18,28 @@ Inheritance diagram for Dud\+Optimizer\+:\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_dud_optimizer_af26b9a7008edc72eab4904e4412ec807}{}\label{class_dud_optimizer_af26b9a7008edc72eab4904e4412ec807} 
+\mbox{\Hypertarget{class_dud_optimizer_af26b9a7008edc72eab4904e4412ec807}\label{class_dud_optimizer_af26b9a7008edc72eab4904e4412ec807}} 
 {\bfseries Dud\+Optimizer} (\hyperlink{class_geometry}{Geometry} \&geom)
 \item 
-\hypertarget{class_dud_optimizer_ade6ed18e711d2d43967d063015f154ae}{}\label{class_dud_optimizer_ade6ed18e711d2d43967d063015f154ae} 
-virtual void {\bfseries Add\+Base\+Geometry} (\hyperlink{class_geometry}{Geometry} \&geom) override
+\mbox{\Hypertarget{class_dud_optimizer_a1cab6b6d9290cd8b573946eae396ac4a}\label{class_dud_optimizer_a1cab6b6d9290cd8b573946eae396ac4a}} 
+virtual void {\bfseries initialize} (\hyperlink{class_geometry}{Geometry} \&geom) override
 \item 
-\hypertarget{class_dud_optimizer_a12ad186007710f0828cdb74818587685}{}\label{class_dud_optimizer_a12ad186007710f0828cdb74818587685} 
-virtual void {\bfseries Optimize\+Step} () override
+\mbox{\Hypertarget{class_dud_optimizer_a6bb45a864903a58c7b030f94f388e094}\label{class_dud_optimizer_a6bb45a864903a58c7b030f94f388e094}} 
+virtual void {\bfseries optimize\+Step} () override
 \item 
-\hypertarget{class_dud_optimizer_afa2b5ba6daa5d384c005272de5d6a4c3}{}\label{class_dud_optimizer_afa2b5ba6daa5d384c005272de5d6a4c3} 
-virtual \hyperlink{class_geometry}{Geometry} const {\bfseries Get\+Top\+Geometry} (int place) override
+\mbox{\Hypertarget{class_dud_optimizer_af20d6c98319f93ea3d3ee82736900eb5}\label{class_dud_optimizer_af20d6c98319f93ea3d3ee82736900eb5}} 
+virtual \hyperlink{class_geometry}{Geometry} const {\bfseries get\+Top\+Geometry} () override
 \item 
-\hypertarget{class_dud_optimizer_ad5dde8e13b08b6267f34c500fa116c80}{}\label{class_dud_optimizer_ad5dde8e13b08b6267f34c500fa116c80} 
-virtual double const {\bfseries Get\+Progress} () override
+\mbox{\Hypertarget{class_dud_optimizer_ac5cb8e4b437fb0bd9584541e43939809}\label{class_dud_optimizer_ac5cb8e4b437fb0bd9584541e43939809}} 
+virtual double const {\bfseries get\+Progress} () override
 \end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
 
+
+\subsection{Detailed Description}
+Dud Airfoil optimizer object for testing interfaces. 
+
+Allows for different test scenarios 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 

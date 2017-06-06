@@ -2,7 +2,7 @@
 \label{class_genome_scrambler}\index{Genome\+Scrambler@{Genome\+Scrambler}}
 
 
-Representation of abstract class.  
+Abstraction class for Genetic\+Scrambler objects.  
 
 
 
@@ -18,16 +18,18 @@ Inheritance diagram for Genome\+Scrambler\+:\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_genome_scrambler_a742dcbb2809cc85b02b10c0dbfd64c08}{}\label{class_genome_scrambler_a742dcbb2809cc85b02b10c0dbfd64c08} 
-virtual void {\bfseries Mutate} (\hyperlink{class_genome}{Genome} $\ast$genome)=0
+\mbox{\Hypertarget{class_genome_scrambler_a7937beaa7aa3c4a13c8c598ee0afca4a}\label{class_genome_scrambler_a7937beaa7aa3c4a13c8c598ee0afca4a}} 
+virtual \hyperlink{class_genome}{Genome} $\ast$ {\bfseries mutate} (\hyperlink{class_genome}{Genome} $\ast$genome)=0
 \item 
-\hypertarget{class_genome_scrambler_a8301658c631bc714d31eb8d6c111b78e}{}\label{class_genome_scrambler_a8301658c631bc714d31eb8d6c111b78e} 
-virtual \hyperlink{class_genome}{Genome} $\ast$ {\bfseries Crossover} (const unsigned char $\ast$g1, const unsigned char $\ast$g2)=0
+\mbox{\Hypertarget{class_genome_scrambler_a91f7407ea74f20ffc60d7af0de4e8e18}\label{class_genome_scrambler_a91f7407ea74f20ffc60d7af0de4e8e18}} 
+virtual \hyperlink{class_genome}{Genome} $\ast$ {\bfseries crossover} (\hyperlink{class_genome}{Genome} $\ast$g1, \hyperlink{class_genome}{Genome} $\ast$g2)=0
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-Representation of abstract class. 
+Abstraction class for Genetic\+Scrambler objects. 
+
+Genetic\+Scrambler object allows for genome crossover according to different strategies eg. single point Multi\+Point etc. 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 

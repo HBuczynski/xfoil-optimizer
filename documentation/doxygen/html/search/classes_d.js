@@ -7,5 +7,6 @@ var searchData=
   ['simulationhandler',['SimulationHandler',['../class_simulation_handler.html',1,'']]],
   ['simulationparams',['SimulationParams',['../struct_config_1_1_simulation_params.html',1,'Config']]],
   ['simulationproxy',['SimulationProxy',['../class_simulation_proxy.html',1,'']]],
-  ['simulationscheduler',['SimulationScheduler',['../class_simulation_scheduler.html',1,'']]]
+  ['simulationscheduler',['SimulationScheduler',['../class_simulation_scheduler.html',1,'']]],
+  ['singlecrossovermultimutationscrambler',['SingleCrossoverMultiMutationScrambler',['../class_single_crossover_multi_mutation_scrambler.html',1,'']]]
 ];

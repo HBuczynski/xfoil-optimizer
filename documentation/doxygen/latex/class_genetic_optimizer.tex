@@ -18,61 +18,77 @@ Inheritance diagram for Genetic\+Optimizer\+:\begin{figure}[H]
 \subsection*{Public Types}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_genetic_optimizer_aa91faeb519e387199da6988e60f4a135}{}\label{class_genetic_optimizer_aa91faeb519e387199da6988e60f4a135} 
+\mbox{\Hypertarget{class_genetic_optimizer_aa91faeb519e387199da6988e60f4a135}\label{class_genetic_optimizer_aa91faeb519e387199da6988e60f4a135}} 
 enum {\bfseries G\+A\+State} \{ \newline
 {\bfseries Not\+Initialized}, 
+{\bfseries Initialized}, 
 {\bfseries Simulation\+In\+Progress}, 
 {\bfseries Generation\+Complete}, 
-{\bfseries Optimization\+Complete\+Target\+Reached}, 
 \newline
+{\bfseries Optimization\+Complete\+Target\+Reached}, 
 {\bfseries Optimization\+Complete\+Final\+Generation}
  \}
 \end{DoxyCompactItemize}
 \subsection*{Public Slots}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_genetic_optimizer_ad7fcac7f513d98f81eb91f27a5a20313}{}\label{class_genetic_optimizer_ad7fcac7f513d98f81eb91f27a5a20313} 
+\mbox{\Hypertarget{class_genetic_optimizer_ad7fcac7f513d98f81eb91f27a5a20313}\label{class_genetic_optimizer_ad7fcac7f513d98f81eb91f27a5a20313}} 
 virtual void {\bfseries simulation\+Batch\+Complete} ()
+\item 
+\mbox{\Hypertarget{class_genetic_optimizer_ab8fc3a1363e8cc3eb2259354ee0d689a}\label{class_genetic_optimizer_ab8fc3a1363e8cc3eb2259354ee0d689a}} 
+void {\bfseries request\+Stop} ()
 \end{DoxyCompactItemize}
 \subsection*{Signals}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_genetic_optimizer_ad51ae7c1b9048c2d9df23269ac9281c8}{}\label{class_genetic_optimizer_ad51ae7c1b9048c2d9df23269ac9281c8} 
+\mbox{\Hypertarget{class_genetic_optimizer_ad51ae7c1b9048c2d9df23269ac9281c8}\label{class_genetic_optimizer_ad51ae7c1b9048c2d9df23269ac9281c8}} 
 void {\bfseries optimization\+Finished} ()
+\item 
+\mbox{\Hypertarget{class_genetic_optimizer_ab01f9fc4d56f6eccc80b2ed61ca91c0f}\label{class_genetic_optimizer_ab01f9fc4d56f6eccc80b2ed61ca91c0f}} 
+void {\bfseries new\+Generation\+Generated} ()
 \end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_genetic_optimizer_aee9c0a4fcf7738ebb36b866a6167ecc1}{}\label{class_genetic_optimizer_aee9c0a4fcf7738ebb36b866a6167ecc1} 
-{\bfseries Genetic\+Optimizer} (\hyperlink{struct_config_1_1_simulation_params}{Config\+::\+Simulation\+Params} \&params, \hyperlink{struct_config_1_1_optimizer_params_1_1_fitness}{Config\+::\+Optimizer\+Params\+::\+Fitness} \&fitness)
+\mbox{\Hypertarget{class_genetic_optimizer_a64d3d782d76c1baad7e3abd37cf376ad}\label{class_genetic_optimizer_a64d3d782d76c1baad7e3abd37cf376ad}} 
+{\bfseries Genetic\+Optimizer} (\hyperlink{struct_config_1_1_simulation_params}{Config\+::\+Simulation\+Params} \&params, \hyperlink{struct_config_1_1_optimizer_params}{Config\+::\+Optimizer\+Params} \&opt\+Params)
 \item 
-\hypertarget{class_genetic_optimizer_af0e47a91e79cf2361b6974d699504459}{}\label{class_genetic_optimizer_af0e47a91e79cf2361b6974d699504459} 
-void {\bfseries initialize} ()
+\mbox{\Hypertarget{class_genetic_optimizer_a56ed2a002152fa57bec6596c1fbf220f}\label{class_genetic_optimizer_a56ed2a002152fa57bec6596c1fbf220f}} 
+virtual void {\bfseries initialize} (\hyperlink{class_geometry}{Geometry} \&geom)
 \item 
-\hypertarget{class_genetic_optimizer_ac3350b35f1b7072ec75aef879d74d125}{}\label{class_genetic_optimizer_ac3350b35f1b7072ec75aef879d74d125} 
+\mbox{\Hypertarget{class_genetic_optimizer_ac3350b35f1b7072ec75aef879d74d125}\label{class_genetic_optimizer_ac3350b35f1b7072ec75aef879d74d125}} 
 void {\bfseries run\+Genetic\+Algorithm} ()
 \item 
-\hypertarget{class_genetic_optimizer_a701cb357dee66f50f7fab0307536ff86}{}\label{class_genetic_optimizer_a701cb357dee66f50f7fab0307536ff86} 
-G\+A\+State {\bfseries Get\+State} ()
+\mbox{\Hypertarget{class_genetic_optimizer_a33817c3a5cf8f9590a0054636af4510b}\label{class_genetic_optimizer_a33817c3a5cf8f9590a0054636af4510b}} 
+G\+A\+State {\bfseries get\+State} ()
 \item 
-\hypertarget{class_genetic_optimizer_a33826271122b05404035cd49e5c4db11}{}\label{class_genetic_optimizer_a33826271122b05404035cd49e5c4db11} 
-virtual void {\bfseries Add\+Base\+Geometry} (\hyperlink{class_geometry}{Geometry} \&geom)
+\mbox{\Hypertarget{class_genetic_optimizer_adb9c71703b5e2cb13bcb8c3c4b49b743}\label{class_genetic_optimizer_adb9c71703b5e2cb13bcb8c3c4b49b743}} 
+virtual void {\bfseries optimize\+Step} ()
 \item 
-\hypertarget{class_genetic_optimizer_a95aceb015fdaafbd8452cfb82697e5af}{}\label{class_genetic_optimizer_a95aceb015fdaafbd8452cfb82697e5af} 
-virtual void {\bfseries Optimize\+Step} ()
+\mbox{\Hypertarget{class_genetic_optimizer_afbce0360126b8cb9f3e242d3bbc02422}\label{class_genetic_optimizer_afbce0360126b8cb9f3e242d3bbc02422}} 
+virtual \hyperlink{class_geometry}{Geometry} const {\bfseries get\+Top\+Geometry} ()
 \item 
-\hypertarget{class_genetic_optimizer_a86946cfba2c49218acde44312e20ed46}{}\label{class_genetic_optimizer_a86946cfba2c49218acde44312e20ed46} 
-virtual \hyperlink{class_geometry}{Geometry} const {\bfseries Get\+Top\+Geometry} (int place)
+\mbox{\Hypertarget{class_genetic_optimizer_a8d9aea6ca935024e3c5ecbc10b10c2a2}\label{class_genetic_optimizer_a8d9aea6ca935024e3c5ecbc10b10c2a2}} 
+virtual double const {\bfseries get\+Progress} ()
 \item 
-\hypertarget{class_genetic_optimizer_a256ecf866007f0860a85bdca34754bd8}{}\label{class_genetic_optimizer_a256ecf866007f0860a85bdca34754bd8} 
-virtual double const {\bfseries Get\+Progress} ()
+\mbox{\Hypertarget{class_genetic_optimizer_a1db42893114197a9959fa5f7ac0176ae}\label{class_genetic_optimizer_a1db42893114197a9959fa5f7ac0176ae}} 
+\hyperlink{struct_aviation_profile_parameters}{Aviation\+Profile\+Parameters} {\bfseries calculate\+Basic\+Profile} (std\+::string path)
+\item 
+\mbox{\Hypertarget{class_genetic_optimizer_a255076a279ba7c6665b6d06fb871f620}\label{class_genetic_optimizer_a255076a279ba7c6665b6d06fb871f620}} 
+std\+::vector$<$ double $>$ {\bfseries get\+VectorX} ()
+\item 
+\mbox{\Hypertarget{class_genetic_optimizer_a679345a9ca88eb5122f4192c4239c276}\label{class_genetic_optimizer_a679345a9ca88eb5122f4192c4239c276}} 
+std\+::vector$<$ double $>$ {\bfseries get\+VectorY} ()
+\item 
+\mbox{\Hypertarget{class_genetic_optimizer_a096ebb1c1b1c0630516373b236c71985}\label{class_genetic_optimizer_a096ebb1c1b1c0630516373b236c71985}} 
+bool {\bfseries is\+Running} ()
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Class contains implementation of the genetic algorithm. 
 
-Genetic Optimizer provides necessary objects and methods to use genetic algorithm. 
+Genetic Optimizer provides necessary objects and methods to use genetic algorithm. General usage operates on signals and slots -\/ after run\+Simulation Slot is invoked initial population is generated And simulation is handled bu \hyperlink{class_simulation_scheduler}{Simulation\+Scheduler} object 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 

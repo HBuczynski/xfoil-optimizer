@@ -2,11 +2,6 @@
 \label{class_q_simulation_proxy}\index{Q\+Simulation\+Proxy@{Q\+Simulation\+Proxy}}
 
 
-IO stream interface using QT Qprocess A\+PI.  
-
-
-
-
 {\ttfamily \#include $<$qsimulation.\+h$>$}
 
 Inheritance diagram for Q\+Simulation\+Proxy\+:\begin{figure}[H]
@@ -18,40 +13,42 @@ Inheritance diagram for Q\+Simulation\+Proxy\+:\begin{figure}[H]
 \subsection*{Public Types}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_q_simulation_proxy_a85e46e407b5003b30885178dbf01edfb}{}\label{class_q_simulation_proxy_a85e46e407b5003b30885178dbf01edfb} 
+\mbox{\Hypertarget{class_q_simulation_proxy_a85e46e407b5003b30885178dbf01edfb}\label{class_q_simulation_proxy_a85e46e407b5003b30885178dbf01edfb}} 
 typedef std\+::chrono\+::steady\+\_\+clock\+::time\+\_\+point {\bfseries Time\+Point}
 \item 
-\hypertarget{class_q_simulation_proxy_a4dc47dcbf523e98cb6290707e88297dc}{}\label{class_q_simulation_proxy_a4dc47dcbf523e98cb6290707e88297dc} 
+\mbox{\Hypertarget{class_q_simulation_proxy_a4dc47dcbf523e98cb6290707e88297dc}\label{class_q_simulation_proxy_a4dc47dcbf523e98cb6290707e88297dc}} 
 typedef std\+::chrono\+::steady\+\_\+clock {\bfseries Clock}
 \end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_q_simulation_proxy_a10836d0c32979096e2f717fc52fe9cfe}{}\label{class_q_simulation_proxy_a10836d0c32979096e2f717fc52fe9cfe} 
+\mbox{\Hypertarget{class_q_simulation_proxy_a10836d0c32979096e2f717fc52fe9cfe}\label{class_q_simulation_proxy_a10836d0c32979096e2f717fc52fe9cfe}} 
 {\bfseries Q\+Simulation\+Proxy} (const \hyperlink{struct_config_1_1_simulation_params}{Config\+::\+Simulation\+Params} \&params, Q\+Object $\ast$parent=0)
 \item 
-\hypertarget{class_q_simulation_proxy_ac2ec0d6fcbb367a09215fa74a0e07097}{}\label{class_q_simulation_proxy_ac2ec0d6fcbb367a09215fa74a0e07097} 
-virtual void {\bfseries Add\+Command} (std\+::string command) override
+\mbox{\Hypertarget{class_q_simulation_proxy_a742cc06c1570725a477f8df130718982}\label{class_q_simulation_proxy_a742cc06c1570725a477f8df130718982}} 
+virtual void {\bfseries add\+Command} (std\+::string command) override
 \item 
-\hypertarget{class_q_simulation_proxy_accbf718d10c3d97bc969d40041079a2e}{}\label{class_q_simulation_proxy_accbf718d10c3d97bc969d40041079a2e} 
-virtual void {\bfseries Run} () override
+\mbox{\Hypertarget{class_q_simulation_proxy_abfbfab05b9a78a9fdbf213cbecf05548}\label{class_q_simulation_proxy_abfbfab05b9a78a9fdbf213cbecf05548}} 
+virtual void {\bfseries run} () override
 \item 
-\hypertarget{class_q_simulation_proxy_aef1ca5b3fa662109c5f45e0b277df2db}{}\label{class_q_simulation_proxy_aef1ca5b3fa662109c5f45e0b277df2db} 
-virtual void {\bfseries Terminate} () override
+\mbox{\Hypertarget{class_q_simulation_proxy_a6dbc671e0a5a8a476fc3e7b0b3df628d}\label{class_q_simulation_proxy_a6dbc671e0a5a8a476fc3e7b0b3df628d}} 
+virtual void {\bfseries terminate} () override
 \item 
-\hypertarget{class_q_simulation_proxy_aae992d752c79bca078612afb918a0683}{}\label{class_q_simulation_proxy_aae992d752c79bca078612afb918a0683} 
-virtual Status {\bfseries Poll\+Status} () override
+\mbox{\Hypertarget{class_q_simulation_proxy_a39ce37ffed6195d802d6ccc964702beb}\label{class_q_simulation_proxy_a39ce37ffed6195d802d6ccc964702beb}} 
+virtual Status {\bfseries poll\+Status} () override
 \item 
-\hypertarget{class_q_simulation_proxy_ab8be04fedafdc3f9924703dafb68611b}{}\label{class_q_simulation_proxy_ab8be04fedafdc3f9924703dafb68611b} 
-virtual std\+::string const {\bfseries Get\+Program\+Output} () override
+\mbox{\Hypertarget{class_q_simulation_proxy_a2605ac2db38c4e2746bb5ff4a8eec02e}\label{class_q_simulation_proxy_a2605ac2db38c4e2746bb5ff4a8eec02e}} 
+virtual std\+::string const {\bfseries get\+Program\+Output} () override
 \item 
-\hypertarget{class_q_simulation_proxy_a51336e36115ed18a9b78aba8fdabe4db}{}\label{class_q_simulation_proxy_a51336e36115ed18a9b78aba8fdabe4db} 
-virtual std\+::string const {\bfseries Get\+Exe\+Path} () override
+\mbox{\Hypertarget{class_q_simulation_proxy_ac821f1c368462d4826b6a1872092921d}\label{class_q_simulation_proxy_ac821f1c368462d4826b6a1872092921d}} 
+virtual std\+::string const {\bfseries get\+Exe\+Path} () override
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-IO stream interface using QT Qprocess A\+PI. 
+Simulation Proxy implementation using Qprocess. The proxy spawns new child process with xfoil and monitors its execution. There is no way of implementing reliable two way communication thus we hte process awaits timeout or termination and interprets the results
+
+IO stream interface using QT Qprocess A\+PI 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 

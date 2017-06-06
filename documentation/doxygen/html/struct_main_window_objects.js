@@ -1,0 +1,25 @@
+var struct_main_window_objects =
+[
+    [ "baseChartFrame", "struct_main_window_objects.html#a7377475ac90b86521112633e35a7455d", null ],
+    [ "baseParameters", "struct_main_window_objects.html#a1abbb394cc7ea94d4cd9d37f53e373a2", null ],
+    [ "baseParametersRoot", "struct_main_window_objects.html#abdfa7ef5b54f46708493aa75bc8857b8", null ],
+    [ "basePlot", "struct_main_window_objects.html#ac937bbf4b515456afc0a02a69b864da2", null ],
+    [ "busyIndicator", "struct_main_window_objects.html#a641ea5e0d975030e97f61e691754688d", null ],
+    [ "buttonsCount", "struct_main_window_objects.html#afefa46ef2b7b2bbb8463510cbd1fa96c", null ],
+    [ "fitnessValues", "struct_main_window_objects.html#a0c7e32f66c72e8a5d4f59a4a1c3d2ae3", null ],
+    [ "fitnessValuesRoot", "struct_main_window_objects.html#a9baa2379c0784fa902c370c22364d53a", null ],
+    [ "mainWindow", "struct_main_window_objects.html#ab6864383c5a6b6b5e2bf103d95ed36ce", null ],
+    [ "optimizeChartFrame", "struct_main_window_objects.html#a327f6ab5bc103545a2bdf71af2709bb1", null ],
+    [ "optimizedPlot", "struct_main_window_objects.html#a340c6d92e16fc0e18c084ccb31022002", null ],
+    [ "optimizerSettings", "struct_main_window_objects.html#a025c228783402e4171b6b10255e6c299", null ],
+    [ "parametersLabelCount", "struct_main_window_objects.html#a90fb8550521905b8ff5deb3ada029bf6", null ],
+    [ "RUN_BUTTON_IS_PRESSED", "struct_main_window_objects.html#a33cf57580a48e05aa26084a2e885c56b", null ],
+    [ "runButton", "struct_main_window_objects.html#ad56f352e1aef36d43dbfd98d9275a104", null ],
+    [ "SET_BASE", "struct_main_window_objects.html#afd2840313b5e375d9fc611433f881481", null ],
+    [ "SET_TARGET", "struct_main_window_objects.html#a8ecfc11bef148eccb169de602894f430", null ],
+    [ "settingsButtons", "struct_main_window_objects.html#a98363267c86a7f59c7693ca5be07b3ee", null ],
+    [ "settingsButtonsRoot", "struct_main_window_objects.html#a005329df1cbb43b6a5efada959b08109", null ],
+    [ "stopButton", "struct_main_window_objects.html#a0e90147f2b6515e2fb72d81e1a332d52", null ],
+    [ "targetValues", "struct_main_window_objects.html#af9867c17eb5a246afe57fef072c42950", null ],
+    [ "targetValuesRoot", "struct_main_window_objects.html#a1c9dfd930602bbe606b2c9e23eaf1e7a", null ]
+];

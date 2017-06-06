@@ -13,8 +13,7 @@ typedef std::uint8_t byte;
 
 /**
 *	@struct AirfoilCoefficients
-*   Param become larger: Overall shape becomeshigher
-*   Param become smaller: Overall shape becomes lower
+*   Structure with coefficient for airfoil curve generation
 *   @var AirfoilCoefficients::p_u
 *   Param become larger: Overall shape becomeshigher
 *   Param become smaller: Overall shape becomes lower

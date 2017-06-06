@@ -1,27 +1,47 @@
 \hypertarget{class_airfoil_optimizer}{}\section{Airfoil\+Optimizer Class Reference}
 \label{class_airfoil_optimizer}\index{Airfoil\+Optimizer@{Airfoil\+Optimizer}}
+
+
+Abstract Airfoil optimizer object for managing Optimization and communication with model.  
+
+
+
+
+{\ttfamily \#include $<$airfoil\+\_\+optimizer.\+h$>$}
+
 Inheritance diagram for Airfoil\+Optimizer\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[height=3.000000cm]{class_airfoil_optimizer}
 \end{center}
 \end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_airfoil_optimizer_ab9c9cba16c69c178be6344c7d57794aa}\label{class_airfoil_optimizer_ab9c9cba16c69c178be6344c7d57794aa}} 
+void {\bfseries optimization\+Finished} ()
+\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_airfoil_optimizer_a8bff6847d64da457709efdb4e745faca}{}\label{class_airfoil_optimizer_a8bff6847d64da457709efdb4e745faca} 
-virtual void {\bfseries Add\+Base\+Geometry} (\hyperlink{class_geometry}{Geometry} \&geom)=0
+\mbox{\Hypertarget{class_airfoil_optimizer_a6547cf20afd5820b7ce961e5777d02a6}\label{class_airfoil_optimizer_a6547cf20afd5820b7ce961e5777d02a6}} 
+virtual void {\bfseries initialize} (\hyperlink{class_geometry}{Geometry} \&geom)=0
 \item 
-\hypertarget{class_airfoil_optimizer_aae4cfe4a39abc62969ff452ffb39a7cc}{}\label{class_airfoil_optimizer_aae4cfe4a39abc62969ff452ffb39a7cc} 
-virtual void {\bfseries Optimize\+Step} ()=0
+\mbox{\Hypertarget{class_airfoil_optimizer_abe159aa3cef40f5b25ecca8fab1353d1}\label{class_airfoil_optimizer_abe159aa3cef40f5b25ecca8fab1353d1}} 
+virtual void {\bfseries optimize\+Step} ()=0
 \item 
-\hypertarget{class_airfoil_optimizer_afee9d3b8b967ae69f04a5daa392ee39e}{}\label{class_airfoil_optimizer_afee9d3b8b967ae69f04a5daa392ee39e} 
-virtual \hyperlink{class_geometry}{Geometry} const {\bfseries Get\+Top\+Geometry} (int place)=0
+\mbox{\Hypertarget{class_airfoil_optimizer_af97435c1a0351b2ed9597a5c522e7c7f}\label{class_airfoil_optimizer_af97435c1a0351b2ed9597a5c522e7c7f}} 
+virtual \hyperlink{class_geometry}{Geometry} const {\bfseries get\+Top\+Geometry} ()=0
 \item 
-\hypertarget{class_airfoil_optimizer_a9c6bfbbf160a67847a9283cee0676a72}{}\label{class_airfoil_optimizer_a9c6bfbbf160a67847a9283cee0676a72} 
-virtual double const {\bfseries Get\+Progress} ()=0
+\mbox{\Hypertarget{class_airfoil_optimizer_a5180dad58c1256ca4909e497f1c2b516}\label{class_airfoil_optimizer_a5180dad58c1256ca4909e497f1c2b516}} 
+virtual double const {\bfseries get\+Progress} ()=0
 \end{DoxyCompactItemize}
 
+
+\subsection{Detailed Description}
+Abstract Airfoil optimizer object for managing Optimization and communication with model. 
+
+Allows for multiple optimizer implementations 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 

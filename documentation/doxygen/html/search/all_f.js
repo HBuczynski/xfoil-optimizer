@@ -26,6 +26,7 @@ var searchData=
   ['simulationparams',['SimulationParams',['../struct_config_1_1_simulation_params.html',1,'Config']]],
   ['simulationproxy',['SimulationProxy',['../class_simulation_proxy.html',1,'']]],
   ['simulationscheduler',['SimulationScheduler',['../class_simulation_scheduler.html',1,'']]],
+  ['singlecrossovermultimutationscrambler',['SingleCrossoverMultiMutationScrambler',['../class_single_crossover_multi_mutation_scrambler.html',1,'']]],
   ['size',['Size',['../class_ti_xml_printer.html#ad01375ae9199bd2f48252eaddce3039d',1,'TiXmlPrinter']]],
   ['standalone',['Standalone',['../class_ti_xml_declaration.html#a1f2f8a741593d15a61e491e5024cacef',1,'TiXmlDeclaration']]],
   ['str',['Str',['../class_ti_xml_printer.html#a3bd4daf44309b41f5813a833caa0d1c9',1,'TiXmlPrinter']]]

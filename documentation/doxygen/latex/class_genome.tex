@@ -1,45 +1,71 @@
 \hypertarget{class_genome}{}\section{Genome Class Reference}
 \label{class_genome}\index{Genome@{Genome}}
+
+
+Class contains implementation of the genome.  
+
+
+
+
+{\ttfamily \#include $<$genome.\+h$>$}
+
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_genome_a2a9830ff70a104defa32311a0df1b23b}{}\label{class_genome_a2a9830ff70a104defa32311a0df1b23b} 
+\mbox{\Hypertarget{class_genome_a2a9830ff70a104defa32311a0df1b23b}\label{class_genome_a2a9830ff70a104defa32311a0df1b23b}} 
 {\bfseries Genome} (\hyperlink{struct_airfoil_coefficients}{Airfoil\+Coefficients} coeff)
 \item 
-\hypertarget{class_genome_a010985b266e041f3c96174aa0e90f8fc}{}\label{class_genome_a010985b266e041f3c96174aa0e90f8fc} 
+\mbox{\Hypertarget{class_genome_a010985b266e041f3c96174aa0e90f8fc}\label{class_genome_a010985b266e041f3c96174aa0e90f8fc}} 
 {\bfseries Genome} (unsigned char $\ast$array)
 \item 
-\hypertarget{class_genome_a0604b3988e6fd685f0eaffc124aed0c9}{}\label{class_genome_a0604b3988e6fd685f0eaffc124aed0c9} 
-void {\bfseries Set} (\hyperlink{struct_airfoil_coefficients}{Airfoil\+Coefficients} \&coefficients)
+\mbox{\Hypertarget{class_genome_a2230db644307d8ff96a908ad0eb20dd5}\label{class_genome_a2230db644307d8ff96a908ad0eb20dd5}} 
+void {\bfseries set} (\hyperlink{struct_airfoil_coefficients}{Airfoil\+Coefficients} \&coefficients)
 \item 
-\hypertarget{class_genome_a80747aa266026e16dfdaf1449ba5c8aa}{}\label{class_genome_a80747aa266026e16dfdaf1449ba5c8aa} 
-\hyperlink{class_geometry}{Geometry} $\ast$ {\bfseries get\+Geometry} ()
-\item 
-\hypertarget{class_genome_a8ebe6f37306c3aa87a8d711ec778609f}{}\label{class_genome_a8ebe6f37306c3aa87a8d711ec778609f} 
+\mbox{\Hypertarget{class_genome_a8ebe6f37306c3aa87a8d711ec778609f}\label{class_genome_a8ebe6f37306c3aa87a8d711ec778609f}} 
 void {\bfseries set\+Fitness} (double value)
 \item 
-\hypertarget{class_genome_a3b61a1cd0050ad1297867a0fc42736a6}{}\label{class_genome_a3b61a1cd0050ad1297867a0fc42736a6} 
+\mbox{\Hypertarget{class_genome_adee73c2b3f2158273e52e9aad0709023}\label{class_genome_adee73c2b3f2158273e52e9aad0709023}} 
+void {\bfseries set} (\hyperlink{struct_binary_airfoil_coefficients}{Binary\+Airfoil\+Coefficients} \&airfoil\+Coefficients)
+\item 
+\mbox{\Hypertarget{class_genome_ae3adc37122e4fc822ce1c322d4b6d726}\label{class_genome_ae3adc37122e4fc822ce1c322d4b6d726}} 
+void {\bfseries set} (unsigned char $\ast$array)
+\item 
+\mbox{\Hypertarget{class_genome_a80747aa266026e16dfdaf1449ba5c8aa}\label{class_genome_a80747aa266026e16dfdaf1449ba5c8aa}} 
+\hyperlink{class_geometry}{Geometry} $\ast$ {\bfseries get\+Geometry} ()
+\item 
+\mbox{\Hypertarget{class_genome_a3b61a1cd0050ad1297867a0fc42736a6}\label{class_genome_a3b61a1cd0050ad1297867a0fc42736a6}} 
 double \& {\bfseries get\+Fitness} ()
 \item 
-\hypertarget{class_genome_a10f096f993bdecc320aebbd2ec867305}{}\label{class_genome_a10f096f993bdecc320aebbd2ec867305} 
-unsigned char $\ast$ {\bfseries get\+Coefficients\+Array} ()
+\mbox{\Hypertarget{class_genome_a6969cbfb886eb9a3508b4c2c0ea6ff05}\label{class_genome_a6969cbfb886eb9a3508b4c2c0ea6ff05}} 
+uint8\+\_\+t $\ast$ {\bfseries get\+Coefficients\+Array} ()
 \item 
-\hypertarget{class_genome_ac12d4227a6f8c923c7f65d760cdeac35}{}\label{class_genome_ac12d4227a6f8c923c7f65d760cdeac35} 
+\mbox{\Hypertarget{class_genome_ac12d4227a6f8c923c7f65d760cdeac35}\label{class_genome_ac12d4227a6f8c923c7f65d760cdeac35}} 
 \hyperlink{struct_airfoil_coefficients}{Airfoil\+Coefficients} {\bfseries get\+Coefficients} ()
 \item 
-\hypertarget{class_genome_a8599bccee27d2594b0364f011cfe4b3f}{}\label{class_genome_a8599bccee27d2594b0364f011cfe4b3f} 
+\mbox{\Hypertarget{class_genome_a1eb60345de5968a454d3868e66bd2773}\label{class_genome_a1eb60345de5968a454d3868e66bd2773}} 
+\hyperlink{struct_binary_airfoil_coefficients}{Binary\+Airfoil\+Coefficients} {\bfseries get\+Binary\+Coefficients} ()
+\item 
+\mbox{\Hypertarget{class_genome_a8599bccee27d2594b0364f011cfe4b3f}\label{class_genome_a8599bccee27d2594b0364f011cfe4b3f}} 
 uint8\+\_\+t {\bfseries get\+Random\+Byte} ()
 \item 
-\hypertarget{class_genome_ad05f549a5fb6603245f6bbd303d60ec1}{}\label{class_genome_ad05f549a5fb6603245f6bbd303d60ec1} 
-void {\bfseries Set} (\hyperlink{struct_binary_airfoil_coefficients}{Binary\+Airfoil\+Coefficients} \&airfoil\+Coefficients)
+\mbox{\Hypertarget{class_genome_af7cf0bc049e9a79ec5ef48a3b2b4498e}\label{class_genome_af7cf0bc049e9a79ec5ef48a3b2b4498e}} 
+void {\bfseries randomize} ()
 \item 
-\hypertarget{class_genome_a390f17f811a33f34d7bcf4a61c3b9c5d}{}\label{class_genome_a390f17f811a33f34d7bcf4a61c3b9c5d} 
-void {\bfseries Set} (unsigned char $\ast$array)
+\mbox{\Hypertarget{class_genome_ab026e27931513c4e665e5d22f7e482a0}\label{class_genome_ab026e27931513c4e665e5d22f7e482a0}} 
+void {\bfseries reload} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_genome_a4e942202f21f552157604cda9529e19d}{}\label{class_genome_a4e942202f21f552157604cda9529e19d} 
-void {\bfseries Randomize} ()
+\mbox{\Hypertarget{class_genome_a99b2cd9bd15161e49840ca43c79a9cae}\label{class_genome_a99b2cd9bd15161e49840ca43c79a9cae}} 
+\hyperlink{struct_binary_airfoil_coefficients}{Binary\+Airfoil\+Coefficients} {\bfseries binary\+Coefficients\+\_\+}
 \end{DoxyCompactItemize}
 
+
+\subsection{Detailed Description}
+Class contains implementation of the genome. 
+
+\hyperlink{class_genome}{Genome} is a representation of one instance of population. It contains its own \hyperlink{class_geometry}{Geometry} generated based on current genome binary representation. The class provides also methods for array access of genome 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 

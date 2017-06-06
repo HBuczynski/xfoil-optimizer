@@ -6,13 +6,17 @@ File providing methods to genome mutation and crossover.
 
 
 {\ttfamily \#include \char`\"{}optimizer/genetic/genome.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}utility/config.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$random$>$}\newline
 \subsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
 class \hyperlink{class_genome_scrambler}{Genome\+Scrambler}
-\begin{DoxyCompactList}\small\item\em Representation of abstract class. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Abstraction class for Genetic\+Scrambler objects. \end{DoxyCompactList}\item 
 class \hyperlink{class_dud_scrambler}{Dud\+Scrambler}
-\begin{DoxyCompactList}\small\item\em Class provides methods to genome reproduction. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Test class for Genetic\+Scrambler objects. \end{DoxyCompactList}\item 
+class \hyperlink{class_single_crossover_multi_mutation_scrambler}{Single\+Crossover\+Multi\+Mutation\+Scrambler}
+\begin{DoxyCompactList}\small\item\em Single\+Crossover Multipoint Mutation Genetic\+Scrambler object. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}

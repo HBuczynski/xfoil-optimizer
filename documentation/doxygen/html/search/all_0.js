@@ -6,6 +6,7 @@ var searchData=
   ['airfoil_5foptimizer_2eh',['airfoil_optimizer.h',['../airfoil__optimizer_8h.html',1,'']]],
   ['airfoilcoefficients',['AirfoilCoefficients',['../struct_airfoil_coefficients.html',1,'']]],
   ['airfoiloptimizer',['AirfoilOptimizer',['../class_airfoil_optimizer.html',1,'']]],
+  ['alfa',['alfa',['../struct_sim_results_1_1_result_entry.html#aeebdc22ea1d6227bc7bb734b772cdde4',1,'SimResults::ResultEntry']]],
   ['applicationparams',['ApplicationParams',['../struct_config_1_1_application_params.html',1,'Config']]],
   ['attribute',['Attribute',['../class_ti_xml_element.html#a6042f518748f475a7ac4b4e0b509eb05',1,'TiXmlElement::Attribute(const char *name) const'],['../class_ti_xml_element.html#a8005d0b808fd02bd1246710cdf95e5f6',1,'TiXmlElement::Attribute(const char *name, int *i) const'],['../class_ti_xml_element.html#a09df893402d0ab1402c8725e6d30ec04',1,'TiXmlElement::Attribute(const char *name, double *d) const']]],
   ['aviationprofileparameters',['AviationProfileParameters',['../struct_aviation_profile_parameters.html',1,'']]]
