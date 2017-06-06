@@ -244,6 +244,7 @@ const SimResults &Geometry::getResults()
 void Geometry::save(std::string filename)
 {
     //Repair - look up report!
+    AirfoilCoefficients saveCoeff = coefficients_;
     calculateCoefficients();
     transform();
     //Alert this is because function generating airfoil is wrong//
@@ -269,6 +270,8 @@ void Geometry::save(std::string filename)
     {
         throw std::invalid_argument("Invalid file path");
     }
+    coefficients_ = saveCoeff;
+    transform();
 }
 
 void Geometry::transform()
