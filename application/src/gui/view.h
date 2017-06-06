@@ -16,7 +16,8 @@
 *	@date 05/06/2017
 */
 
-//!  Class controlling user interface
+//!\class  View
+//! \brief Class controlling user interface
 /*!
    View consists all components and methods responsible for communication with user
    and redirect information to model of application.

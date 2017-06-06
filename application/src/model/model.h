@@ -16,7 +16,11 @@
 *	@date 05/06/2017
 */
 
-//!  Class controlling application back-end
+//! \class Model
+//! \brief  Class manage GUI and genethic algorithm
+/*!
+*  Get data from user interface and redirect it to genethic algorithm.
+*/
 class Model : public QObject
 {
     Q_OBJECT

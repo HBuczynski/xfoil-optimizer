@@ -14,7 +14,11 @@
 *	@date 05/06/2017
 */
 
-//!  The class takes care of genetic algorithm's settings obtain from user
+//! \class SettingsDialog
+//! \brief  Class manage genethic algorithm parameters obtain from user
+/*!
+     The class takes care of genetic algorithm's settings obtain from user
+*/
 class SettingsDialog : public QObject
 {
     Q_OBJECT
