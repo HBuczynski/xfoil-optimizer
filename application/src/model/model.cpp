@@ -3,7 +3,7 @@
 #include "optimizer/genetic/genetic.h"
 #include <QDebug>
 
-Model::Model() : runGeneticAlgorithm(false)
+Model::Model()
 {
     initializeConfigurationReader();
     initializeLogger();
@@ -42,6 +42,10 @@ void Model::getOptimizedGeometry()
     std::vector<double> vectorY;
 
     Geometry geometry = geneticOptimizer_->getTopGeometry();
+    AviationProfileParameters results;
+    results.alfa = geometry.getResults().calcMaxCl().alfa;
+    results.cdMin = geometry.getResults().calcMinCd().param;
+    results.clMax = geometry.getResults().calcMaxCl().param;
 
     for(auto points: geometry.getPoints())
     {
@@ -50,20 +54,18 @@ void Model::getOptimizedGeometry()
     }
 
     emit updateOptimizedChart(vectorX, vectorY);
+    emit setFitnessParameters(results);
 }
 
 void Model::stopSimulation()
 {
     qDebug() << "stop";
-    runGeneticAlgorithm = false;
+    geneticOptimizer_->requestStop();
 }
 
 void Model::startSimulation()
 {
     qDebug() << "start simulation";
-
-    runGeneticAlgorithm = true;
-
     geneticOptimizer_->runGeneticAlgorithm();
 }
 
@@ -89,10 +91,3 @@ void Model::initializeGeneticAlgorithm()
     QObject::connect(geneticOptimizer_, SIGNAL(newGenerationGenerated()), this, SLOT(getOptimizedGeometry()));
 }
 
-void Model::runOptimizer()
-{
-    while(runGeneticAlgorithm)
-    {
-
-    }
-}

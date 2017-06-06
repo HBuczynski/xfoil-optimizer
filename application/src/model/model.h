@@ -54,6 +54,4 @@ private:
     Config::ApplicationParams applicationParameters_;
     Config::SimulationParams simulationParameters_;
     Config::OptimizerParams optimizerParameres_;
-
-    bool runGeneticAlgorithm;
 };

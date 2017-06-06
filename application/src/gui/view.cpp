@@ -133,9 +133,9 @@ void View::setOptimizerSettings()
 
 void View::getFitnessParametersLabel(AviationProfileParameters data)
 {
-   guiObjects_.fitnessValues.at(0)->setProperty("text", data.alfa);
-   guiObjects_.fitnessValues.at(1)->setProperty("text", data.clMax);
-   guiObjects_.fitnessValues.at(2)->setProperty("text", data.cdMin);
+   guiObjects_.fitnessValues.at(0)->setProperty("text", QString("%2").arg(data.alfa));
+   guiObjects_.fitnessValues.at(1)->setProperty("text", QString("%2").arg(data.clMax));
+   guiObjects_.fitnessValues.at(2)->setProperty("text", QString("%2").arg(data.cdMin));
 }
 
 void View::initializeGuiObjects()
