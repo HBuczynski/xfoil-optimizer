@@ -8,7 +8,11 @@
 *	@author Jakub Polaczek & Hubert Buczyński
 *	@date 05/06/2017
 */
-
+//! \class AirfoilOptimizer
+//! \brief  Abstract Airfoil optimizer object for managing Optimization and communication with model
+/*!
+*  Allows for multiple optimizer implementations
+*/
 class AirfoilOptimizer: public QObject
 {
     Q_OBJECT
@@ -22,7 +26,11 @@ public:
 Q_SIGNALS:
     void optimizationFinished();
 };
-
+//! \class DudOptimizer
+//! \brief  Dud Airfoil optimizer object for testing interfaces
+/*!
+*  Allows for different test scenarios
+*/
 class DudOptimizer : public AirfoilOptimizer
 {
 public:

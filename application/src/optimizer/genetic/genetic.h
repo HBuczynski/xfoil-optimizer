@@ -17,9 +17,12 @@
 *	@date 05/06/2017
 */
 
-//!  Class contains implementation of the genetic algorithm
+//! \class GeneticOptimizer
+//! \brief  Class contains implementation of the genetic algorithm
 /*!
 *  Genetic Optimizer provides necessary objects and methods to use genetic algorithm.
+*   General usage operates on signals and slots - after runSimulation Slot is invoked initial population is generated
+*   And simulation is handled bu SimulationScheduler object
 */
 class GeneticOptimizer : public AirfoilOptimizer
 {

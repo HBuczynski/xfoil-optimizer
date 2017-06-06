@@ -12,9 +12,12 @@
 *	@date 05/06/2017
 */
 
-//!  IO stream interface using QT Qprocess API
+//!  \class QSimulationProxy
+//! IO stream interface using QT Qprocess API
 /*!
-
+Simulation Proxy implementation using Qprocess. The proxy spawns new child process with xfoil and monitors its execution.
+There is no way of implementing reliable two way communication thus we hte process awaits timeout or termination
+and interprets the results
 */
 class QSimulationProxy : public QObject, public SimulationProxy
 {

@@ -8,10 +8,32 @@
 *	@date 05/06/2017
 */
 
-//!  Class containing simulation results from xfoil
+//!
 /*!
   This class calculate airfoil's parameters based on the outputs from xfoil simulation.
 */
+/**
+*	@struct SimResults::ResultEntry
+*   \brief Class containing simulation results from xfoil
+*   Structure for storing simulation results from xfoil panel optimizer
+*   @var SimResults::ResultEntry::alfa
+*   airfoil angle of attack for the calculation
+*   @var SimResults::ResultEntry::cl
+*   Lift coefficient
+*   @var SimResults::ResultEntry:cd
+*   Drag coefficient
+*   @var SimResults::ResultEntry::cdp
+*   Pressure coefficient
+*   @var SimResults::ResultEntry::cm
+*   Tirque coefficient
+*   @var SimResults::ResultEntry::xtr_top
+*   Top transition point
+*   @var SimResults::ResultEntry::xtr_bottom
+*   Bottom transition point
+*	@author Jakub Polaczek & Hubert Buczyński
+*	@date 05/06/2017
+*/
+
 class SimResults
 {
     friend class SimulationHandler;

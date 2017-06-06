@@ -31,9 +31,10 @@
 */
 
 
-//!  Class controlling execution single simulation tool using proxy interface
+//!  \class SimulationHandler
+//! \brief Class controlling execution single simulation tool using proxy interface
 /*!
-  Controls single instance of xfoil optimizer
+  Controls single instance of xfoil optimizer via proxy object, interprets the results and provids input data
 */
 class SimulationHandler
 {
@@ -70,20 +71,26 @@ private:
     const Config::SimulationParams params_;
 };
 
+//!  \struct Task
+//!  \brief Object encapsulating single task for SchedulerWorker
+/*!
 
+*/
 struct Task
 {
     Task(Geometry * geom):
-        geometry(geom),
-        handlerAssigned(-1)
+        geometry(geom)
     {
 
     }
     Geometry * geometry;
-    int handlerAssigned = -1;
 };
 
-
+//!  \class SchedulerWorker
+//!  \brief Class controlling execution of multiple handlers to be deployed in a dedicated thread
+/*!
+  Clas runns in a separate thread and controls multiple simulation handlers execution (according to thread count parameter)
+*/
 class SchedulerWorker : public QObject
 {
     Q_OBJECT
@@ -113,7 +120,8 @@ private:
     SimulationHandler **handlers;
 };
 
-//!  Class controlling execution of external simulation tools
+//!  \class SimulationScheduler
+//! \brief Class controlling execution of external simulation tools
 /*!
   Controls multiple instances of xfoil optimizer running in parallel
   Runs a thread that polls and initiates all xfoil proxy instances

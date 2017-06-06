@@ -11,9 +11,11 @@
 
 typedef std::map<std::string, boost::variant<double, std::string, int> > Parameters;
 
-//!  Class containing application parameters
+//!  \class Config
+//! \brief Class containing application parameters
 /*!
-  This class consists basic structures use in the whole application.
+  This class consists basic structures use in the whole application. It is separated into main subclasses for
+ easier distribution of parameters
 */
 class Config
 {
@@ -26,7 +28,7 @@ public:
     {
         int parallelSimulations = 4;
         int iterationLimit = 30;
-        std::string xfoilExecutablePath =  "C:\\Users\\Hubert\\Documents\\Projekt\\xfoil-optimizer\\xfoil\\win32";
+        std::string xfoilExecutablePath =  "C:\\Users\\Kub\\Documents\\workspace\\xfoil-optimizer\\xfoil\\win32";
         bool viscousEnable = true;
         int reynoldsNo = 10000000;
         int xfoilTimeout = 15;

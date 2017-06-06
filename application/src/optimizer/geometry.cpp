@@ -248,8 +248,6 @@ void Geometry::save(std::string filename)
     calculateCoefficients();
     transform();
     //Alert this is because function generating airfoil is wrong//
-
-
     ofstream file;
     file.open(filename,std::ios::out | std::ios::trunc);
     if (file.is_open())

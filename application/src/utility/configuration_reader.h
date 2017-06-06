@@ -14,7 +14,8 @@
 *	@date 05/06/2017
 */
 
-//!  Class containing methods to generate and load parameters from xml file.
+//! \class ConfigurationReader
+//! \brief Class containing methods to generate and load parameters from xml file.
 /*!
   This class uses TinyXml library to write and read data to xml files.
 */
