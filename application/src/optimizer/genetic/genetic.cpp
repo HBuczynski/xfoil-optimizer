@@ -272,7 +272,7 @@ AviationProfileParameters GeneticOptimizer::calculateBasicProfile(std::string pa
 
     parameters.alfa = geom.getResults().calcMinCd().alfa;
     parameters.clMax = geom.getResults().calcMaxCl().param;
-    parameters.cdMax = geom.getResults().calcMinCd().param;
+    parameters.cdMin = geom.getResults().calcMinCd().param;
 
     vectorX_.clear();
     vectorY_.clear();

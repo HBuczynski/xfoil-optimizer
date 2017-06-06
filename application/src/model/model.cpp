@@ -3,7 +3,7 @@
 #include "optimizer/genetic/genetic.h"
 #include <QDebug>
 
-Model::Model()
+Model::Model() : runGeneticAlgorithm(false)
 {
     initializeConfigurationReader();
     initializeLogger();
@@ -31,6 +31,7 @@ void Model::calculateBaseProfileParameters(std::string path)
 
     while(path.find('/') != std::string::npos)
         path.replace(path.find('/'),1, separator.c_str());
+
     emit setBasicProfileParameters(geneticOptimizer_->calculateBasicProfile(path));
     emit updateBaseChart(geneticOptimizer_->getVectorX(), geneticOptimizer_->getVectorY());
 }
@@ -38,11 +39,14 @@ void Model::calculateBaseProfileParameters(std::string path)
 void Model::stopSimulation()
 {
     qDebug() << "stop";
+    runGeneticAlgorithm = false;
 }
 
 void Model::startSimulation()
 {
     qDebug() << "start simulation";
+
+    runGeneticAlgorithm = true;
 }
 
 void Model::initializeLogger()
@@ -64,4 +68,12 @@ void Model::initializeConfigurationReader()
 void Model::initializeGeneticAlgorithm()
 {
     geneticOptimizer_ = new GeneticOptimizer(simulationParameters_, optimizerParameres_);
+}
+
+void Model::runOptimizer()
+{
+    while(runGeneticAlgorithm)
+    {
+
+    }
 }

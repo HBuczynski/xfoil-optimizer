@@ -12,7 +12,7 @@ struct AviationProfileParameters
 {
     double alfa = -1;
     double clMax = -1;
-    double cdMax = -1;
+    double cdMin = -1;
 
 };
 

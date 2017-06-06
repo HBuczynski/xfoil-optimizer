@@ -50,7 +50,7 @@ GroupBox {
         x: 2
         y: -9
         height: 24
-        text: qsTr("Cd max")
+        text: qsTr("Cd min")
         anchors.left: parent.left
         anchors.topMargin: 113
         anchors.top: parent.top
