@@ -11,7 +11,8 @@
 *	@date 05/06/2017
 */
 
-//!  Class containing methods add information about current state of application.
+//! \class LogWriter
+//!  \brief Class containing methods add information about current state of application.
 /*!
     Log writer provides to show the information on the console window and save it to the logger file. User is able to choose
     kind of message which he wants to show, i.e. information, warning or error. This class is essential for supply the data to behavior

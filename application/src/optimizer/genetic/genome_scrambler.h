@@ -12,18 +12,22 @@
 *	@date 05/06/2017
 */
 
-//!  Representation of abstract class.
-
+//! \class GenomeScrambler
+//! \brief  Abstraction class for GeneticScrambler objects
+/*!
+*  GeneticScrambler object allows for genome crossover according to different strategies eg. single point
+*   MultiPoint etc.
+*/
 class GenomeScrambler //This might need rethinking - maybe move to genome as it is genome specific...
 {
 public:
     virtual Genome * mutate(Genome *genome) = 0;
     virtual Genome* crossover( Genome *g1,  Genome *g2) = 0;
 };
-
-//!  Class provides methods to genome reproduction
+//! \class DudScrambler
+//! \brief  Test class for GeneticScrambler objects
 /*!
-  This class can mutate and crossover genomes.
+*  DudScrambler object is a test object providing constant, not random implementation for scrambling
 */
 class DudScrambler: public GenomeScrambler
 {
@@ -31,6 +35,12 @@ public:
    virtual Genome * mutate(Genome *genome) override;
    virtual Genome* crossover( Genome *g1, Genome *g2) override;
 };
+
+//! \class SingleCrossoverMultiMutationScrambler
+//! \brief  SingleCrossover Multipoint Mutation GeneticScrambler object
+/*!
+*  Applies Single point crossover and multipoint mutation on genome objects
+*/
 class SingleCrossoverMultiMutationScrambler : public GenomeScrambler
 {
 public:

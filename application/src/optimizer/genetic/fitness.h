@@ -9,9 +9,10 @@
 *	@date 05/06/2017
 */
 
-//!  Class maintain fitness function for genetic algorithm
+//! \class FitnessModel
+//! \brief  Class maintain fitness function for genetic algorithm
 /*!
-*  Calculate fitness for each genome in population.
+*  Calculate fitness function for each genome in population based on simulation results data.
 */
 class FitnessModel
 {

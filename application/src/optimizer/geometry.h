@@ -15,7 +15,8 @@
 *	@date 05/06/2017
 */
 
-//!  Class providing necessary attributes for geometry calculation
+//!  \class Geometry
+//! \brief Class providing necessary attributes for geometry calculation
 /*!
   This class provides loading and saving profile to file.
 */

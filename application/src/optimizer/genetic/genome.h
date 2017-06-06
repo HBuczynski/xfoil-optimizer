@@ -11,9 +11,11 @@
 *	@date 05/06/2017
 */
 
-//!  Class contains implementation of the genome
+//! \class Genome
+//! \brief  Class contains implementation of the genome
 /*!
-*  Genome is a representation of one instance of population.
+*  Genome is a representation of one instance of population. It contains its own Geometry generated based on current
+*  genome binary representation. The class provides also methods for array access of genome
 */
 class Genome
 {
