@@ -13,8 +13,8 @@ ChartView {
 
     function setAxis(yMx, yMn)
     {
-        Qt.yMax = yMx
-        Qt.yMin = yMn
+        yMax = yMx + 0.1
+        yMin = yMn -0.1
     }
 
     ValueAxis {

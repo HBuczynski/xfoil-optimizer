@@ -8,6 +8,15 @@ ChartView {
     backgroundColor: "#CED1D2"
     legend.visible: false
 
+    property double yMax: 1
+    property double yMin: -1
+
+    function setAxis(yMx, yMn)
+    {
+        yMax = yMx + 0.1
+        yMin = yMn -0.1
+    }
+
     ValueAxis {
         id: axisX
         min: 0
@@ -16,8 +25,8 @@ ChartView {
 
     ValueAxis {
          id: axisY
-         min: -0.5
-         max: 0.5
+         min: yMin
+         max: yMax
      }
 
     SplineSeries {

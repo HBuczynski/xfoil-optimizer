@@ -15,7 +15,11 @@
 *	@date 05/06/2017
 */
 
-//!  Class provides drawing chart in external dialog
+//! \class PlotDialog
+//! \brief  Class manage fitness values obtain form genethic algorithm
+/*!
+     Class provides drawing fitness chart.
+*/
 class PlotDialog :QObject
 {
     Q_OBJECT
