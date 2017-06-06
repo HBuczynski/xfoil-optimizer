@@ -29,11 +29,10 @@ void Model::calculateBaseProfileParameters(std::string path)
     std::string separator ="/";
 #endif
 
-
     while(path.find('/') != std::string::npos)
         path.replace(path.find('/'),1, separator.c_str());
     emit setBasicProfileParameters(geneticOptimizer_->calculateBasicProfile(path));
-
+    emit updateBaseChart(geneticOptimizer_->getVectorX(), geneticOptimizer_->getVectorY());
 }
 
 void Model::stopSimulation()
@@ -55,10 +54,9 @@ void Model::initializeConfigurationReader()
 {
     configReader_.initialize();
 
-    //to do - do smt if initialize return false
-
     applicationParameters_ = configReader_.getApplicationParameters();
     simulationParameters_ = configReader_.getSimulatorParameters();
+    simulationParameters_.viscousEnable = false;
     optimizerParameres_ = configReader_.getOptimizerParameters();
     projectPath_ = configReader_.getProjectPath();
 }

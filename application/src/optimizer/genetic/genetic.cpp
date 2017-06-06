@@ -259,22 +259,38 @@ void GeneticOptimizer::calculateFitness()
 
 AviationProfileParameters GeneticOptimizer::calculateBasicProfile(std::string path)
 {
-    qDebug() << path.c_str();
-
-    Geometry geom("C:\\Users\\Hubert\\Desktop\\xfoil-optimizer\\xfoil\\win32\\NACA_0012.dat");
+    Geometry geom(path);
 
     SimulationScheduler scheduler(simulationParams_);
     scheduler.addTask(Task(&geom));
     scheduler.waitForFinished();
 
     AviationProfileParameters parameters;
-    qDebug() << "policzyło   " << geom.getResults().isCalculated();
-    double lol = geom.getResults().calcMaxCl().param;
-    qDebug() << "parameters.alfa" << lol;
+
+    parameters.alfa = geom.getResults().calcMinCd().alfa;
     parameters.clMax = geom.getResults().calcMaxCl().param;
     parameters.cdMax = geom.getResults().calcMinCd().param;
 
+    vectorX_.clear();
+    vectorY_.clear();
+
+    for(auto points : geom.getPoints())
+    {
+        vectorX_.push_back(points.x);
+        vectorY_.push_back(points.y);
+    }
+
     return parameters;
+}
+
+std::vector<double> GeneticOptimizer::getVectorX()
+{
+    return vectorX_;
+}
+
+std::vector<double> GeneticOptimizer::getVectorY()
+{
+    return vectorY_;
 }
 
 Genome *GeneticOptimizer::rouletteWheelSelection()

@@ -141,9 +141,11 @@ bool View::checkIfTargetIsSet()
 
 void View::getBaseProfileValues(AviationProfileParameters data)
 {
-    guiObjects_.baseParameters.at(0)->setProperty("text", data.alfa);
-    guiObjects_.baseParameters.at(1)->setProperty("text", data.clMax);
-    guiObjects_.baseParameters.at(2)->setProperty("text", data.cdMax);
+    qDebug() << "dostalem sygnal" << data.alfa;
+
+    guiObjects_.baseParameters.at(0)->setProperty("text", QString("%2").arg(data.clMax));
+    guiObjects_.baseParameters.at(1)->setProperty("text", QString("%2").arg(data.alfa));
+    guiObjects_.baseParameters.at(2)->setProperty("text", QString("%2").arg(data.cdMax));
 
     guiObjects_.SET_BASE = true;
 }

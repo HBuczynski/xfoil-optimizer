@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <algorithm>
+#include <vector>
 #include <QObject>
 #include "optimizer/airfoil_optimizer.h"
 #include "xfoil/simulation.h"
@@ -47,7 +48,8 @@ public:
     virtual double const getProgress();
     AviationProfileParameters calculateBasicProfile(std::string path);
 
-
+    std::vector<double> getVectorX();
+    std::vector<double> getVectorY();
 
     bool isRunning();
 public Q_SLOTS:
@@ -77,7 +79,8 @@ private:
     Geometry baseGeometry_;
     const Config::SimulationParams simulationParams_;
     const Config::OptimizerParams optParams_;
-
+    std::vector<double> vectorX_;
+    std::vector<double> vectorY_;
 
     bool continueOptimization_;
     std::vector<Genome*> population_;

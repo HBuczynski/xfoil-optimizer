@@ -16,8 +16,8 @@ ChartView {
 
     ValueAxis {
          id: axisY
-         min: 0
-         max: 1
+         min: -0.5
+         max: 0.5
      }
 
     SplineSeries {
